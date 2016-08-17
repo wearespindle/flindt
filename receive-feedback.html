@@ -20,7 +20,7 @@
         <div class="navigation--wrapper">
             <ul class="navigation">
                 <li><a href="#">Feedback geven <i class="fa fa-undo"></i></a></li>
-                <li class="is-active"><a href="#">Ontvangen feedback <i class="fa fa-thumbs-up"></i></a></li>
+                <li class="is-active"><a href="javascript:void(0)">Ontvangen feedback <i class="fa fa-thumbs-up"></i></a></li>
                 <li><a href="#">Feedback vragen <i class="fa fa-question-circle-o"></i></a></li>
                 <li><a href="#">Jij en de organisatie <i class="fa fa-user"></i></a></li>
             </ul>
@@ -166,23 +166,25 @@
                     <div class="feedback-form--row">
                         <div class="l-48">
                             <h3>Ben je van plan iets met de feedback te gaan doen?</h3>
-                            <ul class="feedback--form-radiolist">
-                                <li><input type="radio" /><label>Ja, namelijk</label></li>
-                                <li><input type="radio" /><label>Nee, want</label></li>
-                            </ul>
+                            <form>
+                                <ul class="feedback--form-radiolist">
+                                    <li><input id="yes" name="feedback-action" type="radio" /><label for="yes">Ja, namelijk</label></li>
+                                    <li><input id="no" name="feedback-action" type="radio" /><label for="no">Nee, want</label></li>
+                                </ul>
+                            </form>
                             <textarea rows="5"></textarea>
                         </div>
                     </div>
                 </div>
 
-                <a href="#" class="action--button neutral"><i class="fa fa-chevron-left"></i> Terug naar overzicht</a>
+                <a href="index.html" class="action--button neutral"><i class="fa fa-chevron-left"></i> Terug naar overzicht</a>
                 <a href="index.html" class="action--button is-right">Opslaan <i class="fa fa-chevron-right"></i></a>
             </div>
         </div>
     </div>
 
     <div class="modal--wrapper">
-        <a href="#" class="modal--close"><i class="fa fa-close"></i></a>
+        <a href="javascript:void(0)" class="modal--close"><i class="fa fa-close"></i></a>
         <h2>Replink</h2>
 
         <div class="modal--content">
@@ -191,16 +193,14 @@
 
             <h3>Accountabilities</h3>
             <ul>
-            <li>Removing constraints within the broader Organization that limit the Sub-Circle</li>
-            <li>Seeking to understand Tensions conveyed by Sub-Circle Circle Members, and discerning those appropriate to process in the Super-Circle</li>
-            <li>Providing visibility to the Super-Circle into the health of the Sub-Circle, including reporting on any metrics or checklist items assigned to the whole Sub-Circle</li>
+                <li>Removing constraints within the broader Organization that limit the Sub-Circle</li>
+                <li>Seeking to understand Tensions conveyed by Sub-Circle Circle Members, and discerning those appropriate to process in the Super-Circle</li>
+                <li>Providing visibility to the Super-Circle into the health of the Sub-Circle, including reporting on any metrics or checklist items assigned to the whole Sub-Circle</li>
             </ul>
         </div>
-
-
     </div>
 
     <div class="overlay"></div>
-</body>
 
+</body>
 </html>
