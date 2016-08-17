@@ -1,0 +1,190 @@
+.feedback-form--wrapper {
+    background: $white;
+    overflow: hidden;
+}
+
+.range-input-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: none;
+
+    li {
+        margin: 0 8px;
+        display: inline-block;
+        text-align: center;
+
+        &:hover {
+            cursor: pointer;
+            color: $color-primary-30;
+        }
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+            margin-left: 3px;
+        }
+
+        @media (min-width: $breakpoint-10) {
+            margin-left: 15px;
+            margin-right: 15px;
+
+            &:last-child {
+                margin-left: 10px;
+            }
+
+            &:first-child {
+                margin-left: 6px;
+                margin-right: 15px;
+            }
+        }
+    }
+
+    @media (min-width: $breakpoint-10) {
+        display: block;
+        width: 420px;
+    }
+}
+
+.range-input-list-output {
+    display: inline;
+    width: 10px;
+    height: 10px;
+
+    span {
+        display: inline;
+        font-weight: bold;
+    }
+
+    @media (min-width: $breakpoint-10) {
+        display: none;
+    }
+}
+
+.feedback-form--row {
+    @include grid (48);
+    border-bottom: 1px solid $color-neutral-30;
+    padding: 1rem;
+
+    position: relative;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    @media (min-width: $breakpoint-20) {
+        padding: 2rem;
+    }
+
+    @media (min-width: $breakpoint-30) {
+        padding: 2rem 0;
+    }
+}
+
+.feedback-form--meta {
+    border-bottom: 1px solid $color-neutral-30;
+    margin-bottom: 0;
+    padding: 0;
+
+    td {
+        padding: 0.3rem 1rem;
+
+        &:last-child {
+            border-left: 0;
+        }
+    }
+
+    tr:last-child {
+        margin-bottom: 0;
+    }
+
+    @media (min-width: $breakpoint-30) {
+        padding: 0.5rem 0;
+    }
+}
+
+.feedback-form--row-button {
+    @extend %button;
+
+    background: $color-primary-30;
+    font-size: $font-size-10;
+    color: $color-primary-50;
+    text-transform: uppercase;
+    padding-left: 10px;
+    margin-top: 1rem;
+    position: relative;
+
+    i {
+        margin-left: 10px;
+    }
+
+    &:hover {
+        color: $color-primary-50;
+
+        i {
+            color: $white;
+        }
+    }
+
+    &:active,
+    &:focus {
+        box-shadow: inset 0 1px 3px rgba($black, 0.2);
+    }
+
+    &.negative {
+        background: $color-primary-50;
+        color: $white;
+    }
+}
+
+.feedback-form--row-smiley {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    img {
+        width: 50px;
+    }
+
+    @media (min-width: $breakpoint-30) {
+        position: relative;
+        top: auto;
+        right: auto;
+
+        img {
+            width: auto;
+            max-width: 100%;
+        }
+    }
+}
+
+.feedback-form--form {
+    margin-top: 30px;
+
+    @media (min-width: $breakpoint-30) {
+        margin: 0;
+    }
+}
+
+
+.feedback--form-radiolist {
+    margin: 5px 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+        display: inline;
+        margin-right: 20px;
+        font-weight: bold;
+
+        input[type="radio"] {
+            vertical-align: top;
+            position: relative;
+            top: 2px;
+            margin-right: 5px;
+        }
+    }
+}

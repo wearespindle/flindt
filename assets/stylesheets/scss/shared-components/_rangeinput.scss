@@ -1,0 +1,107 @@
+input[type="range"] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+
+    // Fix for Firefox unable to apply focus style bug.
+    border: 1px solid $white;
+
+    // Required for proper track sizing in Firefox.
+    width: 100%;
+
+    @media (min-width: $breakpoint-10) {
+        width: 415px;
+    }
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 415px;
+    height: 13px;
+    background: $color-primary-50;
+    border: 0;
+    border-radius: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 0;
+    height: 18px;
+    width: 18px;
+    border-radius: 3px;
+    border-left: 1px solid $white;
+    border-right: 1px solid $white;
+    background: $color-primary-30;
+    margin-top: -3px;
+}
+
+input[type="range"]:focus {
+    outline: none;
+}
+
+input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: darken($color-primary-50, 10%);
+}
+
+input[type="range"]::-moz-range-track {
+    width: 410px;
+    height: 13px;
+    background: $color-primary-50;
+    border: 0;
+    border-radius: 10px;
+}
+
+input[type="range"]::-moz-range-thumb {
+    border: 0;
+    height: 18px;
+    width: 18px;
+    border-radius: 3px;
+    border-left: 1px solid $white;
+    border-right: 1px solid $white;
+    background: $color-primary-30;
+}
+
+// Hide the outline behind the border.
+input[type="range"]:-moz-focusring {
+    outline: 1px solid $white;
+    outline-offset: -1px;
+}
+
+input[type="range"]::-ms-track {
+    width: 300px;
+    height: 5px;
+
+    // Remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead.
+    background: transparent;
+
+    // Leave room for the larger thumb to overflow with a transparent border.
+    border-color: transparent;
+    border-width: 6px 0;
+
+    // Remove default tick marks.
+    color: transparent;
+}
+
+input[type="range"]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+
+input[type="range"]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+input[type="range"]::-ms-thumb {
+    border: 0;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: $color-primary-30;
+}
+
+input[type="range"]:focus::-ms-fill-lower {
+    background: $color-primary-50;
+}
+
+input[type="range"]:focus::-ms-fill-upper {
+    background: $color-neutral-30;
+}

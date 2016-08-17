@@ -1,0 +1,149 @@
+.content--wrapper {
+    background-color: #ebecef;
+    overflow-y: auto;
+
+    @media (min-width: $breakpoint-30) {
+        @include grid(34);
+        height: 100vh;
+    }
+
+    @media (min-width: $breakpoint-40) {
+        @include grid(38);
+    }
+
+    @media (min-width: $breakpoint-50) {
+        @include grid(40);
+    }
+}
+
+.content--header-spacing {
+    height: 4rem;
+    background-color: $white;
+}
+
+.content--header-breadcrumbs {
+    height: calc(4rem + 1px);
+    padding: 1rem;
+    border-bottom: 1px solid #d6d7d9;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+
+        li {
+            font-size: 0.8rem;
+            line-height: 2rem;
+            display: inline;
+            border-left: 1px solid $color-neutral-30;
+            padding: 0 20px;
+
+            &:first-child {
+                border-left: 0;
+                padding-left: 0;
+            }
+
+            @media (min-width: $breakpoint-30) {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+.content {
+    padding: 1rem;
+    overflow: hidden;
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+}
+
+.overlay {
+    background: $black;
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+
+    &.show {
+        display: block;
+    }
+}
+
+.modal--wrapper {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    background: $white;
+    width: 30rem;
+    z-index: 100;
+    margin-top: 3rem;
+    border-radius: $border-radius-20;
+    display: none;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.2s;
+    animation-name: animatetop;
+    animation-duration: 0.2s;
+
+    h2 {
+        padding: 1rem;
+        border-bottom: 1px solid $color-neutral-30;
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: $font-size-40;
+        font-weight: bold;
+    }
+
+    &.show {
+        display: block;
+    }
+
+}
+
+.modal--close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1.3rem;
+
+    &:hover {
+        color: $color-primary-50;
+    }
+}
+
+@-webkit-keyframes animatetop {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes animatetop {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.modal--content {
+    padding: 1rem;
+}
