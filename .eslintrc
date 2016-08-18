@@ -1,6 +1,10 @@
 {
-    "ecmaFeatures": {},
     "parser": "espree",
+    "parserOptions": {
+     "ecmaFeatures": {
+          "jsx": true
+        }
+     },
     "env": {
         "amd": false,
         "browser": true,
@@ -12,8 +16,12 @@
         "ga": false,
         "app": true,
         "context": true,
-        "gettext": true
+        "gettext": true,
+        "React": true
     },
+    "plugins": [
+        "react"
+    ],
     "rules": {
         /** Based on https://raw.githubusercontent.com/airbnb/javascript/master/linters/.eslintrc */
 
@@ -24,7 +32,7 @@
         /** Variables */
         "no-shadow": 2,                                 // http://eslint.org/docs/rules/no-shadow
         "no-shadow-restricted-names": 2,                // http://eslint.org/docs/rules/no-shadow-restricted-names
-        "no-unused-vars": [2, {                         // http://eslint.org/docs/rules/no-unused-vars
+        "no-unused-vars": [0, {                         // http://eslint.org/docs/rules/no-unused-vars
           "vars": "local",
           "args": "none"
         }],

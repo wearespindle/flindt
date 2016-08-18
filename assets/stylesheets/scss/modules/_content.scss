@@ -72,6 +72,10 @@
 
     &.show {
         display: block;
+
+        .modal--wrapper {
+            display: block;
+        }
     }
 }
 
@@ -81,6 +85,7 @@
     margin-right: auto;
     left: 0;
     right: 0;
+    top: 0;
     background: $white;
     width: 30rem;
     z-index: 100;

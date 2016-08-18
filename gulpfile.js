@@ -1,14 +1,27 @@
 'use strict';
 
 let autoprefixer = require('gulp-autoprefixer');
+let babelify = require('babelify');
+let watchify = require('watchify');
 let browserify = require('browserify');
 let browserSync = require('browser-sync');
-let buffer = require('vinyl-buffer');
 let gulp = require('gulp');
+let historyApiFallback = require('connect-history-api-fallback');
+var notify = require('gulp-notify');
 let path = require('path');
 let sass = require('gulp-sass');
 let source = require('vinyl-source-stream');
 let sourcemaps = require('gulp-sourcemaps');
+
+let dependencies = [
+    'react',
+    'react-dom',
+];
+
+// Put browserSync reload method in a variable for easier use.
+let reload = browserSync.reload;
+
+let scriptsCount = 0;
 
 let paths = {
     browser: './',
@@ -27,31 +40,85 @@ let paths = {
 
 
 /**
- * Generate the JavaScript bundled file. All source target files are wrapped in
- * a closure by Browserify.
+ * Show errors in the console and prevent Gulp from running when an error
+ * occurs.
+ */
+function handleErrors() {
+    var args = Array.prototype.slice.call(arguments);
+    notify.onError({
+        title: 'Compile Error',
+        message: '<%= error.message %>',
+    }).apply(this, args);
+    this.emit('end'); // Keep gulp from hanging on this task.
+}
+
+
+/**
+ * Build all the JavaScript files and transpile them when neccessary.
+ * @param {Bool} isProduction. When true bundle all JavaScript in to one file
+ * (vendor/app).
+ */
+function bundleApp(isProduction) {
+    var appBundler = browserify({
+        entries: './assets/js/index.js',
+        debug: true,
+    });
+
+    scriptsCount++;
+
+    // If it's not for production, a separate vendors.js file will be created
+    // the first time gulp is run so that we don't have to rebundle things like
+    // react everytime there's a change in the js file.
+    if (!isProduction && scriptsCount === 1) {
+        // Create vendors.js for dev. environment.
+        browserify({
+            require: dependencies,
+            debug: true,
+        })
+        .bundle()
+        .on('error', handleErrors)
+        .pipe(source('vendors.js'))
+        .pipe(gulp.dest('./compiled-assets/vendor/'));
+    }
+    if (!isProduction) {
+        // Make the dependencies external so they dont get bundled by the
+        // app bundler. Dependencies are already bundled in vendors.js for
+        // dev. environments.
+        dependencies.forEach(function(dep) {
+            appBundler.external(dep);
+        });
+    }
+
+    appBundler
+        .transform('babelify', {presets: ['es2015', 'react']})
+        .bundle()
+        .on('error', handleErrors)
+        .pipe(source('index.js'))
+        .pipe(gulp.dest('./compiled-assets/scripts/'));
+}
+
+
+/**
+ * Run JavaScript related tasks.
+ * Execute the bundleApp function with true to bundle all the JavaScript files
+ * vendor and app into one file. Set to false to split vendor and app JS
+ * for faster development (eg. not compiling vendor JS on every save).
  */
 gulp.task('js', function() {
-    return browserify(paths.js.jsIndex, {debug: true, extensions: ['es6']})
-        .transform('babelify', {presets: ['es2015']})
-        .bundle()
-        .pipe(source('bundle.js'))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./compiled-assets/'))
-        .pipe(browserSync.reload({stream: true}));
+    bundleApp(false);
 });
 
 
 /**
  * Setup local server for static files.
  */
-gulp.task('browser-sync', () => {
-    const config = {
-        server: {baseDir: paths.browser},
-    };
-
-    return browserSync(config);
+gulp.task('browser-sync', function() {
+    browserSync({
+        // we need to disable clicks and forms for when we test multiple rooms
+        server: {},
+        middleware: [historyApiFallback()],
+        ghostMode: false,
+    });
 });
 
 
@@ -68,7 +135,7 @@ gulp.task('sass', function() {
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./compiled-assets/css'))
-        .pipe(browserSync.reload({stream: true}));
+        .pipe(reload({stream: true}));
 });
 
 
@@ -81,7 +148,7 @@ gulp.task('watch', function() {
     gulp.watch(paths.sass.src, ['sass']);
     gulp.watch(paths.html, function() {
         return gulp.src('')
-            .pipe(browserSync.reload({stream: true}));
+            .pipe(reload({stream: true}));
     });
 });
 
@@ -93,7 +160,7 @@ gulp.task('watch', function() {
 gulp.task('images', () => {
     return gulp.src(path.join(paths.img, '**'))
     .pipe(gulp.dest('./compiled-assets/images'))
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(reload({stream: true}));
 });
 
 
@@ -103,7 +170,7 @@ gulp.task('images', () => {
 gulp.task('fonts', () => {
     return gulp.src(path.join(paths.fonts, '**'))
     .pipe(gulp.dest('./compiled-assets/fonts'))
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('default', ['js', 'sass', 'watch', 'images', 'fonts', 'browser-sync']);

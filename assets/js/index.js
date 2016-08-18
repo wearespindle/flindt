@@ -1,40 +1,27 @@
-'use strict';
+import React  from 'react';
+import ReactDOM  from 'react-dom';
+import { Router, Route, browserHistory, Link, IndexRoute } from 'react-router';
 
-var $ = require('jquery');
+import App from './components/App';
+import Home from './components/Home';
+import GiveFeedback from './components/GiveFeedback';
+import GiveFeedbackPerson from './components/GiveFeedbackPerson';
+import ReceivedFeedback from './components/ReceivedFeedback';
 
-class App {
 
-    constructor() {
-        this.events();
-    }
+/*
+  Routes
+*/
 
-    events() {
-        $('.show--modal').on('click', () => {
-            $('.overlay').toggleClass('show');
-            $('.modal--wrapper').toggleClass('show');
-        });
+var routes = (
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+        <IndexRoute component={Home} />
+        <Route path="/give-feedback" component={GiveFeedback} />
+        <Route path="/received-feedback" component={ReceivedFeedback} />
+        <Route path="/give-feedback-person" component={GiveFeedbackPerson} />
+    </Route>
+  </Router>
+)
 
-        $('.modal--close').on('click', () => {
-            $('.modal--wrapper').toggleClass('show');
-            $('.overlay').toggleClass('show');
-            return false;
-        });
-
-        $('.range-input-list li').on('click', function() {
-            $(this).parent().parent().find('input').val($(this).text());
-        });
-
-        $('.feedback-form--range').on('change', function() {
-            $(this).parent().find('.range-input-list-output > span').html($(this).val());
-        });
-
-        $('body').on('click', '.feedback-form--row-button', function() {
-            var $tr    = $(this).closest('.feedback-form--row');
-            var $clone = $tr.clone();
-            $clone.find('textarea').val('');
-            $tr.after($clone);
-        });
-    }
-}
-
-$(() => new App());
+ReactDOM.render(routes, document.querySelector('#main'));

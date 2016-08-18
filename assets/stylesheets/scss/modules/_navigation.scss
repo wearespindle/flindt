@@ -34,17 +34,17 @@
                 float: right;
             }
 
-            &:hover {
+            &:hover,
+            &.is-active {
                 color: $color-primary-30;
+
+                i {
+                    color: $color-primary-30;
+                }
             }
         }
 
-        &.is-active {
-            a,
-            i {
-                color: $color-primary-30;
-            }
-        }
+
 
         &:first-child {
             border-top: 1px solid #6d717e;
