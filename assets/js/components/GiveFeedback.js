@@ -8,12 +8,27 @@ import autobind from 'autobind-decorator';
 import FeedbackRow from './FeedbackRow';
 import {Link} from 'react-router';
 
-@autobind
-class GiveFeedback extends React.Component {
+var GiveFeedback = React.createClass({
 
-    constructor() {
-        super();
-    }
+    getInitialState() {
+        // This would normally be an API call to get the open feedback data
+        // but for now I'm using a sample data JSON file to render the
+        // components.
+        return {
+            feedbackRows: require('../sample-data/data'),
+            post: null,
+        };
+    },
+
+
+    componentDidMount() {
+        const postIndex = this.state.feedbackRows.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
+        const post = this.state.feedbackRows[postIndex];
+
+        this.setState({
+            post,
+        });
+    },
 
     openModal(roleId) {
         let info = {
@@ -21,9 +36,19 @@ class GiveFeedback extends React.Component {
         };
 
         this.props.showModal(info);
-    }
+    },
 
     render() {
+        let person = this.state.post;
+        let circle, role;
+
+        if (!person) {
+            return null;
+        }
+
+        circle = person.circles[0];
+        role = person.roles[0];
+
         return (
             <div className="content--wrapper">
                 <div className="content--header">
@@ -52,16 +77,16 @@ class GiveFeedback extends React.Component {
                             <tbody>
                                 <tr>
                                     <td data-label="Persoon">
-                                        Jan Arend
+                                        { person.name }
                                     </td>
                                     <td data-label="Rol">
-                                        Replink for Sales &amp; Support <a href="#" onClick={this.openModal.bind(this, 57570)} className="show--modal"><i className="fa fa-info-circle"></i></a>
+                                        { role.name } <a href="#" onClick={this.openModal.bind(null, role.id)} className="show--modal"><i className="fa fa-info-circle"></i></a>
                                     </td>
                                     <td data-label="Subcirkel">
-                                        Sales and Support <a href="#" onClick={this.openModal.bind(this, 891021)}><i className="fa fa-info-circle"></i></a>
+                                        Sales and Support <a href="#" onClick={this.openModal.bind(null, 891021)}><i className="fa fa-info-circle"></i></a>
                                     </td>
                                     <td data-label="Cirkel">
-                                        VoIPGRID <a href="#"><i className="fa fa-info-circle"></i></a>
+                                        { circle.name} <a href="#"><i className="fa fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -69,7 +94,7 @@ class GiveFeedback extends React.Component {
 
                         <div className="feedback-form--row">
                             <div className="l-5 feedback-form--row-smiley">
-                                <img src="compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
+                                <img src="/compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
                             </div>
 
                             <div className="l-43 feedback-form--form">
@@ -81,7 +106,7 @@ class GiveFeedback extends React.Component {
 
                         <div className="feedback-form--row">
                             <div className="l-5 feedback-form--row-smiley">
-                                <img src="compiled-assets/images/negative-feedback.png" alt="Wat kan er beter?" />
+                                <img src="/compiled-assets/images/negative-feedback.png" alt="Wat kan er beter?" />
                             </div>
 
                             <div className="l-43 feedback-form--form">
@@ -92,12 +117,12 @@ class GiveFeedback extends React.Component {
                         </div>
                     </div>
 
-                    <a href="index.html" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</a>
+                    <Link to="/" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</Link>
                     <Link to="give-feedback-person" className="action--button is-right">Opslaan en feedback geven op persoon <i className="fa fa-chevron-right"></i></Link>
                 </div>
             </div>
         );
-    }
-}
+    },
+});
 
 export default GiveFeedback;

@@ -5,6 +5,7 @@ FeedbackRow
 
 import React from 'react';
 import autobind from 'autobind-decorator';
+import { Link } from 'react-router';
 
 @autobind
 class FeedbackRow extends React.Component {
@@ -19,7 +20,9 @@ class FeedbackRow extends React.Component {
                 <td data-label="Rol">{ role.name }</td>
                 <td data-label="Cirkel">{ circle.name }</td>
                 <td data-label="Sluitingsdatum">1 sept. 2016</td>
-                <td data-label="Acties"><a href="give-feedback.html"><i className="fa fa-undo"></i> Feedback geven</a></td>
+                <td data-label="Acties">
+                    <Link to={`/give-feedback/${person.id}`}><i className="fa fa-undo"></i> Feedback geven</Link>
+                </td>
             </tr>
         );
     }

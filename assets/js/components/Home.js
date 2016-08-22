@@ -22,6 +22,8 @@ var Home = React.createClass({
     },
 
     render() {
+        var numberOfFeedbackRequests = Object.keys(this.state.feedbackRows).length;
+
         return (
             <div className="content--wrapper">
                 <div className="content--header">
@@ -34,7 +36,7 @@ var Home = React.createClass({
                 </div>
 
                 <div className="content">
-                    <h2>Openstaande verzoeken (2)</h2>
+                    <h2>Openstaande verzoeken ({numberOfFeedbackRequests})</h2>
 
                     <table>
                         <thead>
@@ -82,8 +84,8 @@ var Home = React.createClass({
                     </table>
                 </div>
             </div>
-        )
-    }
+        );
+    },
 });
 
 export default Home;

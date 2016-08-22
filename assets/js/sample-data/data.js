@@ -1,8 +1,9 @@
 // Some sample data to test loading in data and showing it.
-module.exports = {
-    feedback_person1: {
+module.exports = [
+    {
+        id: 1,
         name: 'Jan Arend',
-        id: 17506,
+        personId: 17506,
         circles: [
             {
                 id: 3943,
@@ -23,10 +24,10 @@ module.exports = {
             },
         ],
     },
-
-    feedback_person2: {
+    {
+        id: 2,
         name: 'Peter',
-        id: 19082,
+        personId: 19082,
         circles: [
             {
                 id: 10945,
@@ -51,4 +52,4 @@ module.exports = {
             },
         ],
     },
-};
+];
