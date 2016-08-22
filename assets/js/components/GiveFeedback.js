@@ -4,32 +4,23 @@
 */
 
 import React from 'react';
-import { Link } from 'react-router';
-import InfoModal from './InfoModal';
+import autobind from 'autobind-decorator';
+import FeedbackRow from './FeedbackRow';
+import {Link} from 'react-router';
 
+@autobind
 class GiveFeedback extends React.Component {
 
     constructor() {
         super();
     }
 
+    openModal(roleId) {
+        let info = {
+            roleId,
+        };
 
-    openModal(circle, role) {
-
-        if(circle === 1){
-            let info = {
-                roleId: 57570,
-            }
-            this.props.showModal(info);
-        }
-
-        if(circle === 2){
-
-            let info = {
-                roleId: 891021,
-            }
-            this.props.showModal(info);
-        }
+        this.props.showModal(info);
     }
 
     render() {
@@ -64,10 +55,10 @@ class GiveFeedback extends React.Component {
                                         Jan Arend
                                     </td>
                                     <td data-label="Rol">
-                                        Replink for Sales &amp; Support <a href="#" onClick={this.openModal.bind(this, 1, 2)} className="show--modal"><i className="fa fa-info-circle"></i></a>
+                                        Replink for Sales &amp; Support <a href="#" onClick={this.openModal.bind(this, 57570)} className="show--modal"><i className="fa fa-info-circle"></i></a>
                                     </td>
                                     <td data-label="Subcirkel">
-                                        Sales and Support <a href="#" onClick={this.openModal.bind(this, 2, 1)}><i className="fa fa-info-circle"></i></a>
+                                        Sales and Support <a href="#" onClick={this.openModal.bind(this, 891021)}><i className="fa fa-info-circle"></i></a>
                                     </td>
                                     <td data-label="Cirkel">
                                         VoIPGRID <a href="#"><i className="fa fa-info-circle"></i></a>
@@ -105,7 +96,7 @@ class GiveFeedback extends React.Component {
                     <Link to="give-feedback-person" className="action--button is-right">Opslaan en feedback geven op persoon <i className="fa fa-chevron-right"></i></Link>
                 </div>
             </div>
-        )
+        );
     }
 }
 

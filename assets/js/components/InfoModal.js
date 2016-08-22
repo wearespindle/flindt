@@ -10,42 +10,54 @@ var $ = require('jquery');
 
 var InfoModal = React.createClass({
     getInitialState: function() {
-      return {
-        data: null
-      };
+        return {
+            data: {
+                purpose: null,
+                name: null,
+            },
+        };
     },
 
     componentDidMount() {
-
-
-    },
-
-    setData(id) {
-        let roleId = id;
-        this.serverRequest = $.get('https://glassfrog.holacracy.org/api/v3/roles/'+roleId+'?api_key=d0f15c2543e30e70e4dcc6d6b3331170430a198b', function (result) {
+        let id = this.props.details.roleId;
+        this.serverRequest = $.get(`https://glassfrog.holacracy.org/api/v3/roles/${id}?api_key=d0f15c2543e30e70e4dcc6d6b3331170430a198b`, function(result) {
             let roleDetails = result.roles[0];
 
-          this.setState({
-            data: {
-                purpose: roleDetails.purpose,
-                name: roleDetails.name,
-            }
-          });
+            this.setState({
+                data: {
+                    purpose: roleDetails.purpose,
+                    name: roleDetails.name,
+                },
+            });
         }.bind(this));
     },
 
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
+    },
+
     closeModal() {
-        this.setState({data: null});
         this.props.closeModal();
     },
 
     render() {
-        if (this.props.isOpen === false)
-            return null;
-
-        let data = this.props.details;
-
-        this.setData(data.roleId);
+        if (this.state.data.name === null) {
+            return (
+                <div>
+                    <div className="modal--wrapper show">
+                        <a onClick={this.closeModal} className="modal--close"><i className="fa fa-close"></i></a>
+                        <div className="modal--content">
+                            <div className="spinner">
+                                <div className="bounce1"></div>
+                                <div className="bounce2"></div>
+                                <div className="bounce3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="overlay show"></div>
+                </div>
+            );
+        }
 
         return (
             <div>
@@ -67,8 +79,8 @@ var InfoModal = React.createClass({
                 </div>
                 <div className="overlay show"></div>
             </div>
-        )
-    }
+        );
+    },
 });
 
 export default InfoModal;

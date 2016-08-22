@@ -11,7 +11,7 @@ var Main = React.createClass({
     getInitialState() {
         return {
             isModalOpen: false,
-        }
+        };
     },
 
     showModal(parameters) {
@@ -24,11 +24,11 @@ var Main = React.createClass({
     },
 
     render() {
-        const childrenWithProps = React.Children.map(this.props.children,
-            (child) => React.cloneElement(child, {
-                showModal: this.showModal
-            })
-        );
+        let modal;
+
+        if (this.state.isModalOpen) {
+            modal = <InfoModal details={this.state.modalDetails} closeModal={this.closeModal} />;
+        }
 
         return (
             <div className="app-wrapper">
@@ -40,12 +40,13 @@ var Main = React.createClass({
                     </ul>
                 </div>
 
-                { childrenWithProps }
+                {React.cloneElement(this.props.children, {showModal: this.showModal})}
 
-                <InfoModal isOpen={this.state.isModalOpen} details={this.state.modalDetails} closeModal={this.closeModal}/>
+                { modal }
+
             </div>
-        )
-    }
+        );
+    },
 });
 
 export default Main;
