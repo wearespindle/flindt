@@ -15,15 +15,14 @@ var GiveFeedback = React.createClass({
         // but for now I'm using a sample data JSON file to render the
         // components.
         return {
-            feedbackRows: require('../sample-data/data'),
             post: null,
         };
     },
 
 
     componentDidMount() {
-        const postIndex = this.state.feedbackRows.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
-        const post = this.state.feedbackRows[postIndex];
+        const postIndex = this.props.feedbackPeople.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
+        const post = this.props.feedbackPeople[postIndex];
 
         this.setState({
             post,

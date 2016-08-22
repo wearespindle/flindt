@@ -8,21 +8,12 @@ import FeedbackRow from './FeedbackRow';
 
 var Home = React.createClass({
 
-    getInitialState() {
-        // This would normally be an API call to get the open feedback data
-        // but for now I'm using a sample data JSON file to render the
-        // components.
-        return {
-            feedbackRows: require('../sample-data/data'),
-        };
-    },
-
     renderFeedbackRow(key) {
-        return <FeedbackRow key={key} index={key} details={this.state.feedbackRows[key]}/>;
+        return <FeedbackRow key={key} index={key} details={this.props.feedbackPeople[key]}/>;
     },
 
     render() {
-        var numberOfFeedbackRequests = Object.keys(this.state.feedbackRows).length;
+        var numberOfFeedbackRequests = Object.keys(this.props.feedbackPeople).length;
 
         return (
             <div className="content--wrapper">
@@ -49,7 +40,7 @@ var Home = React.createClass({
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.keys(this.state.feedbackRows).map(this.renderFeedbackRow)}
+                            {Object.keys(this.props.feedbackPeople).map(this.renderFeedbackRow)}
                         </tbody>
                     </table>
 

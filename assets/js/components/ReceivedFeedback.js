@@ -129,7 +129,7 @@ class ReceivedFeedback extends React.Component {
                     <a href="index.html" className="action--button is-right">Bewerken <i className="fa fa-pencil"></i></a>
                 </div>
             </div>
-        )
+        );
     }
 }
 

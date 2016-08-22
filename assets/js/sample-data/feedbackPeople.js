@@ -1,5 +1,5 @@
 // Some sample data to test loading in data and showing it.
-module.exports = [
+const feedbackPeople = [
     {
         id: 1,
         name: 'Jan Arend',
@@ -53,3 +53,5 @@ module.exports = [
         ],
     },
 ];
+
+export default feedbackPeople;

@@ -40,7 +40,7 @@ var Main = React.createClass({
                     </ul>
                 </div>
 
-                {React.cloneElement(this.props.children, {showModal: this.showModal})}
+                {React.cloneElement(this.props.children, {showModal: this.showModal, ...this.props})}
 
                 { modal }
 
