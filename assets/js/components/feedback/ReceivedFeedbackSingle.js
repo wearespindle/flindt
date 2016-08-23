@@ -4,6 +4,7 @@
 */
 
 import React from 'react';
+import { Link } from 'react-router';
 
 class ReceivedFeedback extends React.Component {
     render() {
@@ -125,7 +126,7 @@ class ReceivedFeedback extends React.Component {
                         </div>
                     </div>
 
-                    <a href="index.html" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</a>
+                    <Link to="/" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</Link>
                     <a href="index.html" className="action--button is-right">Bewerken <i className="fa fa-pencil"></i></a>
                 </div>
             </div>

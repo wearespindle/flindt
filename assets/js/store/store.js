@@ -3,10 +3,10 @@ import { syncHistoryWithStore} from 'react-router-redux';
 import { browserHistory } from 'react-router';
 
 // Import rootReducer.
-import rootReducer from './reducers/index';
+import rootReducer from '../reducers/index';
 
-import feedbackPeople from './sample-data/feedbackPeople';
-import feedbackReceived from './sample-data/feedbackReceived';
+import feedbackPeople from '../sample-data/feedbackPeople';
+import feedbackReceived from '../sample-data/feedbackReceived';
 
 // Create an object for the default data.
 const defaultState = {

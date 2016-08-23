@@ -1,13 +1,13 @@
 /*
-  GiveFeedback
-  <GiveFeedback/>
+  FeedbackFormGeneral
+  <FeedbackFormGeneral/>
 */
 
 import React from 'react';
 import FeedbackRow from './FeedbackRow';
 import { Link, History } from 'react-router';
 
-var GiveFeedback = React.createClass({
+var FeedbackFormGeneral = React.createClass({
 
     // Set contextType for route to be able to go back and forth in History.
     contextTypes: {
@@ -137,4 +137,4 @@ var GiveFeedback = React.createClass({
     },
 });
 
-export default GiveFeedback;
+export default FeedbackFormGeneral;

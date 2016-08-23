@@ -1,11 +1,11 @@
 /*
-  GiveFeedbackPerson
-  <GiveFeedbackPerson/>
+  FeedbackFormPerson
+  <FeedbackFormPerson/>
 */
 
 import React from 'react';
 
-var GiveFeedbackPerson = React.createClass({
+var FeedbackFormPerson = React.createClass({
 
     // Set contextType for route to be able to go back and forth in History.
     contextTypes: {
@@ -87,4 +87,4 @@ var GiveFeedbackPerson = React.createClass({
     },
 });
 
-export default GiveFeedbackPerson;
+export default FeedbackFormPerson;

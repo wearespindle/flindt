@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Link } from 'react-router';
-import InfoModal from './InfoModal';
+import InfoModal from './addons/InfoModal';
 
 var Main = React.createClass({
     getInitialState() {
