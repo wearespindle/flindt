@@ -34,8 +34,7 @@ var Main = React.createClass({
             <div className="app-wrapper">
                 <div className="navigation--wrapper">
                     <ul className="navigation">
-                        <li><Link activeClassName="is-active" to="/">Home<i className="fa fa-home"></i></Link></li>
-                        <li><Link activeClassName="is-active" to="/give-feedback">Feedback geven<i className="fa fa-undo"></i></Link></li>
+                        <li><Link activeClassName="is-active" to="/">Feedback geven<i className="fa fa-undo"></i></Link></li>
                         <li><Link activeClassName="is-active" to="/received-feedback">Ontvangen feedback <i className="fa fa-thumbs-up"></i></Link></li>
                     </ul>
                 </div>

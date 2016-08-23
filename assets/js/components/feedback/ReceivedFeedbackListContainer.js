@@ -23,11 +23,7 @@ var ReceivedFeedbackListContainer = React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            Object.keys(this.props.feedbackReceived).map((key) => {
-                                return <FeedbackRow key={key} index={key} details={this.props.feedbackReceived[key]}/>;
-                            })
-                        }
+                        
                     </tbody>
                 </table>
             </div>

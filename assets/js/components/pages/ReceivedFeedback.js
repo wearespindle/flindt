@@ -4,7 +4,7 @@
 */
 
 import React from 'react';
-import ReceivedFeedbackListContainer from '../feedback/ReceivedFeedbackListContainer';
+import FeedbackList from '../feedback/as_receiver/FeedbackList';
 
 var ReceivedFeedback = React.createClass({
     render() {
@@ -20,7 +20,7 @@ var ReceivedFeedback = React.createClass({
                 </div>
 
                 <div className="content">
-                    <ReceivedFeedbackListContainer {...this.props}/>
+                    <FeedbackList {...this.props}/>
                 </div>
             </div>
         );

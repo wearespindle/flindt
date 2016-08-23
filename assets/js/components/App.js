@@ -1,29 +1,31 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/actionCreators';
+import { fetchFeedbackAsSender, fetchFeedbackAsSenderSuccess, fetchFeedbackAsSenderFailure } from '../actions/FetchFeedbackAsSender';
+import { fetchFeedbackAsReceiver, fetchFeedbackAsReceiverSuccess, fetchFeedbackAsReceiverFailure } from '../actions/FetchFeedbackAsReceiver';
 import Main from './Main';
 
-/*
-If specified, the component will subscribe to Redux store updates.
-Any time it updates, mapStateToProps will be called.
-*/
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
-        feedbackPeople: state.feedbackPeople,
-        feedbackReceived: state.feedbackReceived,
-        addFeedback: state.addFeedback,
+        as_sender_data: state.FetchFeedbackAsSender.data,
+        as_receiver_data: state.FetchFeedbackAsReceiver.data,
     };
-}
+};
 
-/*
-If an object is passed, each function inside it will be assumed to be a Redux
-action creator. An object with the same function names, but with every action
-creator wrapped into a dispatch call so they may be invoked directly, will be
-merged into the component’s props.
-*/
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchFeedbackAsSender: () => {
+            dispatch(fetchFeedbackAsSender()).then((response) => {
+                !response.error ? dispatch(fetchFeedbackAsSenderSuccess(response.payload)) : dispatch(fetchFeedbackAsSenderFailure(response.payload));
+            });
+        },
+        fetchFeedbackAsReceiver: () => {
+            dispatch(fetchFeedbackAsReceiver()).then((response) => {
+                !response.error ? dispatch(fetchFeedbackAsReceiverSuccess(response.payload)) : dispatch(fetchFeedbackAsReceiverFailure(response.payload));
+            });
+        },
+    };
+};
+
 
 const App = connect(mapStateToProps, mapDispatchToProps)(Main);
 

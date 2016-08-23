@@ -21,13 +21,15 @@ var FeedbackFormGeneral = React.createClass({
         };
     },
 
-    componentDidMount() {
-        const postIndex = this.props.feedbackPeople.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
-        const post = this.props.feedbackPeople[postIndex];
-
-        this.setState({
-            post,
-        });
+    componentWillMount() {
+        this.props.fetchFeedbackAsSender();
+        console.log(this.props);
+        // const postIndex = this.props.feedbackPeople.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
+        // const post = this.props.feedbackPeople[postIndex];
+        //
+        // this.setState({
+        //     post,
+        // });
     },
 
     handleSubmit() {

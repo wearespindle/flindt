@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import FetchFeedbackAsSenderReducer from './FetchFeedbackAsSenderReducer';
+import FetchFeedbackAsReceiverReducer from './FetchFeedbackAsReceiverReducer';
+import { reducer as formReducer } from 'redux-form';
 
-import feedbackPeople from './feedbackPeople';
-import feedbackReceived from './feedbackReceived';
-import addFeedback from './addFeedback';
-
-const rootReducer = combineReducers({feedbackPeople, feedbackReceived, addFeedback, routing: routerReducer});
+const rootReducer = combineReducers({
+    FetchFeedbackAsSender: FetchFeedbackAsSenderReducer,
+    FetchFeedbackAsReceiver: FetchFeedbackAsReceiverReducer,
+});
 
 export default rootReducer;
