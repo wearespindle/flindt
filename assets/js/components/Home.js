@@ -8,7 +8,7 @@ import FeedbackRow from './FeedbackRow';
 
 var Home = React.createClass({
 
-    renderFeedbackRow(key) {
+    renderFeedbackRow(key, type) {
         return <FeedbackRow key={key} index={key} details={this.props.feedbackPeople[key]}/>;
     },
 
@@ -40,7 +40,11 @@ var Home = React.createClass({
                             </tr>
                         </thead>
                         <tbody>
-                            {Object.keys(this.props.feedbackPeople).map(this.renderFeedbackRow)}
+                            {
+                                Object.keys(this.props.feedbackPeople).map((key) => {
+                                    return <FeedbackRow key={key} index={key} feedbackType="give" details={this.props.feedbackPeople[key]}/>;
+                                })
+                            }
                         </tbody>
                     </table>
 
@@ -57,20 +61,11 @@ var Home = React.createClass({
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data-label="Persoon">Erwin</td>
-                                <td data-label="Rol">Planner voor VoIPGRID</td>
-                                <td data-label="Cirkel">VoIPGRID</td>
-                                <td data-label="Gegeven op">1 sept. 2016</td>
-                                <td data-label="Acties"><a href="receive-feedback.html"><i className="fa fa-eye"></i> Feedback bekijken</a></td>
-                            </tr>
-                            <tr>
-                                <td data-label="Persoon">Erwin</td>
-                                <td data-label="Rol">Planner voor VoIPGRID</td>
-                                <td data-label="Cirkel">VoIPGRID</td>
-                                <td data-label="Gegeven op">1 sept. 2016</td>
-                                <td data-label="Acties"><a href="receive-feedback.html"><i className="fa fa-eye"></i> Feedback bekijken</a></td>
-                            </tr>
+                            {
+                                Object.keys(this.props.feedbackReceived).map((key) => {
+                                    return <FeedbackRow key={key} index={key} details={this.props.feedbackReceived[key]}/>;
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>

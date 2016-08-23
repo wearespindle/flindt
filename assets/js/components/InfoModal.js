@@ -6,6 +6,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+// Require jQuery for the AJAX call.
 var $ = require('jquery');
 
 var InfoModal = React.createClass({
@@ -45,6 +46,7 @@ var InfoModal = React.createClass({
     },
 
     render() {
+        // If the data is null, show a spinner.
         if (this.state.data === null) {
             return (
                 <div>

@@ -5,8 +5,34 @@
 
 import React from 'react';
 
-class GiveFeedbackPerson extends React.Component {
+var GiveFeedbackPerson = React.createClass({
+
+    // Set contextType for route to be able to go back and forth in History.
+    contextTypes: {
+        router: React.PropTypes.object.isRequired,
+    },
+
+    getInitialState() {
+        const postIndex = this.props.feedbackPeople.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
+        return {
+            post: this.props.feedbackPeople[postIndex],
+        };
+    },
+
+    saveFeedback() {
+        const personalFeedbackQuestion = this.refs.personalFeedbackQuestion.value;
+        const personalFeedbackAnswer = this.refs.personalFeedbackAnswer.value;
+        const { feedbackId } = this.props.params;
+        const { feedbackPositives, feedbackImprovements } = this.props.addFeedback;
+
+        this.props.saveFeedback(feedbackId, feedbackPositives, feedbackImprovements, personalFeedbackQuestion, personalFeedbackAnswer);
+
+        this.context.router.push('/');
+    },
+
     render() {
+        let person = this.state.post;
+
         return (
             <div className="content--wrapper">
                 <div className="content--header">
@@ -32,7 +58,7 @@ class GiveFeedbackPerson extends React.Component {
                             <tbody>
                                 <tr>
                                     <td data-label="Persoon">
-                                        Jan Arend
+                                        { person.name }
                                     </td>
                                 </tr>
                             </tbody>
@@ -40,25 +66,25 @@ class GiveFeedbackPerson extends React.Component {
 
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
-                                <label>Als Jan Arend een auto zou zijn wat voor auto zou hij dan zijn?</label>
-                                <textarea rows="5"></textarea>
+                                <label>Als { person.name } een auto zou zijn wat voor auto zou hij dan zijn?</label>
+                                <textarea ref="personalFeedbackQuestion" rows="5"></textarea>
                             </div>
                         </div>
 
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
                                 <label>Waarom vind je dat?</label>
-                                <textarea rows="5"></textarea>
+                                <textarea ref="personalFeedbackAnswer" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <a href="give-feedback.html" className="action--button neutral"><i className="fa fa-chevron-left"></i> Vorige</a>
-                    <a href="index.html" className="action--button is-right">Opslaan <i className="fa fa-chevron-right"></i></a>
+                    <a onClick={this.context.router.goBack} className="action--button neutral"><i className="fa fa-chevron-left"></i> Vorige</a>
+                    <a onClick={this.saveFeedback} className="action--button is-right">Opslaan <i className="fa fa-chevron-right"></i></a>
                 </div>
             </div>
-        )
-    }
-}
+        );
+    },
+});
 
 export default GiveFeedbackPerson;

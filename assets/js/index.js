@@ -1,6 +1,6 @@
 import React  from 'react';
 import ReactDOM  from 'react-dom';
-import { Router, Route, browserHistory, Link, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import Home from './components/Home';
@@ -22,7 +22,7 @@ var routes = (
             <Route path="/" component={App}>
                 <IndexRoute component={Home} />
                 <Route path="/received-feedback" component={ReceivedFeedback} />
-                <Route path="/give-feedback-person" component={GiveFeedbackPerson} />
+                <Route path="/give-feedback/person/:feedbackId" component={GiveFeedbackPerson} />
                 <Route path="/give-feedback/:feedbackId" component={GiveFeedback}/>
             </Route>
         </Router>

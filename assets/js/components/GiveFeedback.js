@@ -4,21 +4,22 @@
 */
 
 import React from 'react';
-import autobind from 'autobind-decorator';
 import FeedbackRow from './FeedbackRow';
-import {Link} from 'react-router';
+import { Link, History } from 'react-router';
 
 var GiveFeedback = React.createClass({
 
-    getInitialState() {
-        // This would normally be an API call to get the open feedback data
-        // but for now I'm using a sample data JSON file to render the
-        // components.
-        return {
-            post: null,
-        };
+    // Set contextType for route to be able to go back and forth in History.
+    contextTypes: {
+        router: React.PropTypes.object.isRequired,
     },
 
+    getInitialState() {
+        return {
+            post: null,
+            feedback: null,
+        };
+    },
 
     componentDidMount() {
         const postIndex = this.props.feedbackPeople.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
@@ -27,6 +28,18 @@ var GiveFeedback = React.createClass({
         this.setState({
             post,
         });
+    },
+
+    handleSubmit() {
+        const { feedbackId } = this.props.params;
+        const positiveFeedback = this.refs.positiveFeedback.value;
+        const improvementFeedback = this.refs.improvementFeedback.value;
+
+        // Save the feedbackState to use it in the next component.
+        this.props.saveFeedbackState(positiveFeedback, improvementFeedback);
+
+        // Route to the next component for personal feedback.
+        this.context.router.push('/give-feedback/person/' + feedbackId);
     },
 
     openModal(roleId) {
@@ -98,7 +111,7 @@ var GiveFeedback = React.createClass({
 
                             <div className="l-43 feedback-form--form">
                                 <label htmlFor="what-is-going-well">Wat gaat er goed?</label>
-                                <textarea id="what-is-going-well" rows="5"></textarea>
+                                <textarea id="what-is-going-well" ref="positiveFeedback" rows="5"></textarea>
                                 <a href="#" className="feedback-form--row-button"><i className="fa fa-plus"></i> Voeg nog een positief punt toe</a>
                             </div>
                         </div>
@@ -110,14 +123,14 @@ var GiveFeedback = React.createClass({
 
                             <div className="l-43 feedback-form--form">
                                 <label htmlFor="what-can-be-better">Wat kan er beter?</label>
-                                <textarea id="what-can-be-better" rows="5"></textarea>
+                                <textarea id="what-can-be-better" ref="improvementFeedback" rows="5"></textarea>
                                 <a href="#" className="feedback-form--row-button negative"><i className="fa fa-plus"></i> Voeg nog een verbeterpunt toe</a>
                             </div>
                         </div>
                     </div>
 
                     <Link to="/" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</Link>
-                    <Link to="give-feedback-person" className="action--button is-right">Opslaan en feedback geven op persoon <i className="fa fa-chevron-right"></i></Link>
+                    <a onClick={this.handleSubmit} className="action--button is-right">Opslaan en feedback geven op persoon <i className="fa fa-chevron-right"></i></a>
                 </div>
             </div>
         );
