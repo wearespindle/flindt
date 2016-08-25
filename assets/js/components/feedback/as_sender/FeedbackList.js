@@ -13,9 +13,21 @@ var FeedbackList = React.createClass({
 
     render() {
         const { feedback, loading, error } = this.props.as_sender_data;
-        const { complete, incomplete } = feedback;
+        let complete = [];
+        let incomplete = [];
 
-        if (loading || !complete) {
+        Object.keys(feedback).map((key) => {
+            if (feedback[key].status === 'complete') {
+                complete.push(feedback[key]);
+            }
+
+            if (feedback[key].status === 'incomplete') {
+                incomplete.push(feedback[key]);
+            }
+        });
+
+
+        if (loading || !complete.length || !incomplete.length) {
             return (
                 <div>
                     <h2>Loading...</h2>
@@ -28,49 +40,56 @@ var FeedbackList = React.createClass({
             );
         }
 
+        let numberOfIncompletedRequests = Object.keys(incomplete).length;
+        let numberOfCompletedRequests = Object.keys(complete).length;
+
         return (
             <div>
-                <h2>Openstaande verzoeken ()</h2>
+                <div className="feedbacklist--wrapper">
+                    <h2>Openstaande verzoeken ({numberOfIncompletedRequests})</h2>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Persoon</th>
-                            <th>Rol</th>
-                            <th>Cirkel</th>
-                            <th>Sluitingsdatum</th>
-                            <th>Acties</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            Object.keys(complete).map((key) => {
-                                return <FeedbackRow key={complete[key].id} index={key} feedbackType="give" details={complete[key]}/>;
-                            })
-                        }
-                    </tbody>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Persoon</th>
+                                <th>Rol</th>
+                                <th>Cirkel</th>
+                                <th>Sluitingsdatum</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                Object.keys(incomplete).map((key) => {
+                                    return <FeedbackRow key={incomplete[key].id} index={key} feedbackType="give" details={incomplete[key]}/>;
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
-                <h2>Gegeven Feedback ()</h2>
+                <div className="feedbacklist--wrapper">
+                    <h2>Gegeven Feedback ({numberOfCompletedRequests})</h2>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Persoon</th>
-                            <th>Rol</th>
-                            <th>Cirkel</th>
-                            <th>Gegeven op</th>
-                            <th>Acties</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            Object.keys(incomplete).map((key) => {
-                                return <FeedbackRow key={incomplete[key].id} index={key} details={incomplete[key]}/>;
-                            })
-                        }
-                    </tbody>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Persoon</th>
+                                <th>Rol</th>
+                                <th>Cirkel</th>
+                                <th>Gegeven op</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                Object.keys(complete).map((key) => {
+                                    return <FeedbackRow key={complete[key].id} index={key} details={complete[key]}/>;
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     },

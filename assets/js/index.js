@@ -24,7 +24,7 @@ var routes = (
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={GiveFeedback} />
-                <Route path="/give-feedback/person/:feedbackId" component={FeedbackFormPerson} />
+                <Route path="/give-personal-feedback/:personId" component={FeedbackFormPerson} />
                 <Route path="/give-feedback/:feedbackId" component={FeedbackFormGeneral}/>
                 <Route path="/received-feedback" component={ReceivedFeedback} />
                 <Route path="/received-feedback/:feedbackId" component={ReceivedFeedbackSingle} />

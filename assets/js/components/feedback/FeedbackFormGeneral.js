@@ -14,34 +14,14 @@ var FeedbackFormGeneral = React.createClass({
         router: React.PropTypes.object.isRequired,
     },
 
-    getInitialState() {
-        return {
-            post: null,
-            feedback: null,
-        };
-    },
-
     componentWillMount() {
         this.props.fetchFeedbackAsSender();
-        console.log(this.props);
-        // const postIndex = this.props.feedbackPeople.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
-        // const post = this.props.feedbackPeople[postIndex];
-        //
-        // this.setState({
-        //     post,
-        // });
     },
 
-    handleSubmit() {
-        const { feedbackId } = this.props.params;
-        const positiveFeedback = this.refs.positiveFeedback.value;
-        const improvementFeedback = this.refs.improvementFeedback.value;
-
-        // Save the feedbackState to use it in the next component.
-        this.props.saveFeedbackState(positiveFeedback, improvementFeedback);
-
-        // Route to the next component for personal feedback.
-        this.context.router.push('/give-feedback/person/' + feedbackId);
+    handleSubmit(postIndex) {
+        let positiveFeedback = this.refs.positiveFeedback.value;
+        let improvementFeedback = this.refs.improvementFeedback.value;
+        this.props.createFeedback({positiveFeedback, improvementFeedback, postIndex});
     },
 
     openModal(roleId) {
@@ -53,12 +33,47 @@ var FeedbackFormGeneral = React.createClass({
     },
 
     render() {
-        let person = this.state.post;
-        let circle, role;
+        const { feedback, loading, error } = this.props.as_sender_data;
+        let incomplete = [];
 
-        if (!person) {
-            return null;
+        Object.keys(feedback).map((key) => {
+            if (feedback[key].status === 'incomplete') {
+                incomplete.push(feedback[key]);
+            }
+        });
+
+        if (!incomplete.length) {
+            return (
+                <div className="content--wrapper">
+                    <div className="content--header">
+                        <div className="content--header-spacing"></div>
+                        <div className="content--header-breadcrumbs">
+                            <ul>
+                                <li>Feedback geven</li>
+                                <li>Feedback op rollen</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="content">
+                        <h2>Feedback op rollen</h2>
+
+                        <div className="feedback-form--wrapper">
+                            <div className="spinner">
+                                <div className="bounce1"></div>
+                                <div className="bounce2"></div>
+                                <div className="bounce3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
         }
+
+        const postIndex = incomplete.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
+
+        let person = incomplete[postIndex];
+        let circle, role;
 
         circle = person.circles[0];
         role = person.roles[0];
@@ -132,7 +147,8 @@ var FeedbackFormGeneral = React.createClass({
                     </div>
 
                     <Link to="/" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</Link>
-                    <a onClick={this.handleSubmit} className="action--button is-right">Opslaan en feedback geven op persoon <i className="fa fa-chevron-right"></i></a>
+                    <a onClick={this.handleSubmit.bind(null, postIndex)} className="action--button is-right">Opslaan</a>
+
                 </div>
             </div>
         );

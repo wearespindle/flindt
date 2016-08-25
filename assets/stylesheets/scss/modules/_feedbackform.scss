@@ -184,3 +184,21 @@
         }
     }
 }
+
+.feedback-type-indicator {
+    &:before {
+        content: " ";
+        width: 8px;
+        height: 8px;
+        background-color: $color-primary-30;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: middle;
+        margin-bottom: 1px;
+    }
+}
+
+.feedbacklist--wrapper {
+    margin-bottom: 3rem;
+}
