@@ -25,7 +25,6 @@ newrelic.ini
 /manage.cfg*
 /data
 /dist-packages
-/node_modules
 /xunit.xml
 /xunit-mysql.xml
 /xunit-sqlite.xml
@@ -36,6 +35,7 @@ docs/sphinx/build/
 docs/sphinx/source/modules/
 
 /frontend/compiled-assets
+/frontend/node_modules
 
 .bash_history
 .ipython

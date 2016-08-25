@@ -25,16 +25,16 @@ let scriptsCount = 0;
 
 let paths = {
     browser: './',
-    fonts: './frontend/assets/fonts',
-    html: './frontend/**/*.html',
-    img: './frontend/assets/images',
+    fonts: './assets/fonts',
+    html: './**/*.html',
+    img: './assets/images',
     js: {
-        src: './frontend/assets/js/**/*.js',
-        jsIndex: './frontend/assets/js/index.js',
+        src: './assets/js/**/*.js',
+        jsIndex: './assets/js/index.js',
     },
     sass: {
-        src: './frontend/assets/stylesheets/**/*.scss',
-        sassIndex: './frontend/assets/stylesheets/scss/styles.scss',
+        src: './assets/stylesheets/**/*.scss',
+        sassIndex: './assets/stylesheets/scss/styles.scss',
     },
 };
 
@@ -78,7 +78,7 @@ function bundleApp(isProduction) {
         .bundle()
         .on('error', handleErrors)
         .pipe(source('vendors.js'))
-        .pipe(gulp.dest('./frontend/compiled-assets/vendor/'));
+        .pipe(gulp.dest('./compiled-assets/vendor/'));
     }
     if (!isProduction) {
         // Make the dependencies external so they dont get bundled by the
@@ -94,7 +94,7 @@ function bundleApp(isProduction) {
         .bundle()
         .on('error', handleErrors)
         .pipe(source('index.js'))
-        .pipe(gulp.dest('./frontend/compiled-assets/scripts/'));
+        .pipe(gulp.dest('./compiled-assets/scripts/'));
 }
 
 
@@ -134,7 +134,7 @@ gulp.task('sass', function() {
             browsers: ['last 2 versions'],
         }))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('./frontend/compiled-assets/css'))
+        .pipe(gulp.dest('./compiled-assets/css'))
         .pipe(reload({stream: true}));
 });
 
@@ -159,7 +159,7 @@ gulp.task('watch', function() {
  */
 gulp.task('images', () => {
     return gulp.src(path.join(paths.img, '**'))
-    .pipe(gulp.dest('./frontend/compiled-assets/images'))
+    .pipe(gulp.dest('./compiled-assets/images'))
     .pipe(reload({stream: true}));
 });
 
@@ -169,7 +169,7 @@ gulp.task('images', () => {
  */
 gulp.task('fonts', () => {
     return gulp.src(path.join(paths.fonts, '**'))
-    .pipe(gulp.dest('./frontend/compiled-assets/fonts'))
+    .pipe(gulp.dest('./compiled-assets/fonts'))
     .pipe(reload({stream: true}));
 });
 
