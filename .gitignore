@@ -35,7 +35,7 @@ newrelic.ini
 docs/sphinx/build/
 docs/sphinx/source/modules/
 
-/compiled-assets
+/frontend/compiled-assets
 
 .bash_history
 .ipython

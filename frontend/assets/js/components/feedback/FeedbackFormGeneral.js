@@ -123,7 +123,7 @@ var FeedbackFormGeneral = React.createClass({
 
                         <div className="feedback-form--row">
                             <div className="l-5 feedback-form--row-smiley">
-                                <img src="/compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
+                                <img src="/frontend/compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
                             </div>
 
                             <div className="l-43 feedback-form--form">
@@ -135,7 +135,7 @@ var FeedbackFormGeneral = React.createClass({
 
                         <div className="feedback-form--row">
                             <div className="l-5 feedback-form--row-smiley">
-                                <img src="/compiled-assets/images/negative-feedback.png" alt="Wat kan er beter?" />
+                                <img src="/frontend/compiled-assets/images/negative-feedback.png" alt="Wat kan er beter?" />
                             </div>
 
                             <div className="l-43 feedback-form--form">
