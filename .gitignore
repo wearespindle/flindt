@@ -19,8 +19,6 @@ newrelic.ini
 /.vimrc
 /coverage.mysql.xml
 /coverage.sqlite.xml
-/docker-compose.local.yml
-/docker-compose.yml
 /nbproject
 /manage.cfg*
 /data
@@ -34,6 +32,7 @@ newrelic.ini
 docs/sphinx/build/
 docs/sphinx/source/modules/
 
+npm-debug.log
 /frontend/compiled-assets
 /frontend/node_modules
 
