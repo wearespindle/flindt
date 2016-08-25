@@ -1,0 +1,9 @@
+-r requirements.txt
+
+ipython
+django-extensions
+
+#######################################################
+### Debug                                           ###
+#######################################################
+django-debug-toolbar
