@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'feedbag.base',
     'feedbag.user',
     'feedbag.feedback',
+    'feedbag.round',
 
     'django_extensions',
 )
