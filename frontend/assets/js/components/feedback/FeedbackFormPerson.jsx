@@ -6,16 +6,12 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-var FeedbackFormPerson = React.createClass({
 
-    // Set contextType for route to be able to go back and forth in History.
-    contextTypes: {
-        router: React.PropTypes.object.isRequired,
-    },
+class FeedbackFormPerson extends React.Component {
 
     componentWillMount() {
         this.props.fetchFeedbackAsSender();
-    },
+    }
 
     saveFeedback() {
         // const personalFeedbackQuestion = this.refs.personalFeedbackQuestion.value;
@@ -23,8 +19,9 @@ var FeedbackFormPerson = React.createClass({
         // const { feedbackId } = this.props.params;
         // const { feedbackPositives, feedbackImprovements } = this.props.addFeedback;
         //
-        // this.props.saveFeedback(feedbackId, feedbackPositives, feedbackImprovements, personalFeedbackQuestion, personalFeedbackAnswer);
-    },
+        // this.props.saveFeedback(feedbackId, feedbackPositives, feedbackImprovements,
+        // personalFeedbackQuestion, personalFeedbackAnswer);
+    }
 
     render() {
         const { feedback, loading, error } = this.props.as_sender_data;
@@ -34,13 +31,14 @@ var FeedbackFormPerson = React.createClass({
             if (feedback[key].status === 'incomplete') {
                 incomplete.push(feedback[key]);
             }
+            return null;
         });
 
         if (!incomplete.length) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing"></div>
+                        <div className="content--header-spacing" />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Feedback geven</li>
@@ -54,9 +52,9 @@ var FeedbackFormPerson = React.createClass({
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
-                                <div className="bounce1"></div>
-                                <div className="bounce2"></div>
-                                <div className="bounce3"></div>
+                                <div className="bounce1" />
+                                <div className="bounce2" />
+                                <div className="bounce3" />
                             </div>
                         </div>
                     </div>
@@ -64,14 +62,15 @@ var FeedbackFormPerson = React.createClass({
             );
         }
 
-        const postIndex = incomplete.findIndex((post) => post.id === parseInt(this.props.params.personId, 0));
+        const postIndex = incomplete.findIndex((post) =>
+            post.id === parseInt(this.props.params.personId, 0));
 
         let person = incomplete[postIndex];
 
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing"></div>
+                    <div className="content--header-spacing" />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Feedback geven</li>
@@ -101,25 +100,40 @@ var FeedbackFormPerson = React.createClass({
 
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
-                                <label>Als { person.name } een auto zou zijn wat voor auto zou hij dan zijn?</label>
-                                <textarea ref="personalFeedbackQuestion" rows="5"></textarea>
+                                <label htmlFor="personalFeedbackQuestion">
+                                    Als { person.name } een auto zou zijn wat voor auto zou hij dan zijn?
+                                </label>
+                                <textarea id="personalFeedbackQuestion" rows="5" />
                             </div>
                         </div>
 
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
-                                <label>Waarom vind je dat?</label>
-                                <textarea ref="personalFeedbackAnswer" rows="5"></textarea>
+                                <label htmlFor="whyfeedback">Waarom vind je dat?</label>
+                                <textarea id="whyfeedback" rows="5" />
                             </div>
                         </div>
                     </div>
 
-                    <Link to="/" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</Link>
+                    <Link to="/" className="action--button neutral">
+                        <i className="fa fa-chevron-left" /> Terug naar overzicht
+                    </Link>
                     <a onClick={this.handleSubmit} className="action--button is-right">Opslaan</a>
                 </div>
             </div>
         );
-    },
-});
+    }
+}
+
+FeedbackFormPerson.propTypes = {
+    fetchFeedbackAsSender: React.PropTypes.func,
+    as_sender_data: React.PropTypes.object,
+    params: React.PropTypes.object,
+};
+
+// Set contextType for route to be able to go back and forth in History.
+FeedbackFormPerson.contextTypes = {
+    router: React.PropTypes.object.isRequired,
+};
 
 export default FeedbackFormPerson;

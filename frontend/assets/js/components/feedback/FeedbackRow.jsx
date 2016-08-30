@@ -20,7 +20,8 @@ class FeedbackRow extends React.Component {
         let person = this.props.details;
         let role = person.roles[0];
         let circle = person.circles[0];
-        let dateLabel, action;
+        let dateLabel,
+            action;
 
         // Change the labels and links in the table row to reuse this component.
         if (this.props.feedbackType === 'give') {
@@ -29,10 +30,10 @@ class FeedbackRow extends React.Component {
 
             url = (person.type === 'personal') ? 'give-personal-feedback' : 'give-feedback';
 
-            action = <Link to={`/${url}/${person.id}`}><i className="fa fa-undo"></i> Feedback geven</Link>;
+            action = <Link to={`/${url}/${person.id}`}><i className="fa fa-undo" /> Feedback geven</Link>;
         } else {
             dateLabel = 'Gegeven op';
-            action = <Link to={`/check-feedback/${person.id}`}><i className="fa fa-eye"></i> Feedback bekijken</Link>;
+            action = <Link to={`/check-feedback/${person.id}`}><i className="fa fa-eye" /> Feedback bekijken</Link>;
         }
 
         return (
@@ -50,5 +51,10 @@ class FeedbackRow extends React.Component {
         );
     }
 }
+
+FeedbackRow.propTypes = {
+    feedbackType: React.PropTypes.string,
+    details: React.PropTypes.object,
+};
 
 export default FeedbackRow;

@@ -67,6 +67,7 @@
 .feedback-form--row {
     @include grid (48);
     border-bottom: 1px solid $color-neutral-30;
+    background: $white;
     padding: 1rem;
 
     position: relative;

@@ -14,7 +14,7 @@ newrelic.ini
 /.pydevproject
 /.project
 /.settings
-/.tags
+.tags
 /.tags1
 /.vimrc
 /coverage.mysql.xml

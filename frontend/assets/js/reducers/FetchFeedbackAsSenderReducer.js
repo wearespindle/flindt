@@ -14,7 +14,8 @@ const INITIAL_STATE = {
 };
 
 export default function(state = INITIAL_STATE, action) {
-    let error;
+    let error,
+        i;
     switch (action.type) {
 
     case FETCH_FEEDBACK_AS_SENDER:
@@ -23,13 +24,13 @@ export default function(state = INITIAL_STATE, action) {
         return { ...state, data: {feedback: action.payload.data, error: null, loading: false} };
     case FETCH_FEEDBACK_AS_SENDER_FAILURE:
         error = action.payload.data || {message: action.payload.message};
-        return { ...state, data: {feedback: [], error: error, loading: false} };
+        return { ...state, data: {feedback: [], error, loading: false} };
     case RESET_FETCH_FEEDBACK_AS_SENDER:
         return { ...state, data: {feedback: [], error: null, loading: false} };
     case CREATE_FEEDBACK:
         return { ...state, data: {feedback: [], error: null, loading: true} };
     case CREATE_FEEDBACK_SUCCESS:
-        const i = action.payload.data.postIndex;
+        i = action.payload.data.postIndex;
         // Because we can never assign anything directly in the state, we need
         // to create a new array, with everything except the one we're changing
         // we change that one and assign it back.
@@ -45,7 +46,7 @@ export default function(state = INITIAL_STATE, action) {
         }});
     case CREATE_FEEDBACK_FAILURE:
         error = action.payload.data || {message: action.payload.message};
-        return { ...state, data: {feedback: [], error: error, loading: false} };
+        return { ...state, data: {feedback: [], error, loading: false} };
     case RESET_CREATE_FEEDBACK:
         return { ...state, data: {feedback: [], error: null, loading: true }};
 
