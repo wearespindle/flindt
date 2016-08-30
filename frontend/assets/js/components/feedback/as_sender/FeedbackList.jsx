@@ -6,10 +6,10 @@
 import React from 'react';
 import FeedbackRow from '../FeedbackRow';
 
-var FeedbackList = React.createClass({
+class FeedbackList extends React.Component {
     componentWillMount() {
         this.props.fetchFeedbackAsSender();
-    },
+    }
 
     render() {
         const { feedback, loading, error } = this.props.as_sender_data;
@@ -24,6 +24,8 @@ var FeedbackList = React.createClass({
             if (feedback[key].status === 'incomplete') {
                 incomplete.push(feedback[key]);
             }
+
+            return null;
         });
 
 
@@ -31,11 +33,11 @@ var FeedbackList = React.createClass({
             return (
                 <div>
                     <h2>Loading...</h2>
-                        <div className="spinner">
-                            <div className="bounce1"></div>
-                            <div className="bounce2"></div>
-                            <div className="bounce3"></div>
-                        </div>
+                    <div className="spinner">
+                        <div className="bounce1" />
+                        <div className="bounce2" />
+                        <div className="bounce3" />
+                    </div>
                 </div>
             );
         }
@@ -60,9 +62,14 @@ var FeedbackList = React.createClass({
                         </thead>
                         <tbody>
                             {
-                                Object.keys(incomplete).map((key) => {
-                                    return <FeedbackRow key={incomplete[key].id} index={key} feedbackType="give" details={incomplete[key]}/>;
-                                })
+                                Object.keys(incomplete).map((key) =>
+                                    <FeedbackRow
+                                      key={incomplete[key].id}
+                                      index={key}
+                                      feedbackType="give"
+                                      details={incomplete[key]}
+                                    />
+                                )
                             }
                         </tbody>
                     </table>
@@ -83,16 +90,25 @@ var FeedbackList = React.createClass({
                         </thead>
                         <tbody>
                             {
-                                Object.keys(complete).map((key) => {
-                                    return <FeedbackRow key={complete[key].id} index={key} details={complete[key]}/>;
-                                })
+                                Object.keys(complete).map((key) =>
+                                    <FeedbackRow
+                                      key={complete[key].id}
+                                      index={key}
+                                      details={complete[key]}
+                                    />
+                                )
                             }
                         </tbody>
                     </table>
                 </div>
             </div>
         );
-    },
-});
+    }
+}
+
+FeedbackList.propTypes = {
+    fetchFeedbackAsSender: React.PropTypes.func,
+    as_sender_data: React.PropTypes.object,
+};
 
 export default FeedbackList;

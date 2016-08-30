@@ -61,6 +61,7 @@ function handleErrors() {
 function bundleApp(isProduction) {
     var appBundler = browserify({
         entries: paths.js.jsIndex,
+        extensions: ['.jsx'],
         debug: true,
     });
 
@@ -73,6 +74,7 @@ function bundleApp(isProduction) {
         // Create vendors.js for dev. environment.
         browserify({
             require: dependencies,
+            extensions: ['.jsx'],
             debug: true,
         })
         .bundle()
@@ -90,7 +92,7 @@ function bundleApp(isProduction) {
     }
 
     appBundler
-        .transform('babelify', {presets: ['es2015', 'react']})
+        .transform('babelify', {presets: ['es2015', 'react', 'stage-0']})
         .bundle()
         .on('error', handleErrors)
         .pipe(source('index.js'))

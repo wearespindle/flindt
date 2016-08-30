@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-//Feedback lists
+// Feedback lists
 export const FETCH_FEEDBACK_AS_SENDER = 'FETCH_FEEDBACK_AS_SENDER';
 export const FETCH_FEEDBACK_AS_SENDER_SUCCESS = 'FETCH_FEEDBACK_AS_SENDER_SUCCESS';
 export const FETCH_FEEDBACK_AS_SENDER_FAILURE = 'FETCH_FEEDBACK_AS_SENDER_FAILURE';
@@ -48,7 +48,7 @@ const POST_URL = 'http://jsonplaceholder.typicode.com/posts';
 
 export function createFeedback(props, tokenFromStorage) {
     const index = props.postIndex;
-    //const request = axios.post(`${ROOT_URL}/posts`, props);
+    // const request = axios.post(`${ROOT_URL}/posts`, props);
     const request = axios({
         method: 'post',
         data: props,

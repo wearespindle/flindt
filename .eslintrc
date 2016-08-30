@@ -1,5 +1,5 @@
 {
-    "parser": "babel-eslint",
+    "parser": "espree",
     "parserOptions": {
         "sourceType": "module",
         "ecmaFeatures": {
@@ -24,9 +24,13 @@
         "gettext": true,
         "React": true
     },
+    "extends": "airbnb",
     "plugins": [
         "react"
     ],
+    resolve: {
+        extensions: ['', '.js', '.jsx'],
+    },
     "rules": {
         /** Based on https://raw.githubusercontent.com/airbnb/javascript/master/linters/.eslintrc */
 
@@ -101,6 +105,9 @@
         "wrap-iife": [2, "any"],                        // http://eslint.org/docs/rules/wrap-iife
         "yoda": 2,                                      // http://eslint.org/docs/rules/yoda
 
+        /** React Specific */
+        'react/jsx-indent': [ 'error', 4 ],
+
         /** Style */
         "indent": [2, 4],                               // http://eslint.org/docs/rules/indent
         "brace-style": [2,                              // http://eslint.org/docs/rules/brace-style
@@ -120,6 +127,7 @@
             "beforeColon": false,
             "afterColon": true
         }],
+        "max-len": ["error", 120, 4],                   // http://eslint.org/docs/rules/max-len
         "new-cap": [2, {"newIsCap": true}],             // http://eslint.org/docs/rules/new-cap
         "no-multiple-empty-lines": [2, {                // http://eslint.org/docs/rules/no-multiple-empty-lines
           "max": 2

@@ -4,25 +4,17 @@
 */
 
 import React from 'react';
-import FeedbackRow from './FeedbackRow';
 import { Link, History } from 'react-router';
 
-var FeedbackFormGeneral = React.createClass({
+import FeedbackRow from './FeedbackRow';
+import FormComponent from '../addons/FormComponent';
+import InfoModalButton from '../addons/InfoModalButton';
 
-    // Set contextType for route to be able to go back and forth in History.
-    contextTypes: {
-        router: React.PropTypes.object.isRequired,
-    },
+class FeedbackFormGeneral extends React.Component {
 
     componentWillMount() {
         this.props.fetchFeedbackAsSender();
-    },
-
-    handleSubmit(postIndex) {
-        let positiveFeedback = this.refs.positiveFeedback.value;
-        let improvementFeedback = this.refs.improvementFeedback.value;
-        this.props.createFeedback({positiveFeedback, improvementFeedback, postIndex});
-    },
+    }
 
     openModal(roleId) {
         let info = {
@@ -30,7 +22,11 @@ var FeedbackFormGeneral = React.createClass({
         };
 
         this.props.showModal(info);
-    },
+    }
+
+    renderElement() {
+        return '<p>hoi</p>';
+    }
 
     render() {
         const { feedback, loading, error } = this.props.as_sender_data;
@@ -40,13 +36,14 @@ var FeedbackFormGeneral = React.createClass({
             if (feedback[key].status === 'incomplete') {
                 incomplete.push(feedback[key]);
             }
+            return null;
         });
 
         if (!incomplete.length) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing"></div>
+                        <div className="content--header-spacing" />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Feedback geven</li>
@@ -60,9 +57,9 @@ var FeedbackFormGeneral = React.createClass({
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
-                                <div className="bounce1"></div>
-                                <div className="bounce2"></div>
-                                <div className="bounce3"></div>
+                                <div className="bounce1" />
+                                <div className="bounce2" />
+                                <div className="bounce3" />
                             </div>
                         </div>
                     </div>
@@ -70,10 +67,12 @@ var FeedbackFormGeneral = React.createClass({
             );
         }
 
-        const postIndex = incomplete.findIndex((post) => post.id === parseInt(this.props.params.feedbackId, 0));
+        const postIndex = incomplete.findIndex((post) =>
+            post.id === parseInt(this.props.params.feedbackId, 0));
 
         let person = incomplete[postIndex];
-        let circle, role;
+        let circle,
+            role;
 
         circle = person.circles[0];
         role = person.roles[0];
@@ -81,7 +80,7 @@ var FeedbackFormGeneral = React.createClass({
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing"></div>
+                    <div className="content--header-spacing" />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Feedback geven</li>
@@ -109,50 +108,39 @@ var FeedbackFormGeneral = React.createClass({
                                         { person.name }
                                     </td>
                                     <td data-label="Rol">
-                                        { role.name } <a href="#" onClick={this.openModal.bind(null, role.id)} className="show--modal"><i className="fa fa-info-circle"></i></a>
+                                        { role.name }
+                                        <InfoModalButton {...this.props} glassFrogId={role.id} />
                                     </td>
                                     <td data-label="Subcirkel">
-                                        Sales and Support <a href="#" onClick={this.openModal.bind(null, 891021)}><i className="fa fa-info-circle"></i></a>
+                                        Sales and Support
+                                        <InfoModalButton {...this.props} glassFrogId={891021} />
                                     </td>
                                     <td data-label="Cirkel">
-                                        { circle.name} <a href="#"><i className="fa fa-info-circle"></i></a>
+                                        { circle.name}
+                                        <a><i className="fa fa-info-circle" /></a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-
-                        <div className="feedback-form--row">
-                            <div className="l-5 feedback-form--row-smiley">
-                                <img src="/compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
-                            </div>
-
-                            <div className="l-43 feedback-form--form">
-                                <label htmlFor="what-is-going-well">Wat gaat er goed?</label>
-                                <textarea id="what-is-going-well" ref="positiveFeedback" rows="5"></textarea>
-                                <a href="#" className="feedback-form--row-button"><i className="fa fa-plus"></i> Voeg nog een positief punt toe</a>
-                            </div>
-                        </div>
-
-                        <div className="feedback-form--row">
-                            <div className="l-5 feedback-form--row-smiley">
-                                <img src="/compiled-assets/images/negative-feedback.png" alt="Wat kan er beter?" />
-                            </div>
-
-                            <div className="l-43 feedback-form--form">
-                                <label htmlFor="what-can-be-better">Wat kan er beter?</label>
-                                <textarea id="what-can-be-better" ref="improvementFeedback" rows="5"></textarea>
-                                <a href="#" className="feedback-form--row-button negative"><i className="fa fa-plus"></i> Voeg nog een verbeterpunt toe</a>
-                            </div>
-                        </div>
                     </div>
 
-                    <Link to="/" className="action--button neutral"><i className="fa fa-chevron-left"></i> Terug naar overzicht</Link>
-                    <a onClick={this.handleSubmit.bind(null, postIndex)} className="action--button is-right">Opslaan</a>
-
+                    <FormComponent {...this.props} postIndex={postIndex} />
                 </div>
             </div>
         );
-    },
-});
+    }
+}
+
+FeedbackFormGeneral.propTypes = {
+    as_sender_data: React.PropTypes.object,
+    fetchFeedbackAsSender: React.PropTypes.func,
+    params: React.PropTypes.object,
+    showModal: React.PropTypes.func,
+};
+
+// Set contextType for route to be able to go back and forth in History.
+FeedbackFormGeneral.contextTypes = {
+    router: React.PropTypes.object.isRequired,
+};
 
 export default FeedbackFormGeneral;

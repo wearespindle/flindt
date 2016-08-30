@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from '../reducers';
 import promise from 'redux-promise';
+
+import rootReducer from '../reducers';
+
 
 // Middleware you want to use in production:
 const enhancer = applyMiddleware(promise);
