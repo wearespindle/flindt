@@ -16,18 +16,6 @@ class FeedbackFormGeneral extends React.Component {
         this.props.fetchFeedbackAsSender();
     }
 
-    openModal(roleId) {
-        let info = {
-            roleId,
-        };
-
-        this.props.showModal(info);
-    }
-
-    renderElement() {
-        return '<p>hoi</p>';
-    }
-
     render() {
         const { feedback, loading, error } = this.props.as_sender_data;
         let incomplete = [];
