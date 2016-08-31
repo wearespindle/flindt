@@ -82,4 +82,5 @@ class FeedbackBase(FeedBagBaseModel):
     actionable = models.BooleanField()
     actionable_content = models.TextField(blank=True)
 
-
+    class Meta:
+        abstract = True
