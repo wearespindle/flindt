@@ -84,3 +84,17 @@ class FeedbackBase(FeedBagBaseModel):
 
     class Meta:
         abstract = True
+
+
+class Question(FeedBagBaseModel):
+    """
+    Model for the questions people can answer as an addition to the general
+    feedback given.
+    """
+    name = models.CharField(
+        _('name'),
+        max_length=255,
+    )
+    content = models.TextField(
+        blank=True,
+    )
