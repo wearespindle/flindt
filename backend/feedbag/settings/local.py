@@ -9,23 +9,18 @@ ALLOWED_HOSTS = []
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 # Database connection settings
-DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
-}
+DATABASES = {'default': dj_database_url.config(default='mysql://...')}
 
 #############################################
 #     DJANGO DEBUG TOOLBAR CONFIGURATION    #
 #############################################
 
-MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
-INSTALLED_APPS += (
-    'debug_toolbar',
-)
+INSTALLED_APPS += ('debug_toolbar',)
 
-INTERNAL_IPS = ('127.0.0.1', '172.17.42.1',)
+INTERNAL_IPS = ('127.0.0.1',
+                '172.17.42.1',)
 
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.versions.VersionsPanel',
@@ -43,6 +38,4 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.redirects.RedirectsPanel',
 )
 
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TEMPLATE_CONTEXT': True,
-}
+DEBUG_TOOLBAR_CONFIG = {'SHOW_TEMPLATE_CONTEXT': True,}

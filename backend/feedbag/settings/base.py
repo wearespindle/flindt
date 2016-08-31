@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'a$%t0hx(9v36a9psxpbj6llf05vhe8zy*vy
 
 # Database connection settings
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
+    'default': dj_database_url.config(default='mysql://...')
 }
 
 # Application definition
