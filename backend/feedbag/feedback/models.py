@@ -86,6 +86,16 @@ class FeedbackBase(FeedBagBaseModel):
         abstract = True
 
 
+class FeedbackOnIndividual(FeedbackBase):
+    question = models.ForeignKey(
+        'Question',
+        related_name='question',
+    )
+    answer = models.TextField(
+        blank=True,
+    )
+
+
 class Question(FeedBagBaseModel):
     """
     Model for the questions people can answer as an addition to the general
