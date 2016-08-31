@@ -1,0 +1,2 @@
+REPOSITORY = 'Feedback Tool'
+TRACKING_BRANCH = 'origin/develop'
