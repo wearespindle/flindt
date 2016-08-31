@@ -26,27 +26,23 @@ class User(PermissionsMixin, AbstractBaseUser):
     USERNAME_FIELD = 'email_address'
 
     email_address = models.EmailField(
-        _('email address'),
-        unique=True)
+        unique=True
+    )
     first_name = models.CharField(
-        _('first name'),
         max_length=255,
         blank=True,
     )
     last_name = models.CharField(
-        _('last name'),
         max_length=255,
         blank=True
     )
     prefix = models.CharField(
-        _('prefix'),
         max_length=255,
         blank=True,
     )
     # TODO: FEED-26: Use ExtraUserInfo for the glassfrog_id. That way we can
     # cleanly extend the import to work for Nestr et al.
     glassfrog_id = models.IntegerField(
-        _('glassfrog id'),
         blank=True,
         null=True,
     )
