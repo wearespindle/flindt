@@ -20,6 +20,10 @@ backend:
   links:
     # Define all containers for easy running of development setup.
     - db
+  environment:
+    # Use the root user to enable creation of a test database.
+    - DATABASE_URL=mysql://root:feedbag@db/feedbag
+    - DEBUG=1
 
 frontend:
   build: frontend
