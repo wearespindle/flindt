@@ -16,6 +16,9 @@ class Role(FeedBagBaseModel):
     accountabilities = models.TextField(blank=True)  # Used to store JSON
     domains = models.TextField(blank=True)  # Used to store JSON
     parent = models.ForeignKey('Role', related_name='children', blank=True, null=True)
+    # Rep and Lead Link are special because the can receive/give feedback in two circles.
+    rep_link = models.ForeignKey('Role', blank=True, null=True, related_name='+')
+    lead_link = models.ForeignKey('Role', blank=True, null=True, related_name='+')
 
     def __str__(self):
         return self.name
