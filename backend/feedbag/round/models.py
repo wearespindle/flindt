@@ -11,9 +11,11 @@ class Round(FeedBagBaseModel):
     """
     participants_senders = models.ManyToManyField(
         User,
+        related_name='+',
     )
     participants_receivers = models.ManyToManyField(
         User,
+        related_name='+',
     )
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
