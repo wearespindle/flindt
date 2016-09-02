@@ -1,13 +1,14 @@
 -r requirements.txt
 
-ipython
-django-extensions
+ipython==5.1.0
+django-extensions==1.7.3
 
 #######################################################
 ### Debug                                           ###
 #######################################################
-django-debug-toolbar
+django-debug-toolbar==1.5
 
+django-dbshell-plus==1.0.1
 
 #######################################################
 ### Testing                                         ###

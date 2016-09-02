@@ -66,7 +66,7 @@ class GlassFrogImporter(object):
                 'glassfrog_id': user.get('id'),
             }
 
-            feedbag_user, created = User.objects.update_or_create(email_address=user.get('email'), defaults=kwargs)
+            feedbag_user, created = User.objects.update_or_create(email=user.get('email'), defaults=kwargs)
 
             if created is False:
                 logger.info('User:\n {}\n already exsists. User has been updated.'.format(user))

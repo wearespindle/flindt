@@ -8,14 +8,14 @@ from feedbag.base.models import FeedBagBaseModel
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email_address, password=None):
-        user = self.model(email_address=self.normalize_email(email_address))
+    def create_user(self, email, password=None, username=None):
+        user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email_address, password):
-        user = self.model(email_address=self.normalize_email(email_address))
+    def create_superuser(self, email, password):
+        user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.is_admin = True
         user.save(using=self._db)
@@ -23,9 +23,9 @@ class UserManager(BaseUserManager):
 
 
 class User(PermissionsMixin, AbstractBaseUser):
-    USERNAME_FIELD = 'email_address'
+    USERNAME_FIELD = 'email'
 
-    email_address = models.EmailField(
+    email = models.EmailField(
         unique=True
     )
     first_name = models.CharField(
@@ -62,7 +62,7 @@ class User(PermissionsMixin, AbstractBaseUser):
         return "%s %s" % (self.first_name, self.last_name)
 
     def __str__(self):
-        return self.email_address
+        return self.email
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
