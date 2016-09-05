@@ -17,32 +17,52 @@ class FeedbackRow extends React.Component {
     }
 
     render() {
-        let person = this.props.details;
-        let role = person.roles[0];
-        let circle = person.circles[0];
-        let dateLabel,
-            action;
+        let role = null;
+        let circle = null;
+
+        if(this.props.details.role) {
+            role = this.props.details.role.role.name;
+            circle = this.props.details.role.role.parent.name;
+        }
+
+        let dateLabel;
+        let action;
+        let person = this.props.details.recipient;
 
         // Change the labels and links in the table row to reuse this component.
         if (this.props.feedbackType === 'give') {
             let url;
             dateLabel = 'Sluitingsdatum';
 
-            url = (person.type === 'personal') ? 'give-personal-feedback' : 'give-feedback';
+            url = (role) ? 'give-feedback' : 'give-personal-feedback';
 
-            action = <Link to={`/${url}/${person.id}`}><i className="fa fa-undo" /> Feedback geven</Link>;
+            action = <Link to={`/${url}/${this.props.details.id}`}><i className="fa fa-undo" /> Feedback geven</Link>;
+        } else if (this.props.feedbackType === 'received') {
+            dateLabel = 'Gekregen op';
+            person = this.props.details.sender;
+
+            action = <Link to={`/received-feedback/${this.props.details.id}`}><i className="fa fa-eye" /> Feedback bekijken</Link>;
         } else {
+
             dateLabel = 'Gegeven op';
-            action = <Link to={`/check-feedback/${person.id}`}><i className="fa fa-eye" /> Feedback bekijken</Link>;
+
+            action = <Link to={`/check-feedback/${this.props.details.id}`}><i className="fa fa-eye" /> Feedback bekijken</Link>;
         }
 
         return (
             <tr>
-                <td data-label="Persoon">{person.name}</td>
+                <td data-label="Persoon">{person.first_name} { person.last_name }</td>
                 <td data-label="Rol">
-                    { this.renderType(person.type, role) }
+                    {
+                        role &&
+                        <span>{role}</span>
+                    }
+                    {
+                        !role &&
+                        <span className="feedback-type-indicator">Persoonlijk</span>
+                    }
                 </td>
-                <td data-label="Cirkel">{ circle.name }</td>
+                <td data-label="Cirkel">{ circle }</td>
                 <td data-label="{dateLabel}">1 sept. 2016</td>
                 <td data-label="Acties">
                     { action }
@@ -54,6 +74,8 @@ class FeedbackRow extends React.Component {
 
 FeedbackRow.propTypes = {
     feedbackType: React.PropTypes.string,
+    recipient: React.PropTypes.object,
+    role: React.PropTypes.object,
     details: React.PropTypes.object,
 };
 

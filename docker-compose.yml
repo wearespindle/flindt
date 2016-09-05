@@ -25,6 +25,11 @@ backend:
     # Use the root user to enable creation of a test database.
     - DATABASE_URL=mysql://root:feedbag@db/feedbag
     - DEBUG=1
+    - CORS_ORIGIN_WHITELIST=localhost:3000
+    - SOCIAL_AUTH_GOOGLE_PLUS_KEY=197265624471-f8cb8sdb8dr1uevsscev16191ksr3ln6.apps.googleusercontent.com
+    - SOCIAL_AUTH_GOOGLE_PLUS_SECRET=1KDKrqdje9S5zWXKiGlAoRgb
+    - SOCIAL_AUTH_GOOGLE_PLUS_WHITELISTED_DOMAINS=wearespindle.com
+
 
 frontend:
   build: frontend

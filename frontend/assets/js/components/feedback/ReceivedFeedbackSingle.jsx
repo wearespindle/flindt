@@ -6,145 +6,214 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-const ReceivedFeedback = (props) =>
+import InfoModalButton from '../addons/InfoModalButton';
+import FeedbackContent from '../addons/FeedbackContent';
+import RatingRows from '../addons/RatingRows';
 
-    <div className="content--wrapper">
-        <div className="content--header">
-            <div className="content--header-spacing" />
-            <div className="content--header-breadcrumbs">
-                <ul>
-                    <li>Ontvangen feedback</li>
-                    <li>Feedback van Jan Arend</li>
-                </ul>
-            </div>
-        </div>
+class ReceivedFeedback extends React.Component {
+    constructor(props) {
+        super(props);
 
-        <div className="content">
-            <h2>Ontvangen feedback</h2>
+        this._handleSubmit = this._handleSubmit.bind(this);
 
-            <div className="feedback-form--wrapper">
-                <table className="feedback-form--meta">
-                    <thead>
-                        <tr>
-                            <th>Persoon</th>
-                            <th>Rol</th>
-                            <th>Subcirkel</th>
-                            <th>Cirkel</th>
-                            <th>Ontvangen op</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Persoon">
-                                Erwin
-                            </td>
-                            <td data-label="Rol">
-                                Planner voor VoIPGRID
-                                <a href="/" className="show--modal">
-                                    <i className="fa fa-info-circle" />
-                                </a>
-                            </td>
-                            <td data-label="Subcirkel">
-                                Webapp
-                                <a href="/">
-                                    <i className="fa fa-info-circle" />
-                                </a>
-                            </td>
-                            <td data-label="Cirkel">
-                                VoIPGRID
-                                <a href="/">
-                                    <i className="fa fa-info-circle" />
-                                </a>
-                            </td>
-                            <td data-label="Ontvangen op">
-                                1 sept. 2016
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        this.handleRecognizableChange = this.handleRecognizableChange.bind(this);
+        this.handleValuableChange = this.handleValuableChange.bind(this);
+        this.handleActionableChange = this.handleActionableChange.bind(this);
+        this.handleActionableContentChange = this.handleActionableContentChange.bind(this);
 
-                <div className="feedback-form--row">
-                    <div className="l-5 feedback-form--row-smiley">
-                        <img src="/compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
-                    </div>
+        this.state = {
+            id: this.props.params.feedbackId,
+            howRecognizable: 5,
+            howValuable: 5,
+            actionable: false,
+            actionableContent: '',
+        }
+    }
 
-                    <div className="l-43 feedback-form--form">
-                        <h3>Wat gaat er goed?</h3>
-                        <p>Duis id nibh mauris. Fusce ac ante massa. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Etiam euismod mauris mauris, eget imperdiet magna vehicula id. Etiam tortor lorem,
-                            rutrum sed interdum non, dictum nec enim. Cum sociis natoque penatibus et magnis dis
-                            parturient montes, nascetur ridiculus mus. Curabitur tristique, urna in porttitor lobortis,
-                            leo ante viverra orci, ac sagittis ligula erat a elit. Cras elit nibh, tristique at
-                            malesuada in, mattis et tortor. Etiam vitae sodales metus, nec ornare diam. Duis vel
-                            rhoncus ex, sed sollicitudin elit. Maecenas a velit dui. Curabitur quis mi odio.
-                        </p>
-                    </div>
+    componentWillMount() {
+        let accessToken = this.props.user.user.access_token;
 
-                    <div className="l-5 feedback-form--row-smiley">
-                        <img src="/compiled-assets/images/positive-feedback.png" alt="Wat gaat er goed?" />
-                    </div>
+        this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
+        this.props.fetchRatings(accessToken);
+    }
 
-                    <div className="l-43 feedback-form--form">
-                        <p>Duis id nibh mauris. Fusce ac ante massa. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Etiam euismod mauris mauris, eget imperdiet magna vehicula id. Etiam tortor lorem,
-                            rutrum sed interdum non, dictum nec enim. Cum sociis natoque penatibus et magnis dis
-                            parturient montes, nascetur ridiculus mus. Curabitur tristique, urna in porttitor lobortis,
-                            leo ante viverra orci, ac sagittis ligula erat a elit. Cras elit nibh, tristique at
-                            malesuada in, mattis et tortor. Etiam vitae sodales metus, nec ornare diam. Duis vel
-                            rhoncus ex, sed sollicitudin elit. Maecenas a velit dui. Curabitur quis mi odio.
-                        </p>
-                    </div>
-                </div>
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.feedback.loading) {
+            return false;
+        }
 
-                <div className="feedback-form--row">
-                    <div className="l-5 feedback-form--row-smiley">
-                        <img src="/compiled-assets/images/negative-feedback.png" alt="Wat kan er beter?" />
-                    </div>
+        const { how_recognizable, how_valuable, actionable, actionable_content } = nextProps.feedback.feedback;
 
-                    <div className="l-43 feedback-form--form">
-                        <h3>Wat kan er beter?</h3>
-                        <p>Duis id nibh mauris. Fusce ac ante massa. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Etiam euismod mauris mauris, eget imperdiet magna vehicula id. Etiam tortor lorem,
-                            rutrum sed interdum non, dictum nec enim. Cum sociis natoque penatibus et magnis dis
-                            parturient montes, nascetur ridiculus mus. Curabitur tristique, urna in porttitor lobortis,
-                            leo ante viverra orci, ac sagittis ligula erat a elit. Cras elit nibh, tristique at
-                            malesuada in, mattis et tortor. Etiam vitae sodales metus, nec ornare diam. Duis vel
-                            rhoncus ex, sed sollicitudin elit. Maecenas a velit dui. Curabitur quis mi odio.
-                        </p>
-                    </div>
-                </div>
+        this.setState({
+            actionable,
+            howRecognizable: how_recognizable,
+            howValuable: how_valuable,
+            actionableContent: actionable_content,
+        });
 
-                <div className="feedback-form--row">
-                    <div className="l-24 grade--wrapper">
-                        <h3>Waardevol</h3>
-                        <div className="grade--outset">
-                            <div className="grade--inset" style={{width: '30%'}} />
+        return true;
+    }
+
+    _handleSubmit() {
+        const { id, howRecognizable, howValuable, actionable, actionableContent } = this.state;
+        const accessToken = this.props.user.user.access_token;
+
+        this.props.editFeedback({
+            id,
+            actionable,
+            how_recognizable: howRecognizable,
+            how_valuable: howValuable,
+            actionable_content: actionableContent,
+        }, accessToken);
+    }
+
+    handleRecognizableChange(event) {
+        this.setState({
+            howRecognizable: event.target.value,
+        })
+    }
+
+    handleValuableChange(event) {
+        this.setState({
+            howValuable: event.target.value,
+        })
+    }
+
+    handleActionableChange(event) {
+        let value = (event.target.value === 'true' ? true : false)
+
+        this.setState({
+            actionable: value,
+        })
+    }
+
+    handleActionableContentChange(event) {
+        this.setState({
+            actionableContent: event.target.value,
+        })
+    }
+
+    render() {
+        const { feedback, loading, error } = this.props.feedback;
+        const ratings = this.props.ratings;
+
+        if (loading || !ratings.length) {
+            return (
+                <div className="content--wrapper">
+                    <div className="content--header">
+                        <div className="content--header-spacing" />
+                        <div className="content--header-breadcrumbs">
+                            <ul>
+                                <li>Ontvangen feedback</li>
+                                <li>Ontvangen</li>
+                            </ul>
                         </div>
-                        <div className="grade--number">3/10</div>
                     </div>
 
-                    <div className="l-24 grade--wrapper">
-                        <h3>Herkenbaar</h3>
-                        <div className="grade--outset">
-                            <div className="grade--inset" style={{width: '70%'}} />
+                    <div className="content">
+                        <h2>Ontvangen feedback</h2>
+
+                        <div className="feedback-form--wrapper">
+                            <div className="spinner">
+                                <div className="bounce1" />
+                                <div className="bounce2" />
+                                <div className="bounce3" />
+                            </div>
                         </div>
-                        <div className="grade--number">7/10</div>
+                    </div>
+                </div>
+            );
+        }
+
+        let table;
+        let person = feedback.sender;
+
+        return (
+            <div className="content--wrapper">
+                <div className="content--header">
+                    <div className="content--header-spacing" />
+                    <div className="content--header-breadcrumbs">
+                        <ul>
+                            <li>Ontvangen feedback</li>
+                            <li>Feedback van {person.first_name}</li>
+                        </ul>
                     </div>
                 </div>
 
-                <div className="feedback-form--row">
-                    <div className="l-24 grade--wrapper">
-                        <h3>Voorgenomen acties</h3>
-                        <p>Geen tekst, blabla</p>
+                <div className="content">
+                    <h2>Ontvangen feedback</h2>
+
+                    <div className="feedback-form--wrapper">
+                        <FeedbackContent {...this.props} person={person} feedback={feedback} ratings={ratings} />
+
+                        <div className="feedback-form--row">
+                            <div className="l-48">
+                                <h3>Hoe waardevol vind je de feedback van {person.first_name}?</h3>
+                                <input type="range" className="feedback-form--range" step="1" min="1" max="10" value={this.state.howValuable} onChange={this.handleValuableChange} />
+                                <ul className="range-input-list">
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                    <li>6</li>
+                                    <li>7</li>
+                                    <li>8</li>
+                                    <li>9</li>
+                                    <li>10</li>
+                                </ul>
+
+                                <div className="range-input-list-output">
+                                    Cijfer: <span>1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="feedback-form--row">
+                            <div className="l-48">
+                                <h3>Hoe herkenbaar vind je de feedback van {person.first_name}?</h3>
+                                <input type="range" className="feedback-form--range" step="1" min="1" max="10" value={this.state.howRecognizable} onChange={this.handleRecognizableChange} />
+                                <ul className="range-input-list">
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                    <li>6</li>
+                                    <li>7</li>
+                                    <li>8</li>
+                                    <li>9</li>
+                                    <li>10</li>
+                                </ul>
+
+                                <div className="range-input-list-output">
+                                    Cijfer: <span>1</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="feedback-form--row">
+                            <div className="l-48">
+                                <h3>Ben je van plan iets met de feedback te gaan doen?</h3>
+                                <form>
+                                    <ul className="feedback--form-radiolist">
+                                        <li><input id="yes" name="feedback-action" type="radio" value={true} checked={this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="yes">Ja, namelijk</label></li>
+                                        <li><input id="no" name="feedback-action" type="radio" value={false} checked={!this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="no">Nee, want</label></li>
+                                    </ul>
+                                </form>
+                                <textarea rows="5" value={this.state.actionableContent} onChange={this.handleActionableContentChange} />
+                            </div>
+                        </div>
                     </div>
+
+                    <Link to="/" className="action--button neutral">
+                        <i className="fa fa-chevron-left" /> Terug naar overzicht
+                    </Link>
+                    <a onClick={this._handleSubmit} className="action--button is-right">Opslaan</a>
                 </div>
             </div>
-
-            <Link to="/" className="action--button neutral">
-                <i className="fa fa-chevron-left" /> Terug naar overzicht
-            </Link>
-            <a href="index.html" className="action--button is-right">Bewerken <i className="fa fa-pencil" /></a>
-        </div>
-    </div>;
+        );
+    }
+}
 
 export default ReceivedFeedback;

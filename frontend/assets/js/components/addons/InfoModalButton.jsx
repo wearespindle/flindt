@@ -15,7 +15,7 @@ class InfoModalButton extends React.Component {
 
     _openModal() {
         const details = {
-            glassFrogId: this.props.glassFrogId,
+            roleId: this.props.roleId,
         };
 
         this.props.showModal(details);
@@ -34,7 +34,7 @@ class InfoModalButton extends React.Component {
 InfoModalButton.propTypes = {
     _openModal: React.PropTypes.func,
     showModal: React.PropTypes.func,
-    glassFrogId: React.PropTypes.number,
+    roleId: React.PropTypes.number,
 };
 
 export default InfoModalButton;

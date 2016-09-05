@@ -20,3 +20,4 @@ router.register(r'feedbacks', feedback_views.FeedbackViewSet)
 router.register(r'questions', feedback_views.QuestionViewSet)
 
 router.register(r'roles', role_views.RoleViewSet)
+router.register(r'get_user_by_request', user_views.GetUserByRequest, base_name='get_user_by_request')
