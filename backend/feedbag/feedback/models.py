@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext as _
@@ -44,7 +45,24 @@ class Remark(FeedBagBaseModel):
         return '{}: {}'.format(self.rating, self.content)
 
 
-class FeedbackBase(FeedBagBaseModel):
+class FeedbackOnIndividual(FeedBagBaseModel):
+    question = models.ForeignKey(
+        'Question',
+        related_name='question',
+    )
+    answer = models.TextField(
+        blank=True,
+    )
+
+
+class FeedbackOnRole(FeedBagBaseModel):
+    pass
+
+
+class Feedback(FeedBagBaseModel):
+    """
+    Base feedback model which contains fields used for both feedback models.
+    """
     INCOMPLETE, COMPLETE = range(2)
 
     STATUS_CHOICES = (
@@ -55,11 +73,11 @@ class FeedbackBase(FeedBagBaseModel):
     date = models.DateTimeField()
     recipient = models.ForeignKey(
         User,
-        related_name='received_feedback',
+        related_name='%(class)s_received_feedback',
     )
     sender = models.ForeignKey(
         User,
-        related_name='sent_feedback',
+        related_name='%(class)s_sent_feedback',
     )
     status = models.IntegerField(
         default=INCOMPLETE,
@@ -67,6 +85,7 @@ class FeedbackBase(FeedBagBaseModel):
     )
     how_recognizable = models.IntegerField(
         blank=True,
+        null=True,
         validators=[
             MinValueValidator(0),
             MaxValueValidator(10),
@@ -74,6 +93,7 @@ class FeedbackBase(FeedBagBaseModel):
     )
     how_valuable = models.IntegerField(
         blank=True,
+        null=True,
         validators=[
             MinValueValidator(0),
             MaxValueValidator(10),
@@ -81,19 +101,8 @@ class FeedbackBase(FeedBagBaseModel):
     )
     actionable = models.BooleanField()
     actionable_content = models.TextField(blank=True)
-
-    class Meta:
-        abstract = True
-
-
-class FeedbackOnIndividual(FeedbackBase):
-    question = models.ForeignKey(
-        'Question',
-        related_name='question',
-    )
-    answer = models.TextField(
-        blank=True,
-    )
+    individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True)
+    role = models.ForeignKey(FeedbackOnRole, null=True, blank=True)
 
 
 class Question(FeedBagBaseModel):
