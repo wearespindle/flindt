@@ -116,7 +116,7 @@ class Feedback(FeedBagBaseModel):
     role = models.ForeignKey(FeedbackOnRole, null=True, blank=True)
 
 
-class FeedbackOnRole(FeedbackBase):
+class FeedbackOnRole(Feedback):
     """
     Model for the feedback on roles.
     """
