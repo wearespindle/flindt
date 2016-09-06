@@ -1,7 +1,11 @@
+import logging
+
 from django.db import models
 
 from feedbag.base.models import FeedBagBaseModel
 from feedbag.user.models import User
+
+logger = logging.getLogger(__name__)
 
 
 class Role(FeedBagBaseModel):
@@ -14,11 +18,11 @@ class Role(FeedBagBaseModel):
     purpose = models.TextField()
     # TODO: FEED-41: Use a JSON field to validate contents.
     accountabilities = models.TextField(blank=True)  # Used to store JSON
+    # TODO: FEED-41: Use a JSON field to validate contents.
     domains = models.TextField(blank=True)  # Used to store JSON
     parent = models.ForeignKey('Role', related_name='children', blank=True, null=True)
-    # Rep and Lead Link are special because the can receive/give feedback in two circles.
-    rep_link = models.ForeignKey('Role', blank=True, null=True, related_name='+')
-    lead_link = models.ForeignKey('Role', blank=True, null=True, related_name='+')
+    users = models.ManyToManyField(User)
+    archived = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -37,10 +41,41 @@ class Role(FeedBagBaseModel):
         """
         return self.parent is None
 
+    def descendants(self):
+        """
+        Return all descendants of `self` in a list.
+
+
+        TODO: FEED-50: descendants should be a method on a manager returning a
+        queryset.
+        """
+        descendants = []
+        children = self.children.all()
+        descendants.extend(children)
+        for child in children:
+            descendants.extend(child.descendants())
+        return descendants
+
+    def archive(self):
+        """
+        Archive this role and all roles under it.
+
+        TODO: FEED-50: If descendants is a queryset, replace this with one
+        update()
+        """
+        self.archived = True
+        for role in self.descendants():
+            role.archived = True
+            role.save()
+        logger.info('role: {} and all its descendants have been archived.'.format(self))
+
 
 class Focus(FeedBagBaseModel):
     """
     Used to store a focus for a specific user on a role.
+
+    TODO: FEED-47: Start using/importing focuses. It seems that the GlassFrog
+    API, does not currently know about focus.
     """
     role = models.ForeignKey('Role')
     user = models.ForeignKey(User)
