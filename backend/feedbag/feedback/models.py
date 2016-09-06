@@ -70,6 +70,17 @@ class FeedbackOnIndividual(FeedBagBaseModel):
     )
 
 
+class FeedbackOnRole(FeedBagBaseModel):
+    """
+    Model for the feedback on roles.
+    """
+    role = models.ForeignKey(Role, blank=True, null=True)
+    remark = models.ManyToManyField(
+        Remark,
+        blank=True,
+    )
+
+
 class Feedback(FeedBagBaseModel):
     """
     Base feedback model which contains fields used for both feedback models.
@@ -114,11 +125,4 @@ class Feedback(FeedBagBaseModel):
     actionable_content = models.TextField(blank=True)
     individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True)
     role = models.ForeignKey(FeedbackOnRole, null=True, blank=True)
-
-
-class FeedbackOnRole(Feedback):
-    """
-    Model for the feedback on roles.
-    """
-    role = models.ForeignKey(Role)
-    round = models.ForeignKey(Round)
+    round = models.ForeignKey(Round, null=True, blank=True)
