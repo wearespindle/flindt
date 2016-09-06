@@ -64,6 +64,7 @@ class Role(FeedBagBaseModel):
         update()
         """
         self.archived = True
+        self.save()
         for role in self.descendants():
             role.archived = True
             role.save()
