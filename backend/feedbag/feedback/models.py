@@ -1,10 +1,11 @@
-from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext as _
 
 from feedbag.base.models import FeedBagBaseModel
 from feedbag.user.models import User
+from feedbag.role.models import Role
+from feedbag.round.models import Round
 
 
 class Rating(FeedBagBaseModel):
@@ -36,7 +37,7 @@ class Remark(FeedBagBaseModel):
     A Feedback can link to a rating to confer an emotion.
     """
     rating = models.ManyToManyField(
-        'Rating',
+        Rating,
         blank=True,
     )
     content = models.TextField(_('content'))
@@ -45,18 +46,28 @@ class Remark(FeedBagBaseModel):
         return '{}: {}'.format(self.rating, self.content)
 
 
+class Question(FeedBagBaseModel):
+    """
+    Model for the questions people can answer as an addition to the general
+    feedback given.
+    """
+    name = models.CharField(
+        _('name'),
+        max_length=255,
+    )
+    content = models.TextField(
+        blank=True,
+    )
+
+
 class FeedbackOnIndividual(FeedBagBaseModel):
     question = models.ForeignKey(
-        'Question',
+        Question,
         related_name='question',
     )
     answer = models.TextField(
         blank=True,
     )
-
-
-class FeedbackOnRole(FeedBagBaseModel):
-    pass
 
 
 class Feedback(FeedBagBaseModel):
@@ -105,15 +116,9 @@ class Feedback(FeedBagBaseModel):
     role = models.ForeignKey(FeedbackOnRole, null=True, blank=True)
 
 
-class Question(FeedBagBaseModel):
+class FeedbackOnRole(FeedbackBase):
     """
-    Model for the questions people can answer as an addition to the general
-    feedback given.
+    Model for the feedback on roles.
     """
-    name = models.CharField(
-        _('name'),
-        max_length=255,
-    )
-    content = models.TextField(
-        blank=True,
-    )
+    role = models.ForeignKey(Role)
+    round = models.ForeignKey(Round)
