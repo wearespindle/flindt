@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
 
+from feedbag.role.models import Role
+
 from ...importer import GlassFrogImporter
 
 
@@ -31,7 +33,14 @@ class Command(BaseCommand):
             action='store',
             dest='roles',
             type=int,
-            help='Import Glassfrog roles under circle id.',
+            help='Import Glassfrog roles with <circle_id> and all its descendants.',
+        )
+        parser.add_argument(
+            '--archive',
+            action='store',
+            dest='archive',
+            type=int,
+            help='Archive role with id <id> and all its descendants.',
         )
 
     def handle(self, *args, **options):
@@ -41,6 +50,8 @@ class Command(BaseCommand):
             self.import_users()
         if options['roles']:
             self.import_roles(options['roles'])
+        if options['archive']:
+            self.archive_roles(options['archive'])
 
     def import_users(self):
         g = GlassFrogImporter(api_key=self.api_key)
@@ -49,3 +60,11 @@ class Command(BaseCommand):
     def import_roles(self, circle_id=None):
         g = GlassFrogImporter(api_key=self.api_key)
         g.import_circles(circle_id)
+
+    def archive_roles(self, role_id):
+        """
+        Before running a new import, it is advisable to archive all older roles
+        for the circle you want to import.
+        """
+        role = Role.objects.get(id=role_id)
+        role.archive()

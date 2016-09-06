@@ -1,7 +1,11 @@
+import logging
+
 from django.db import models
 
 from feedbag.base.models import FeedBagBaseModel
 from feedbag.user.models import User
+
+logger = logging.getLogger(__name__)
 
 
 class Role(FeedBagBaseModel):
@@ -18,6 +22,7 @@ class Role(FeedBagBaseModel):
     domains = models.TextField(blank=True)  # Used to store JSON
     parent = models.ForeignKey('Role', related_name='children', blank=True, null=True)
     users = models.ManyToManyField(User)
+    archived = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -35,6 +40,34 @@ class Role(FeedBagBaseModel):
         True if the circle has no parents.
         """
         return self.parent is None
+
+    def descendants(self):
+        """
+        Return all descendants of `self` in a list.
+
+
+        TODO: FEED-50: descendants should be a method on a manager returning a
+        queryset.
+        """
+        descendants = []
+        children = self.children.all()
+        descendants.extend(children)
+        for child in children:
+            descendants.extend(child.descendants())
+        return descendants
+
+    def archive(self):
+        """
+        Archive this role and all roles under it.
+
+        TODO: FEED-50: If descendants is a queryset, replace this with one
+        update()
+        """
+        self.archived = True
+        for role in self.descendants():
+            role.archived = True
+            role.save()
+        logger.info('role: {} and all its descendants have been archived.'.format(self))
 
 
 class Focus(FeedBagBaseModel):

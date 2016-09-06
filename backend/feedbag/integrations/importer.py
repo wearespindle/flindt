@@ -1,11 +1,12 @@
-import os
-import logging
 import json
+import logging
 
 import requests
 
-from feedbag.user.models import User
 from feedbag.role.models import Role
+from feedbag.user.models import User
+
+from .models import RoleImportRun
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,7 @@ class GlassFrogImporter(object):
 
     def __init__(self, *args, **kwargs):
         self.api_key = kwargs.get('api_key')
+        self.import_run = RoleImportRun.objects.create()
 
         self._circles_cached = None
         self._roles_cached = None
@@ -144,7 +146,7 @@ class GlassFrogImporter(object):
 
         role = Role.objects.create(
             name=circle_dict.get('name'),
-            purpose=self._get_circle_purpose_by_id,
+            purpose=self._get_circle_purpose_by_id(circle_id),
             parent=parent_role,
             accountabilities=self._get_circle_accountabilities_by_id(circle_id),
             domains=self._get_circle_domains_by_id(circle_id),
@@ -155,6 +157,9 @@ class GlassFrogImporter(object):
         role.users.add(role_fullfiller)
         role.save()
         logger.info("Circle {} imported as role.".format(role))
+
+        self.import_run.roles.add(role)
+        self.import_run.save()
 
         for role_id in circle_dict.get('links').get('roles'):
             self.import_role(role_id, parent_role=role)
@@ -188,6 +193,8 @@ class GlassFrogImporter(object):
             for user in role_fullfillers:
                 role.users.add(user)
             role.save()
+            self.import_run.roles.add(role)
+            self.import_run.save()
             logger.info("Role {} imported as role.".format(role))
 
     def _make_api_request(self, uri):
