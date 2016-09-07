@@ -34,7 +34,11 @@ class Round(FeedBagBaseModel):
     min_feedback_sent = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.description
+        return 'Receivers: #{}, senders: {}, roles: {}, indiv: {}'.format(
+            self.participants_receivers.count(),
+            self.participants_senders.count(),
+            self.roles_to_review,
+            self.individuals_to_review,
 
     def message_for_open(self):
         """
@@ -71,3 +75,4 @@ class Round(FeedBagBaseModel):
             if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE).exists():
                 messenger = Messenger(user=user)
                 messenger.send_message(message)
+        )
