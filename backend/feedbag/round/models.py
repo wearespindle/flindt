@@ -31,4 +31,9 @@ class Round(FeedBagBaseModel):
     min_feedback_sent = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.name
+        return 'Receivers: #{}, senders: {}, roles: {}, indiv: {}'.format(
+            self.participants_receivers.count(),
+            self.participants_senders.count(),
+            self.roles_to_review,
+            self.individuals_to_review,
+        )
