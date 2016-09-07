@@ -36,8 +36,6 @@ npm-debug.log
 /frontend/compiled-assets
 /frontend/node_modules
 
-/backend/feedbag/settings/local.py
-
 .bash_history
 .ipython
 
