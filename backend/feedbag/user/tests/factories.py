@@ -12,7 +12,7 @@ faker = Factory.create('nl_NL')
 class UserFactory(DjangoModelFactory):
     first_name = LazyAttribute(lambda o: faker.first_name())
     last_name = LazyAttribute(lambda o: faker.last_name())
-    email_address = LazyAttribute(lambda o: faker.email())
+    email = LazyAttribute(lambda o: faker.email())
     password = make_password('password')
 
     class Meta:
