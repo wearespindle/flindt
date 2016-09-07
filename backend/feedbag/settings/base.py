@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'feedbag.round',
     'feedbag.role',
     'feedbag.integrations',
+    'feedbag.organization',
 
     'django_extensions',
 )
@@ -272,3 +273,5 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
+
+FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')

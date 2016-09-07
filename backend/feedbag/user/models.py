@@ -46,6 +46,10 @@ class User(PermissionsMixin, AbstractBaseUser):
         blank=True,
         null=True,
     )
+    slack_user_name = models.CharField(
+        blank=True,
+        max_length=255,
+    )
     extra_info = models.ManyToManyField(
         'ExtraUserInfo',
         blank=True,
