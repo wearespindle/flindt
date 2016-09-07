@@ -45,7 +45,7 @@ class GlassFrogImporter(object):
                 ...
             ]}
         """
-        all_users = self.make_api_request('people').get('people')
+        all_users = self._make_api_request('people').get('people')
 
         for user in all_users:
             name_tokens = user.get('name').split(' ')
