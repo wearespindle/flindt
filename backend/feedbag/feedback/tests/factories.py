@@ -5,7 +5,8 @@ from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyInteger, FuzzyChoice, FuzzyNaiveDateTime
 from faker.factory import Factory
 
-from feedbag.feedback.models import Question, Feedback, FeedbackOnIndividual, FeedbackOnRole
+from feedbag.feedback.models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
+from feedbag.role.tests.factories import RoleFactory
 from feedbag.user.tests.factories import UserFactory
 
 faker = Factory.create('nl_NL')
@@ -21,6 +22,22 @@ class QuestionFactory(DjangoModelFactory):
         model = Question
 
 
+class RatingFactory(DjangoModelFactory):
+    name = LazyAttribute(lambda o: faker.word())
+    description = LazyAttribute(lambda o: faker.text())
+
+    class Meta:
+        model = Rating
+
+
+class RemarkFactory(DjangoModelFactory):
+    rating = SubFactory(RatingFactory)
+    content = LazyAttribute(lambda o: faker.text())
+
+    class Meta:
+        model = Remark
+
+
 class FeedbackOnIndividualFactory(DjangoModelFactory):
     question = SubFactory(QuestionFactory)
     answer = LazyAttribute(lambda o: faker.text())
@@ -30,7 +47,11 @@ class FeedbackOnIndividualFactory(DjangoModelFactory):
 
 
 class FeedbackOnRoleFactory(DjangoModelFactory):
-    pass
+    role = SubFactory(RoleFactory)
+    remark = SubFactory(RemarkFactory)
+
+    class Meta:
+        model = FeedbackOnRole
 
 
 class FeedbackFactory(DjangoModelFactory):

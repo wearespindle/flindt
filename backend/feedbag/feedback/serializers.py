@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual
+from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, FeedbackOnRole
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -27,9 +27,15 @@ class FeedbackOnIndividualSerializer(serializers.ModelSerializer):
         fields = ('id', 'question', 'answer')
 
 
+class FeedbackOnRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackOnRole
+        fields = ('id', 'role', 'remark')
+
+
 class FeedbackSerializer(serializers.ModelSerializer):
     individual = FeedbackOnIndividualSerializer(read_only=True)
-    # role = FeedbackOnRoleSerializer(read_only=True)
+    role = FeedbackOnRoleSerializer(read_only=True)
 
     def validate(self, attrs):
         individual_feedback = attrs.get('individual')
