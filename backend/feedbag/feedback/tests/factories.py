@@ -1,13 +1,14 @@
 import datetime
+import factory
 
-from factory.declarations import LazyAttribute, SubFactory, Iterator, SelfAttribute
+from factory.declarations import LazyAttribute, SubFactory, Iterator
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyInteger, FuzzyChoice, FuzzyNaiveDateTime
 from faker.factory import Factory
 
 from feedbag.feedback.models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
 from feedbag.role.tests.factories import RoleFactory
-from feedbag.user.tests.factories import UserFactory
+from feedbag.user.models import User
 
 faker = Factory.create('nl_NL')
 past_date = datetime.datetime.today() - datetime.timedelta(days=10)
@@ -56,8 +57,8 @@ class FeedbackOnRoleFactory(DjangoModelFactory):
 
 class FeedbackFactory(DjangoModelFactory):
     date = FuzzyNaiveDateTime(past_date, future_date)
-    recipient = SubFactory(UserFactory)
-    sender = SubFactory(UserFactory)
+    recipient = factory.Iterator(User.objects.all())
+    sender = factory.Iterator(User.objects.all())
     status = FuzzyChoice(dict(Feedback.STATUS_CHOICES).keys())
     how_recognizable = FuzzyInteger(0, 10)
     how_valuable = FuzzyInteger(0, 10)
