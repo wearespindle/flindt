@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
+
 from feedbag.base.models import FeedBagBaseModel
+from feedbag.integrations.messenger import Messenger
 from feedbag.user.models import User
 
 
@@ -31,4 +34,40 @@ class Round(FeedBagBaseModel):
     min_feedback_sent = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.name
+        return self.description
+
+    def message_for_open(self):
+        """
+        TODO: FEED-20: Call this method when a new round is started.
+        TODO: FEED-57: Replace message with something more friendly.
+        """
+        message = _('A new feedback round has started and we ask you to participate at {}.'.format(settings.FRONTEND_HOSTNAME))
+        for user in self.participants_senders.all():
+            messenger = Messenger(user=user)
+            messenger.send_message(message)
+
+    def message_for_close(self):
+        """
+        TODO: FEED-20: Call this method when a round is closed.
+        TODO: FEED-57: Replace message with something more friendly.
+        """
+        message = _('Feedback is finished, see your feedback at {}.'.format(settings.HOSTNAME))
+        for user in self.participants_senders.all():
+            messenger = Messenger(user=user)
+            messenger.send_message(message)
+
+    def message_for_reminder(self):
+        """
+        Send a message to all participants_senders that have unfisnished
+        feedbacks.
+
+        TODO: FEED-57: Replace message with something more friendly.
+        """
+        # Prevent circular import.
+        from feedbag.feedback.models import Feedback
+        message = _('People are awaiting your feedback! Please give it to them at {}!'.format(settings.FRONTEND_HOSTNAME))
+
+        for user in self.participants_senders.all():
+            if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE).exists():
+                messenger = Messenger(user=user)
+                messenger.send_message(message)
