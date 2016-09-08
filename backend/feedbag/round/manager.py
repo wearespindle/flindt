@@ -1,11 +1,14 @@
+import logging
 from collections import Counter
 from itertools import dropwhile
 from random import shuffle
 
 from django.utils import timezone
-from feedbag.feedback.models import FeedbackOnRole, Feedback, FeedbackOnIndividual, Question
 
+from feedbag.feedback.models import (Feedback, FeedbackOnIndividual, FeedbackOnRole, Question)
 from feedbag.user.models import User
+
+logger = logging.getLogger(__name__)
 
 
 class MatchNotFoundError(Exception):
@@ -35,12 +38,12 @@ class RoundManager:
 
     def start_round(self):
         # We do a maximum of tries that is equal to number of users giving feeback
+        logger.info('starting a new round: {}'.format(self.round))
         for i in range(len(self.users_giving_feedback)):
             # After every 3th try to fix the round, we increment the number of reviews that needs to be given
             self.max_reviews_per_user = self.round.roles_to_review + i // 3
             try:
-                print('')
-                print('Solution {}, max number of reviews: {}'.format(i, self.max_reviews_per_user))
+                logger.info('Solution {}, max number of reviews: {}'.format(i, self.max_reviews_per_user))
                 self._create_feedback_for_participants()
                 self._sort_feedback_on_circle_size()
                 self._match_role_feedback_to_senders(self.role_feedback)
@@ -51,6 +54,7 @@ class RoundManager:
                 self.tries = 0
                 self.max_depth = 0
                 self.users_have_given_feedback_on_role = Counter()
+        logger.info('New round started.')
 
     def _create_feedback_for_participants(self):
         self.role_feedback = []
@@ -66,7 +70,7 @@ class RoundManager:
                     self.individual_feedback.append(feedback)
 
     def _create_role_feedback_for_participant(self, participant):
-        role = participant.role_set.order_by('?').exclude(parent__isnull=True).first()
+        role = participant.role_set.order_by('?').exclude(parent__isnull=True, archived=True).first()
         if not role:
             return
         feedback_on_role = FeedbackOnRole(role=role)
@@ -80,10 +84,8 @@ class RoundManager:
         return feedback
 
     def _create_individual_for_participant(self, participant):
-        question = Question.objects.order_by('?').first()
-        feedback_on_individual = FeedbackOnIndividual(
-            question=question,
-        )
+        question = self.round.question_for_individual_feedback
+        feedback_on_individual = FeedbackOnIndividual(question=question)
         feedback = Feedback(
             actionable=False,
             round=self.round,
@@ -95,9 +97,7 @@ class RoundManager:
 
     def _sort_feedback_on_circle_size(self):
         for feedback in self.role_feedback:
-            feedback._circle_size = len(self._get_senders_for_user_in_role(
-                feedback.role.role.parent
-            ))
+            feedback._circle_size = len(self._get_senders_for_user_in_role(feedback.role.role.parent))
         sorted(
             self.role_feedback,
             key=lambda feedback: feedback._circle_size,
@@ -108,11 +108,15 @@ class RoundManager:
         if circle.pk in self.users_in_circle:
             return self.users_in_circle[circle.pk]
         else:
-            users = set(User.objects.filter(
-                role__parent_id=circle.pk,
-            ).filter(
-                id__in=self.users_giving_feedback,
-            ).values_list('id', flat=True))
+            users = set(
+                User.objects.filter(
+                    role__parent_id=circle.pk,
+                ).filter(
+                    id__in=self.users_giving_feedback,
+                ).values_list(
+                    'id', flat=True
+                )
+            )
             self.users_in_circle[circle.pk] = users
             return users
 
@@ -146,12 +150,12 @@ class RoundManager:
                 self.counter += 1
                 self.max_depth = max(self.counter, self.max_depth)
                 if self.tries % 10000 == 0:
-                    print('(tries: {}, max depth: {}) counter: {}{}'.format(
-                        self.tries,
-                        self.max_depth,
-                        self.counter * '#',
-                        ' '*100
-                    ), end='\r')
+                    logger.info(
+                        '(tries: {}, max depth: {}) counter: {}{}'.format(
+                            self.tries, self.max_depth, self.counter * '#', ' ' * 100
+                        ),
+                        end='\r'
+                    )
                 self._match_role_feedback_to_senders(feedbacks[1:])
             except MatchNotFoundError:
                 self.counter -= 1
@@ -166,16 +170,14 @@ class RoundManager:
             else:
                 raise MatchNotFoundError
 
+        sender = User.objects.get(id=matched_sender)
         if feedback.individual:
             feedback.individual.save()
         else:
+            feedback.sender = sender
             feedback.role.save()
+            # Question from Joris to Bob: What is up with deze?
+            feedback.role = feedback.role
+
         feedback.sender_id = matched_sender
         feedback.save()
-
-
-
-def start_rounds(modeladmin, request, queryset):
-    for round in queryset.all():
-        RoundManager(round)
-start_rounds.description = 'Start round'
