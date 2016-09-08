@@ -14,17 +14,13 @@ class Rating(FeedBagBaseModel):
     be better or "I have no idea what to say about this". It can be accompanied
     by an image, which is normally a emoji to confer the feeling.
     """
-    name = models.CharField(
-        max_length=255,
-    )
+    name = models.CharField(max_length=255,)
     # TODO: FEED-29: Add pillow, so that we can use ImageFields
     # image = models.ImageField(
     #     _('image'),
     #     blank=True,
     # )
-    description = models.TextField(
-        blank=True,
-    )
+    description = models.TextField(blank=True,)
 
     def __str__(self):
         return self.name
@@ -55,9 +51,10 @@ class Question(FeedBagBaseModel):
         _('name'),
         max_length=255,
     )
-    content = models.TextField(
-        blank=True,
-    )
+    content = models.TextField(blank=True,)
+
+    def __str__(self):
+        return self.name
 
 
 class FeedbackOnIndividual(FeedBagBaseModel):
@@ -65,9 +62,10 @@ class FeedbackOnIndividual(FeedBagBaseModel):
         Question,
         related_name='question',
     )
-    answer = models.TextField(
-        blank=True,
-    )
+    answer = models.TextField(blank=True,)
+
+    def __str__(self):
+        return self.question
 
 
 class FeedbackOnRole(FeedBagBaseModel):
@@ -80,6 +78,9 @@ class FeedbackOnRole(FeedBagBaseModel):
         blank=True,
     )
 
+    def __str__(self):
+        return 'Feedback on {}'.format(self.role)
+
 
 class Feedback(FeedBagBaseModel):
     """
@@ -87,10 +88,8 @@ class Feedback(FeedBagBaseModel):
     """
     INCOMPLETE, COMPLETE = range(2)
 
-    STATUS_CHOICES = (
-        (INCOMPLETE, _('Incomplete')),
-        (COMPLETE, _('Complete')),
-    )
+    STATUS_CHOICES = ((INCOMPLETE, _('Incomplete')),
+                      (COMPLETE, _('Complete')),)
 
     date = models.DateTimeField()
     recipient = models.ForeignKey(
@@ -106,17 +105,13 @@ class Feedback(FeedBagBaseModel):
         choices=STATUS_CHOICES,
     )
     how_recognizable = models.IntegerField(
-        blank=True,
-        null=True,
-        validators=[
+        blank=True, null=True, validators=[
             MinValueValidator(0),
             MaxValueValidator(10),
         ]
     )
     how_valuable = models.IntegerField(
-        blank=True,
-        null=True,
-        validators=[
+        blank=True, null=True, validators=[
             MinValueValidator(0),
             MaxValueValidator(10),
         ]
@@ -126,3 +121,6 @@ class Feedback(FeedBagBaseModel):
     individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True)
     role = models.ForeignKey(FeedbackOnRole, null=True, blank=True)
     round = models.ForeignKey(Round, null=True, blank=True)
+
+    def __str__(self):
+        return 'Feedback from {} on {}'.format(self.sender, self.recipient)

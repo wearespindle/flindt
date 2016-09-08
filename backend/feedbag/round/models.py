@@ -32,16 +32,22 @@ class Round(FeedBagBaseModel):
     individuals_to_review = models.PositiveSmallIntegerField()
     # How many people need to be given feedback before being able to view the “report”.
     min_feedback_sent = models.PositiveIntegerField()
+    question_for_individual_feedback = models.ForeignKey('feedback.Question', blank=True, null=True)
 
     def __str__(self):
-        return self.description
+        return 'Description: {}, Receivers: #{}, senders: {}, roles: {}, indiv: {}'.format(
+            self.description, self.participants_receivers.count(), self.participants_senders.count(),
+            self.roles_to_review, self.individuals_to_review
+        )
 
     def message_for_open(self):
         """
         TODO: FEED-20: Call this method when a new round is started.
         TODO: FEED-57: Replace message with something more friendly.
         """
-        message = _('A new feedback round has started and we ask you to participate at {}.'.format(settings.FRONTEND_HOSTNAME))
+        message = _(
+            'A new feedback round has started and we ask you to participate at {}.'.format(settings.FRONTEND_HOSTNAME)
+        )
         for user in self.participants_senders.all():
             messenger = Messenger(user=user)
             messenger.send_message(message)
@@ -65,7 +71,9 @@ class Round(FeedBagBaseModel):
         """
         # Prevent circular import.
         from feedbag.feedback.models import Feedback
-        message = _('People are awaiting your feedback! Please give it to them at {}!'.format(settings.FRONTEND_HOSTNAME))
+        message = _(
+            'People are awaiting your feedback! Please give it to them at {}!'.format(settings.FRONTEND_HOSTNAME)
+        )
 
         for user in self.participants_senders.all():
             if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE).exists():

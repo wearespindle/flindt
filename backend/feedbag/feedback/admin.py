@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Rating, Remark, Question, FeedbackOnRole, FeedbackOnIndividual
+from .models import (Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark)
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -10,5 +10,6 @@ class QuestionAdmin(admin.ModelAdmin):
 admin.site.register(Rating)
 admin.site.register(Remark)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Feedback)
 admin.site.register(FeedbackOnRole)
 admin.site.register(FeedbackOnIndividual)
