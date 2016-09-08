@@ -21,8 +21,11 @@ class GlassFrogImporter(object):
     """
     API_BASE_URL = 'https://glassfrog.holacracy.org/api/v3/'
 
-    def __init__(self, *args, **kwargs):
-        self.api_key = kwargs.get('api_key')
+    def __init__(self, api_key, organization=None):
+
+        self.api_key = api_key
+        self.organization = organization
+
         self.import_run = RoleImportRun.objects.create()
 
         self._circles_cached = None
@@ -67,6 +70,8 @@ class GlassFrogImporter(object):
             }
 
             feedbag_user, created = User.objects.update_or_create(email=user.get('email'), defaults=kwargs)
+            if self.organization:
+                self.organization.users.add(feedbag_user)
 
             if created is False:
                 logger.info('User:\n {}\n already exsists. User has been updated.'.format(user))
@@ -159,7 +164,8 @@ class GlassFrogImporter(object):
         logger.info("Circle {} imported as role.".format(role))
 
         self.import_run.roles.add(role)
-        self.import_run.save()
+        if self.organization:
+            self.organization.roles.add(role)
 
         for role_id in circle_dict.get('links').get('roles'):
             self.import_role(role_id, parent_role=role)
@@ -194,7 +200,9 @@ class GlassFrogImporter(object):
                 role.users.add(user)
             role.save()
             self.import_run.roles.add(role)
-            self.import_run.save()
+            if self.organization:
+                self.organization.roles.add(role)
+
             logger.info("Role {} imported as role.".format(role))
 
     def _make_api_request(self, uri):
