@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'rest_framework_social_oauth2',
     'rest_framework.authtoken',
     'social.apps.django_app.default',
+    'django_object_actions',
 
     # Project apps
     'feedbag',
