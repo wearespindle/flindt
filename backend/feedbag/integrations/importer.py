@@ -21,11 +21,10 @@ class GlassFrogImporter(object):
     """
     API_BASE_URL = 'https://glassfrog.holacracy.org/api/v3/'
 
-    def __init__(self, *args, **kwargs):
-        assert kwargs.get('api_key')
+    def __init__(self, api_key, organization=None):
 
-        self.api_key = kwargs.get('api_key')
-        self.organization = kwargs.get('organization')
+        self.api_key = api_key
+        self.organization = organization
 
         self.import_run = RoleImportRun.objects.create()
 

@@ -7,6 +7,7 @@ from rest_framework.authtoken import views
 from feedbag.api.urls import router
 
 urlpatterns = [
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^api/v1/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^api-social-auth/', include('rest_framework_social_oauth2.urls')),

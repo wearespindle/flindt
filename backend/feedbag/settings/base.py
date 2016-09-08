@@ -37,6 +37,7 @@ DATABASES = {
 # Application definition
 
 INSTALLED_APPS = (
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,14 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
-LOGIN_REDIRECT_URL = '/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# Static files are collected to this directory.
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
@@ -137,11 +132,11 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'Info <info@example.com>'
-SERVER_EMAIL = 'Alerts <alerts@example.com>'
+DEFAULT_FROM_EMAIL = 'Info <no-reply@wearespindle.com>'
+SERVER_EMAIL = 'Alerts <no-reply@wearespindle.com>'
 
 ADMINS = (
-    ('Admin', 'admin@example.com'),
+    ('Admin', 'admin@wearespindle.com'),
 )
 
 
@@ -276,3 +271,4 @@ SOCIAL_AUTH_PIPELINE = (
 CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 
 FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')
+
