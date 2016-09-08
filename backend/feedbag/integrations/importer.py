@@ -317,7 +317,7 @@ class GlassFrogImporter(object):
             return ""
         accountabilities = []
         for accountability_id in accountability_ids:
-            accountabilities += self._get_accountability_by_id(accountability_id)
+            accountabilities.append(self._get_accountability_by_id(accountability_id))
         return json.dumps(accountabilities)
 
     def _get_circle_domains_by_id(self, id):
@@ -335,7 +335,7 @@ class GlassFrogImporter(object):
             return ""
         domains = []
         for domain_id in domain_ids:
-            domains += self._get_domain_by_id(domain_id)
+            domains.append(self._get_domain_by_id(domain_id))
         return json.dumps(domains)
 
     def _get_role_accountabilities_by_id(self, id):
@@ -353,7 +353,7 @@ class GlassFrogImporter(object):
             return ""
         accountabilities = []
         for accountability_id in accountability_ids:
-            accountabilities += self._get_accountability_by_id(accountability_id)
+            accountabilities.append(self._get_accountability_by_id(accountability_id))
         return json.dumps(accountabilities)
 
     def _get_role_domains_by_id(self, id):
@@ -371,7 +371,7 @@ class GlassFrogImporter(object):
             return ""
         domains = []
         for domain_id in domain_ids:
-            domains += self._get_domain_by_id(domain_id)
+            domains.append(self._get_domain_by_id(domain_id))
         return json.dumps(domains)
 
     def _get_accountability_by_id(self, id):
