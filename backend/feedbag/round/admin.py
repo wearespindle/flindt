@@ -13,10 +13,16 @@ class RoundAdmin(DjangoObjectActions, admin.ModelAdmin):
         round_manager = RoundManager(obj)
         round_manager.start_round()
 
-    start_round.label = _('Start the round.')
+    start_round.label = _('Start the round')
     start_round.short_description = "This will create feedback objects."
 
-    change_actions = ('start_round',)
+    def send_reminder(self, request, obj):
+        obj.message_for_reminder()
+
+    send_reminder.label = _('Send reminder')
+    send_reminder.short_description = _('Send a reminder to users that have unfisnished feedback.')
+
+    change_actions = ('start_round', 'send_reminder')
 
 
 admin.site.register(Round, RoundAdmin)

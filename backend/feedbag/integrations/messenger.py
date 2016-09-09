@@ -51,12 +51,14 @@ class SlackProvider(Provider):
         """
         Args:
             user (User): The user that should receive the message.
+
+        TODO: FEED-59: Replace slack integration with app instead of bot.
         """
         self.user = kwargs['user']
         self.slacker = Slacker(self.user.organization_set.first().slack_bot_api_key)
 
     def send_message(self, message):
-        self.slacker.chat.post_message(self.user.slack_user_name, message)
+        self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@feedbag')
 
 
 class Messenger(object):
