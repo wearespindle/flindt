@@ -43,10 +43,10 @@ class Round(FeedBagBaseModel):
     def message_for_open(self):
         """
         TODO: FEED-20: Call this method when a new round is started.
-        TODO: FEED-57: Replace message with something more friendly.
         """
         message = _(
-            'A new feedback round has started and we ask you to participate at {}.'.format(settings.FRONTEND_HOSTNAME)
+            'Hey, a new feedback round started. Start helping colleagues by giving them some feedback at {}.'.
+            format(settings.FRONTEND_HOSTNAME)
         )
         for user in self.participants_senders.all():
             messenger = Messenger(user=user)
@@ -55,10 +55,13 @@ class Round(FeedBagBaseModel):
     def message_for_close(self):
         """
         TODO: FEED-20: Call this method when a round is closed.
-        TODO: FEED-57: Replace message with something more friendly.
         """
-        message = _('Feedback is finished, see your feedback at {}.'.format(settings.HOSTNAME))
-        for user in self.participants_senders.all():
+        message = _(
+            'The feedback round is over. Check (and rate) your feedback at {}'.
+            format(settings.FRONTEND_HOSTNAME)
+        )
+
+        for user in self.participants_receivers.all():
             messenger = Messenger(user=user)
             messenger.send_message(message)
 
@@ -66,15 +69,13 @@ class Round(FeedBagBaseModel):
         """
         Send a message to all participants_senders that have unfisnished
         feedbacks.
-
-        TODO: FEED-57: Replace message with something more friendly.
         """
         # Prevent circular import.
         from feedbag.feedback.models import Feedback
         message = _(
-            'People are awaiting your feedback! Please give it to them at {}!'.format(settings.FRONTEND_HOSTNAME)
+            "Hey, we noticed that you haven't given feedback yet, please help your colleagues by giving them some feedback at {}".
+            format(settings.FRONTEND_HOSTNAME)
         )
-
         for user in self.participants_senders.all():
             if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE).exists():
                 messenger = Messenger(user=user)
