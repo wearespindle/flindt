@@ -7,6 +7,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import axios from 'axios';
 
+import { API_URL } from '../../constants/ApiConstants';
+
 // Require jQuery for the AJAX call.
 var $ = require('jquery');
 
@@ -25,7 +27,7 @@ class InfoModal extends React.Component {
 
         axios({
             method: 'GET',
-            url: `http://localhost:8005/api/v1/roles/${id}/`,
+            url: `${API_URL}/api/v1/roles/${id}/`,
             headers: {Authorization: `Bearer ${accessToken}`},
         }).then((response) => {
             const { name, purpose, accountabilities } = response.data;
