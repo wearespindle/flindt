@@ -5,6 +5,8 @@ FeedbackRow
 
 import React from 'react';
 import { Link } from 'react-router';
+import Time from 'react-time';
+require('moment/locale/nl');
 
 class FeedbackRow extends React.Component {
 
@@ -63,7 +65,7 @@ class FeedbackRow extends React.Component {
                     }
                 </td>
                 <td data-label="Cirkel">{ circle }</td>
-                <td data-label="{dateLabel}">1 sept. 2016</td>
+                <td data-label="{dateLabel}"><Time value={this.props.details.date} locale='NL' format="D MMMM YYYY" /></td>
                 <td data-label="Acties">
                     { action }
                 </td>
