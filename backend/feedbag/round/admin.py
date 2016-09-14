@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.utils.translation import ugettext as _
 
 from django_object_actions import DjangoObjectActions
-from feedbag.integrations.importer import GlassFrogImporter
 
 from .models import Round
 from .manager import RoundManager
