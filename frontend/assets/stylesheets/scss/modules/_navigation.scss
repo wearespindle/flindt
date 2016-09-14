@@ -1,5 +1,6 @@
 .navigation--wrapper {
     background: $color-primary-50;
+    position: relative;
 
     @media (min-width: $breakpoint-30) {
         @include grid(14);
@@ -44,7 +45,19 @@
             }
         }
 
+        &.logout--link {
+            position: relative;
 
+            @media (min-width: $breakpoint-30) {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                border-top: 1px solid #6d717e;
+                border-bottom: 0;
+            }
+
+        }
 
         &:first-child {
             border-top: 1px solid #6d717e;

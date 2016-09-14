@@ -5,8 +5,12 @@ from rest_framework.response import Response
 from feedbag.feedback.models import Feedback
 from feedbag.feedback.serializers import FeedbackSerializer
 
+from django.shortcuts import get_object_or_404
+
 from .models import User, ExtraUserInfo, ExtraUserInfoCategory
 from .serializers import UserSerializer, ExtraUserInfoSerializer, ExtraUserInfoCategorySerializer
+
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -51,3 +55,17 @@ class ExtraUserInfoCategoryViewSet(viewsets.ModelViewSet):
     """
     queryset = ExtraUserInfoCategory.objects.all()
     serializer_class = ExtraUserInfoCategorySerializer
+
+
+class GetUserByRequest(viewsets.ViewSet):
+    """
+    API endpoint that returns a user object of the logged in user.
+    """
+
+    def list(self, request):
+        queryset = User.objects.filter(email=self.request.user.email)
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def get_queryset(self):
+        return User.objects.filter(email=self.request.user.email)

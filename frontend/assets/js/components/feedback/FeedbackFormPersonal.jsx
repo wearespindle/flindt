@@ -1,40 +1,67 @@
 /*
-  FeedbackFormPerson
-  <FeedbackFormPerson/>
+  FeedbackFormPersonal
+  <FeedbackFormPersonal/>
 */
 
 import React from 'react';
 import { Link } from 'react-router';
 
 
-class FeedbackFormPerson extends React.Component {
+class FeedbackFormPersonal extends React.Component {
+    constructor(props) {
+        super(props);
 
-    componentWillMount() {
-        this.props.fetchFeedbackAsSender();
+        this._handleSubmit = this._handleSubmit.bind(this);
+        this._setAnswer = this._setAnswer.bind(this);
+
+        this.state = {
+            id: this.props.params.feedbackId,
+            answer: '',
+        };
     }
 
-    saveFeedback() {
-        // const personalFeedbackQuestion = this.refs.personalFeedbackQuestion.value;
-        // const personalFeedbackAnswer = this.refs.personalFeedbackAnswer.value;
-        // const { feedbackId } = this.props.params;
-        // const { feedbackPositives, feedbackImprovements } = this.props.addFeedback;
-        //
-        // this.props.saveFeedback(feedbackId, feedbackPositives, feedbackImprovements,
-        // personalFeedbackQuestion, personalFeedbackAnswer);
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.feedback.loading) {
+            return false;
+        }
+
+        const answer = nextProps.feedback.feedback.individual.answer;
+
+        this.setState({
+            answer,
+        });
+
+        return true;
+    }
+
+    _handleSubmit() {
+        const { id, answer } = this.state;
+
+        let accessToken = this.props.user.user.access_token;
+
+        this.props.editFeedback({
+            id,
+            status: 1,
+            individual: {answer},
+        }, accessToken);
+    }
+
+    _setAnswer(event) {
+        this.setState({
+            answer: event.target.value,
+        });
+    }
+
+    componentWillMount() {
+        let accessToken = this.props.user.user.access_token;
+
+        this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
     }
 
     render() {
-        const { feedback, loading, error } = this.props.as_sender_data;
-        let incomplete = [];
+        const { feedback, loading, error } = this.props.feedback;
 
-        Object.keys(feedback).map((key) => {
-            if (feedback[key].status === 'incomplete') {
-                incomplete.push(feedback[key]);
-            }
-            return null;
-        });
-
-        if (!incomplete.length) {
+        if (loading) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
@@ -62,10 +89,7 @@ class FeedbackFormPerson extends React.Component {
             );
         }
 
-        const postIndex = incomplete.findIndex((post) =>
-            post.id === parseInt(this.props.params.personId, 0));
-
-        let person = incomplete[postIndex];
+        let person = feedback.recipient;
 
         return (
             <div className="content--wrapper">
@@ -92,7 +116,7 @@ class FeedbackFormPerson extends React.Component {
                             <tbody>
                                 <tr>
                                     <td data-label="Persoon">
-                                        { person.name }
+                                        {person.first_name} {person.last_name}
                                     </td>
                                 </tr>
                             </tbody>
@@ -101,16 +125,14 @@ class FeedbackFormPerson extends React.Component {
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
                                 <label htmlFor="personalFeedbackQuestion">
-                                    Als { person.name } een auto zou zijn wat voor auto zou hij dan zijn?
+                                    Als {person.first_name} een auto zou zijn wat voor auto zou hij/zij dan zijn en waarom?
                                 </label>
-                                <textarea id="personalFeedbackQuestion" rows="5" />
-                            </div>
-                        </div>
-
-                        <div className="feedback-form--row">
-                            <div className="feedback-form--form">
-                                <label htmlFor="whyfeedback">Waarom vind je dat?</label>
-                                <textarea id="whyfeedback" rows="5" />
+                                <textarea
+                                    id="personalFeedbackQuestion"
+                                    rows="5"
+                                    onChange={this._setAnswer}
+                                    value={this.state.answer}
+                                />
                             </div>
                         </div>
                     </div>
@@ -118,22 +140,22 @@ class FeedbackFormPerson extends React.Component {
                     <Link to="/" className="action--button neutral">
                         <i className="fa fa-chevron-left" /> Terug naar overzicht
                     </Link>
-                    <a onClick={this.handleSubmit} className="action--button is-right">Opslaan</a>
+                    <a onClick={this._handleSubmit} className="action--button is-right">Opslaan</a>
                 </div>
             </div>
         );
     }
 }
 
-FeedbackFormPerson.propTypes = {
+FeedbackFormPersonal.propTypes = {
     fetchFeedbackAsSender: React.PropTypes.func,
     as_sender_data: React.PropTypes.object,
     params: React.PropTypes.object,
 };
 
 // Set contextType for route to be able to go back and forth in History.
-FeedbackFormPerson.contextTypes = {
+FeedbackFormPersonal.contextTypes = {
     router: React.PropTypes.object.isRequired,
 };
 
-export default FeedbackFormPerson;
+export default FeedbackFormPersonal;

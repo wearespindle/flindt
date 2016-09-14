@@ -29,6 +29,10 @@ body {
 
     &.has-blue-background {
         background-color: $color-primary-50;
+
+        .spinner > div {
+            background-color: $white;
+        }
     }
 }
 

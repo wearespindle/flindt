@@ -30,6 +30,7 @@ let paths = {
     img: './assets/images',
     js: {
         src: './assets/js/**/*.js',
+        jsxSrc: './assets/js/**/*.jsx',
         jsIndex: './assets/js/index.js',
     },
     sass: {
@@ -96,7 +97,8 @@ function bundleApp(isProduction) {
         .bundle()
         .on('error', handleErrors)
         .pipe(source('index.js'))
-        .pipe(gulp.dest('./compiled-assets/scripts/'));
+        .pipe(gulp.dest('./compiled-assets/scripts/'))
+        .pipe(reload({stream: true}));
 }
 
 
@@ -147,6 +149,7 @@ gulp.task('sass', function() {
  */
 gulp.task('watch', function() {
     gulp.watch(paths.js.src, ['js']);
+    gulp.watch(paths.js.jsxSrc, ['js']);
     gulp.watch(paths.sass.src, ['sass']);
     gulp.watch(paths.html, function() {
         return gulp.src('')

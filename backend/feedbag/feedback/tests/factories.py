@@ -9,6 +9,7 @@ from faker.factory import Factory
 from feedbag.feedback.models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
 from feedbag.role.tests.factories import RoleFactory
 from feedbag.user.models import User
+from feedbag.role.models import Role
 
 faker = Factory.create('nl_NL')
 past_date = datetime.datetime.today() - datetime.timedelta(days=10)
@@ -32,6 +33,7 @@ class RatingFactory(DjangoModelFactory):
 
 
 class RemarkFactory(DjangoModelFactory):
+
     rating = SubFactory(RatingFactory)
     content = LazyAttribute(lambda o: faker.text())
 
@@ -49,7 +51,7 @@ class FeedbackOnIndividualFactory(DjangoModelFactory):
 
 class FeedbackOnRoleFactory(DjangoModelFactory):
     role = SubFactory(RoleFactory)
-    remark = SubFactory(RemarkFactory)
+    remarks = SubFactory(RemarkFactory)
 
     class Meta:
         model = FeedbackOnRole

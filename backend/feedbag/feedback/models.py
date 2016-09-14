@@ -32,9 +32,10 @@ class Remark(FeedBagBaseModel):
 
     A Feedback can link to a rating to confer an emotion.
     """
-    rating = models.ManyToManyField(
+    rating = models.ForeignKey(
         Rating,
-        blank=True,
+        related_name='rating',
+        null=True
     )
     content = models.TextField(_('content'))
 
@@ -65,7 +66,7 @@ class FeedbackOnIndividual(FeedBagBaseModel):
     answer = models.TextField(blank=True,)
 
     def __str__(self):
-        return self.question
+        return str(self.question)
 
 
 class FeedbackOnRole(FeedBagBaseModel):
@@ -73,7 +74,7 @@ class FeedbackOnRole(FeedBagBaseModel):
     Model for the feedback on roles.
     """
     role = models.ForeignKey(Role, blank=True, null=True)
-    remark = models.ManyToManyField(
+    remarks = models.ManyToManyField(
         Remark,
         blank=True,
     )

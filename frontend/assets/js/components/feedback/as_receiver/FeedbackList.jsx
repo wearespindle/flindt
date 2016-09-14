@@ -8,14 +8,15 @@ import FeedbackRow from '../FeedbackRow';
 
 class FeedbackList extends React.Component {
     componentWillMount() {
-        this.props.fetchFeedbackAsReceiver();
+        let accessToken = this.props.user.user.access_token;
+
+        this.props.fetchFeedbackAsReceiver(accessToken);
     }
 
     render() {
         const { feedback, loading, error } = this.props.as_receiver_data;
-        const { complete, incomplete } = feedback;
 
-        if (loading || !complete) {
+        if (loading) {
             return (
                 <div>
                     <h2>Loading...</h2>
@@ -30,30 +31,36 @@ class FeedbackList extends React.Component {
 
         return (
             <div>
-                <h2>Ontvangen Feedback</h2>
+                <div className="feedbacklist--wrapper">
+                    <h2>Ontvangen feedback</h2>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Persoon</th>
-                            <th>Rol</th>
-                            <th>Cirkel</th>
-                            <th>Gekregen op</th>
-                            <th>Acties</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            Object.keys(complete).map((key) =>
-                                <FeedbackRow
-                                  key={complete[key].id}
-                                  index={key}
-                                  details={complete[key]}
-                                />
-                            )
-                        }
-                    </tbody>
-                </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Persoon</th>
+                                <th>Rol</th>
+                                <th>Cirkel</th>
+                                <th>Gekregen op</th>
+                                <th>Acties</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                feedback.filter((feedbackObject) => {
+                                    // Only display completed feedback.
+                                    return feedbackObject.status === 1;
+                                }).map((feedbackObject) =>
+                                    <FeedbackRow
+                                        key={feedbackObject.id}
+                                        index={feedbackObject.id}
+                                        feedbackType="received"
+                                        details={feedbackObject}
+                                        />
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
@@ -62,7 +69,8 @@ class FeedbackList extends React.Component {
 FeedbackList.propTypes = {
     fetchFeedbackAsReceiver: React.PropTypes.func,
     as_receiver_data: React.PropTypes.object,
-    feedback: React.PropTypes.object,
+    accessToken: React.PropTypes.string,
+    user: React.PropTypes.object,
 };
 
 export default FeedbackList;

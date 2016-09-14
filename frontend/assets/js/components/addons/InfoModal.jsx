@@ -5,6 +5,7 @@
 
 import React from 'react';
 import {Link} from 'react-router';
+import axios from 'axios';
 
 // Require jQuery for the AJAX call.
 var $ = require('jquery');
@@ -19,26 +20,24 @@ class InfoModal extends React.Component {
     }
 
     componentDidMount() {
-        let id = this.props.details.glassFrogId;
-        this.serverRequest = $.get(`https://glassfrog.holacracy.org/api/v3/roles/
-                                    ${id}?api_key=d0f15c2543e30e70e4dcc6d6b3331170430a198b`,
-                                    (result) => {
-                                        let roleDetails = result.roles[0];
-                                        let {name, purpose} = roleDetails;
-                                        let accountabilities = result.linked.accountabilities;
+        let id = this.props.details.roleId;
+        let accessToken = this.props.user.user.access_token;
 
-                                        this.setState({
-                                            data: {
-                                                purpose,
-                                                name,
-                                                accountabilities,
-                                            },
-                                        });
-                                    });
-    }
-
-    componentWillUnmount() {
-        this.serverRequest.abort();
+        axios({
+            method: 'GET',
+            url: `http://localhost:8005/api/v1/roles/${id}/`,
+            headers: {Authorization: `Bearer ${accessToken}`},
+        }).then((response) => {
+            const { name, purpose, accountabilities } = response.data;
+            this.setState({
+                data: {
+                    name,
+                    purpose,
+                    accountabilities,
+                },
+            });
+        }).catch((error) => {
+        });
     }
 
     render() {
@@ -47,7 +46,7 @@ class InfoModal extends React.Component {
             return (
                 <div>
                     <div className="modal--wrapper show">
-                        <a onClick={this._closeModal} className="modal--close"><i className="fa fa-close" /></a>
+                        <a onClick={this.props.closeModal} className="modal--close"><i className="fa fa-close" /></a>
                         <div className="modal--content">
                             <div className="spinner">
                                 <div className="bounce1" />
@@ -75,11 +74,7 @@ class InfoModal extends React.Component {
 
                         <h3>Accountabilities</h3>
                         <ul>
-                            {
-                                Object.keys(accountabilities).map((key) =>
-                                    <li key={key}>{ this.state.data.accountabilities[key].description }</li>
-                                )
-                            }
+                            { accountabilities }
                         </ul>
                     </div>
                 </div>
@@ -89,10 +84,10 @@ class InfoModal extends React.Component {
     }
 }
 
-
 InfoModal.propTypes = {
     closeModal: React.PropTypes.func,
     details: React.PropTypes.object,
+    user: React.PropTypes.object,
 };
 
 export default InfoModal;
