@@ -14,7 +14,7 @@ class RatingRows extends React.Component {
             };
 
             remarks.map((remark) => {
-                if (remark.rating.id === rating.id) {
+                if (remark.rating === rating.id) {
                     ratingObject.items.push(remark);
                 }
 

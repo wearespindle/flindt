@@ -57,15 +57,17 @@ class FeedbackRow extends React.Component {
                 <td data-label="Rol">
                     {
                         role &&
-                        <span>{role}</span>
+                            <span>{role}</span>
                     }
                     {
                         !role &&
-                        <span className="feedback-type-indicator">Persoonlijk</span>
+                            <span className="feedback-type-indicator">Persoonlijk</span>
                     }
                 </td>
                 <td data-label="Cirkel">{ circle }</td>
-                <td data-label="{dateLabel}"><Time value={this.props.details.date} locale='NL' format="D MMMM YYYY" /></td>
+                <td data-label="{dateLabel}">
+                    <Time value={this.props.details.date} locale="NL" format="D MMMM YYYY" />
+                </td>
                 <td data-label="Acties">
                     { action }
                 </td>

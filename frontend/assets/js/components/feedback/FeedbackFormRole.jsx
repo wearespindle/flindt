@@ -55,7 +55,7 @@ class FeedbackFormRole extends React.Component {
     handleChange(content, ratingId, index) {
         const remarks = this.state.remarks;
 
-        if (remarks.indexOf(index)) {
+        if (remarks[index]) {
             remarks[index].content = content;
         } else {
             remarks[index] = {
@@ -151,15 +151,22 @@ class FeedbackFormRole extends React.Component {
                         </table>
                     </div>
                     {
-                        ratings.map((rating, index) =>
-                            <FeedbackFormRoleRow
-                                rating={ratings[index]}
-                                key={ratings[index].id}
-                                callbackParent={this.handleChange}
-                                index={index}
-                                value={feedback.role.remarks[index].content}
-                            />
-                        )
+                        ratings.map((rating, index) => {
+                            let value = '';
+
+                            if (feedback.role.remarks[index]) {
+                                value = feedback.role.remarks[index].content;
+                            }
+                            return (
+                                <FeedbackFormRoleRow
+                                  rating={ratings[index]}
+                                  key={ratings[index].id}
+                                  callbackParent={this.handleChange}
+                                  index={index}
+                                  value={value}
+                                />
+                            );
+                        })
                     }
 
                     <Link to="/" className="action--button neutral">

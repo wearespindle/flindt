@@ -16,7 +16,6 @@ class RemarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Remark
         fields = ('id', 'rating', 'content',)
-        depth = 1
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -69,7 +68,6 @@ class FeedbackSerializer(serializers.ModelSerializer):
                     role_remark.content = remark.get('content')
                     role_remark.save()
                 else:
-                    # New remark, so create a new one and add to the set.
                     instance.role.remarks.create(**remark)
 
         for (key, value) in validated_data.items():
