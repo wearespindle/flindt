@@ -13,7 +13,7 @@ export const GET_USER_DATA_FAILURE = 'GET_USER_DATA_FAILURE';
 export function userLogin(googleToken) {
     const request = axios({
         method: 'post',
-        url: `${API_URL}/auth/convert-token`,
+        url: `${API_URL}/auth/convert-token/`,
         data: {
             grant_type: 'convert_token',
             client_id: 'DsHaTowmFoOr3GQLOOoJaXQpViaV6NsIFzOVY3ME',
