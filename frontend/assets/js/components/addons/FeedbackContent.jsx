@@ -1,4 +1,6 @@
 import React from 'react';
+import Time from 'react-time';
+require('moment/locale/nl');
 
 import InfoModalButton from '../addons/InfoModalButton';
 import RatingRows from '../addons/RatingRows';
@@ -42,7 +44,7 @@ class FeedbackContent extends React.Component {
                                 <InfoModalButton {...this.props} roleId={role.parent.parent} />
                             </td>
                             <td data-label="Ontvangen op">
-                                { feedback.date }
+                                <Time value={feedback.date} locale='NL' format="D MMMM YYYY" />
                             </td>
                         </tr>
                     </tbody>
