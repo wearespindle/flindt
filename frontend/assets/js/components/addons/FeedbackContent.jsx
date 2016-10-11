@@ -8,7 +8,8 @@ import RatingRows from '../addons/RatingRows';
 class FeedbackContent extends React.Component {
 
     render() {
-        const { feedback, ratings, person } = this.props;
+        const { feedback, ratings, person, receiver } = this.props;
+        console.log(receiver);
 
         let table;
 
@@ -82,10 +83,9 @@ class FeedbackContent extends React.Component {
                     feedback.individual &&
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
-                                <label>
-                                    Als {person.first_name}
-                                    een auto zou zijn wat voor auto zou hij/zij dan zijn en waarom?
-                                </label>
+                                <strong>
+                                    Als {receiver.first_name} een auto zou zijn wat voor auto zou hij/zij dan zijn en waarom?
+                                </strong>
                                 <p>{feedback.individual.answer}</p>
                             </div>
                         </div>

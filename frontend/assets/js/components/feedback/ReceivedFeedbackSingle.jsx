@@ -127,6 +127,7 @@ class ReceivedFeedback extends React.Component {
 
         let table;
         let person = feedback.sender;
+        let receiver = feedback.recipient;
 
         return (
             <div className="content--wrapper">
@@ -144,7 +145,7 @@ class ReceivedFeedback extends React.Component {
                     <h2>Ontvangen feedback</h2>
 
                     <div className="feedback-form--wrapper">
-                        <FeedbackContent {...this.props} person={person} feedback={feedback} ratings={ratings} />
+                        <FeedbackContent {...this.props} person={person} receiver={receiver} feedback={feedback} ratings={ratings} />
 
                         <div className="feedback-form--row">
                             <div className="l-48">

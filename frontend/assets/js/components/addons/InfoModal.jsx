@@ -40,6 +40,8 @@ class InfoModal extends React.Component {
             });
         }).catch((error) => {
         });
+
+        console.log(this.state.data);
     }
 
     render() {
@@ -63,6 +65,9 @@ class InfoModal extends React.Component {
         }
 
         let {name, purpose, accountabilities} = this.state.data;
+        let accountabilitiesArray;
+        accountabilitiesArray = accountabilities.replace(/'/g, '"');
+        accountabilitiesArray = JSON.parse(accountabilitiesArray);
 
         return (
             <div>
@@ -74,10 +79,18 @@ class InfoModal extends React.Component {
                         <h3>Purpose</h3>
                         <p>{ purpose }</p>
 
-                        <h3>Accountabilities</h3>
-                        <ul>
-                            { accountabilities }
-                        </ul>
+                        { accountabilitiesArray &&
+                            <div>
+                                <h3>Accountabilities</h3>
+                                <ul>
+                                    {
+                                        accountabilitiesArray.map((accountability, index) =>
+                                            <li key={index}>{accountability}</li>
+                                        )
+                                    }
+                                </ul>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="overlay show" />
