@@ -198,8 +198,8 @@ class ReceivedFeedback extends React.Component {
                                 <h3>Are you planning on doing anything with this feedback?</h3>
                                 <form>
                                     <ul className="feedback--form-radiolist">
-                                        <li><input id="yes" name="feedback-action" type="radio" value={true} checked={this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="yes">Ja, namelijk</label></li>
-                                        <li><input id="no" name="feedback-action" type="radio" value={false} checked={!this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="no">Nee, want</label></li>
+                                        <li><input id="yes" name="feedback-action" type="radio" value={true} checked={this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="yes">Yes, because</label></li>
+                                        <li><input id="no" name="feedback-action" type="radio" value={false} checked={!this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="no">No, because</label></li>
                                     </ul>
                                 </form>
                                 <textarea rows="5" value={this.state.actionableContent} onChange={this.handleActionableContentChange} />

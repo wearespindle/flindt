@@ -28,22 +28,21 @@ class FeedbackContent extends React.Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label="Persoon">
+                            <td data-label="Person">
                                 { person.first_name } { person.last_name}
                             </td>
-                            <td data-label="Rol">
+                            <td data-label="Role">
                                 { role.name }
                                 <InfoModalButton {...this.props} roleId={role.id} />
                             </td>
-                            <td data-label="Subcirkel">
+                            <td data-label="Subcircle">
                                 { role.parent.name }
                                 <InfoModalButton {...this.props} roleId={role.parent.id} />
                             </td>
-                            <td data-label="Cirkel">
+                            <td data-label="Circle">
                                 Devhouse Spindle
-                                <InfoModalButton {...this.props} roleId={role.parent.parent} />
                             </td>
-                            <td data-label="Ontvangen op">
+                            <td data-label="Received on">
                                 <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
                             </td>
                         </tr>
