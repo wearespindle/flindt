@@ -6,6 +6,7 @@ FeedbackRow
 import React from 'react';
 import { Link } from 'react-router';
 import Time from 'react-time';
+
 require('moment/locale/nl');
 
 class FeedbackRow extends React.Component {
@@ -21,14 +22,14 @@ class FeedbackRow extends React.Component {
     render() {
         let role = null;
         let circle = null;
+        let action,
+            dateLabel;
 
-        if(this.props.details.role) {
+        if (this.props.details.role) {
             role = this.props.details.role.role.name;
             circle = this.props.details.role.role.parent.name;
         }
 
-        let dateLabel;
-        let action;
         let person = this.props.details.recipient;
 
         // Change the labels and links in the table row to reuse this component.
@@ -38,17 +39,17 @@ class FeedbackRow extends React.Component {
 
             url = (role) ? 'give-feedback' : 'give-personal-feedback';
 
-            action = <Link to={`/${url}/${this.props.details.id}`}><i className="fa fa-undo" /> Feedback geven</Link>;
+            action = <Link to={`/${url}/${this.props.details.id}`}><i className="fa fa-undo" /> Give feedback</Link>;
         } else if (this.props.feedbackType === 'received') {
             dateLabel = 'Gekregen op';
             person = this.props.details.sender;
 
-            action = <Link to={`/received-feedback/${this.props.details.id}`}><i className="fa fa-eye" /> Feedback bekijken</Link>;
+            action = <Link to={`/received-feedback/${this.props.details.id}`}><i className="fa fa-eye" /> Check feedback</Link>;
         } else {
 
             dateLabel = 'Gegeven op';
 
-            action = <Link to={`/check-feedback/${this.props.details.id}`}><i className="fa fa-eye" /> Feedback bekijken</Link>;
+            action = <Link to={`/check-feedback/${this.props.details.id}`}><i className="fa fa-eye" /> Check feedback</Link>;
         }
 
         return (
@@ -61,12 +62,12 @@ class FeedbackRow extends React.Component {
                     }
                     {
                         !role &&
-                            <span className="feedback-type-indicator">Persoonlijk</span>
+                            <span className="feedback-type-indicator">Personal</span>
                     }
                 </td>
                 <td data-label="Cirkel">{ circle }</td>
                 <td data-label="{dateLabel}">
-                    <Time value={this.props.details.date} locale="NL" format="D MMMM YYYY" />
+                    <Time value={this.props.details.date} locale="EN" format="D MMMM YYYY" />
                 </td>
                 <td data-label="Acties">
                     { action }

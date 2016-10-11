@@ -1,15 +1,14 @@
 import React from 'react';
 import Time from 'react-time';
-require('moment/locale/nl');
-
 import InfoModalButton from '../addons/InfoModalButton';
 import RatingRows from '../addons/RatingRows';
+
+require('moment/locale/nl');
 
 class FeedbackContent extends React.Component {
 
     render() {
         const { feedback, ratings, person, receiver } = this.props;
-        console.log(receiver);
 
         let table;
 
@@ -20,11 +19,11 @@ class FeedbackContent extends React.Component {
                 <table className="feedback-form--meta">
                     <thead>
                         <tr>
-                            <th>Persoon</th>
-                            <th>Rol</th>
-                            <th>Subcirkel</th>
-                            <th>Cirkel</th>
-                            <th>Ontvangen op</th>
+                            <th>Person</th>
+                            <th>Role</th>
+                            <th>Subcircle</th>
+                            <th>Circle</th>
+                            <th>Received on</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +44,7 @@ class FeedbackContent extends React.Component {
                                 <InfoModalButton {...this.props} roleId={role.parent.parent} />
                             </td>
                             <td data-label="Ontvangen op">
-                                <Time value={feedback.date} locale='NL' format="D MMMM YYYY" />
+                                <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
                             </td>
                         </tr>
                     </tbody>
@@ -56,12 +55,12 @@ class FeedbackContent extends React.Component {
                 <table className="feedback-form--meta">
                     <thead>
                         <tr>
-                            <th>Persoon</th>
+                            <th>Person</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label="Persoon">
+                            <td data-label="Person">
                                 { person.first_name } { person.last_name}
                             </td>
                         </tr>
@@ -84,7 +83,7 @@ class FeedbackContent extends React.Component {
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
                                 <strong>
-                                    Als {receiver.first_name} een auto zou zijn wat voor auto zou hij/zij dan zijn en waarom?
+                                    If {receiver.first_name} was a car, which car would he/she be, and why?
                                 </strong>
                                 <p>{feedback.individual.answer}</p>
                             </div>

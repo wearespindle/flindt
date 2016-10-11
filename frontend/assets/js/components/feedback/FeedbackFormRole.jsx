@@ -110,23 +110,23 @@ class FeedbackFormRole extends React.Component {
                     <div className="content--header-spacing" />
                     <div className="content--header-breadcrumbs">
                         <ul>
-                            <li>Feedback geven</li>
-                            <li>Feedback op rollen</li>
+                            <li>Give feedback</li>
+                            <li>Feedback on roles</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="content">
-                    <h2>Feedback op rollen</h2>
+                    <h2>Feedback on roles</h2>
 
                     <div className="feedback-form--wrapper">
                         <table className="feedback-form--meta">
                             <thead>
                                 <tr>
-                                    <th>Persoon</th>
-                                    <th>Rol</th>
-                                    <th>Subcirkel</th>
-                                    <th>Cirkel</th>
+                                    <th>Person</th>
+                                    <th>Role</th>
+                                    <th>Subcircle</th>
+                                    <th>Circle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -170,9 +170,9 @@ class FeedbackFormRole extends React.Component {
                     }
 
                     <Link to="/" className="action--button neutral">
-                        <i className="fa fa-chevron-left" /> Terug naar overzicht
+                        <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
-                    <a onClick={this._handleSubmit} className="action--button is-right">Opslaan</a>
+                    <a onClick={this._handleSubmit} className="action--button is-right">Save</a>
                 </div>
             </div>
         );

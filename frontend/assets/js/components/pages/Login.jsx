@@ -85,7 +85,7 @@ class Login extends React.Component {
         return (
             <div className="l-container">
                 <div className="login--wrapper">
-                    <h1>Inloggen</h1>
+                    <h1>Login</h1>
 
                     { this.props.user.error &&
                         <div className="label--alert">
@@ -106,7 +106,7 @@ class Login extends React.Component {
                         </ul>
 
                         <div className="login--actions">
-                            <a href="/">Wachtwoord vergeten?</a>
+                            <a href="/">Forgot password?</a>
                         </div>
 
                         <div className="login--actions">

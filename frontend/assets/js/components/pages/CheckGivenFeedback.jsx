@@ -13,7 +13,7 @@ class CheckGivenFeedback extends React.Component {
 
         this.state = {
             id: this.props.params.feedbackId,
-        }
+        };
     }
 
     render() {
@@ -27,14 +27,14 @@ class CheckGivenFeedback extends React.Component {
                         <div className="content--header-spacing" />
                         <div className="content--header-breadcrumbs">
                             <ul>
-                                <li>Feedback bekijken</li>
-                                <li>Feedback op rollen</li>
+                                <li>Check feedback</li>
+                                <li>Feedback on roles</li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="content">
-                        <h2>Feedback op rollen</h2>
+                        <h2>Feedback on roles</h2>
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
@@ -57,25 +57,25 @@ class CheckGivenFeedback extends React.Component {
                     <div className="content--header-spacing" />
                     <div className="content--header-breadcrumbs">
                         <ul>
-                            <li>Feedback bekijken</li>
-                            <li>Feedback op { (feedback.role) ? 'rollen' : 'persoon' }</li>
+                            <li>Check feedback</li>
+                            <li>Feedback on { (feedback.role) ? 'roles' : 'person' }</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="content">
-                    <h2>Feedback op { (feedback.role) ? ` de rol '${feedback.role.role.name}'` : person.first_name }</h2>
+                    <h2>Feedback on { (feedback.role) ? ` the role '${feedback.role.role.name}'` : person.first_name }</h2>
 
                     <div className="feedback-form--wrapper">
                         <FeedbackContent {...this.props} feedback={feedback} person={person} ratings={ratings} />
                     </div>
 
                     <Link to="/" className="action--button neutral">
-                        <i className="fa fa-chevron-left" /> Terug naar overzicht
+                        <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
                     <Link to={`/${url}/${this.state.id}`} className="action--button is-right">
-                        Feedback aanpassen
+                        Edit feedback
                     </Link>
                 </div>
             </div>

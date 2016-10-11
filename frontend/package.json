@@ -50,6 +50,7 @@
     "axios": "^0.13.1",
     "googleapis": "^12.4.0",
     "jquery": "^2.2.3",
+    "moment": "^2.15.1",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-google-login-component": "^0.5.2",

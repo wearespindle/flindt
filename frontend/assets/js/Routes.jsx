@@ -2,8 +2,6 @@ import React from 'react';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { Provider } from 'react-redux';
 
-
-
 // Main app connector.
 import App from './components/App';
 import LoginContainer from './components/pages/LoginContainer';

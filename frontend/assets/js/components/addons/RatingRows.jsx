@@ -36,7 +36,7 @@ class RatingRows extends React.Component {
                                     <div className="l-5 feedback-form--row-smiley">
                                         <img
                                           src="/compiled-assets/images/positive-feedback.png"
-                                          alt="Wat gaat er goed?"
+                                          alt="What is going well?"
                                         />
                                     </div>
                                     <div className="l-43 feedback-form--form">
@@ -59,7 +59,7 @@ class RatingRows extends React.Component {
                                 <div className="l-5 feedback-form--row-smiley">
                                     <img
                                       src="/compiled-assets/images/negative-feedback.png"
-                                      alt="Wat kan er beter?"
+                                      alt="Are there any improvements?"
                                     />
                                 </div>
                                 <div className="l-43 feedback-form--form">

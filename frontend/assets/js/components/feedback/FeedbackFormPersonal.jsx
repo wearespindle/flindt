@@ -20,6 +20,12 @@ class FeedbackFormPersonal extends React.Component {
         };
     }
 
+    componentWillMount() {
+        let accessToken = this.props.user.user.access_token;
+
+        this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.feedback.loading) {
             return false;
@@ -52,12 +58,6 @@ class FeedbackFormPersonal extends React.Component {
         });
     }
 
-    componentWillMount() {
-        let accessToken = this.props.user.user.access_token;
-
-        this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
-    }
-
     render() {
         const { feedback, loading, error } = this.props.feedback;
 
@@ -68,14 +68,14 @@ class FeedbackFormPersonal extends React.Component {
                         <div className="content--header-spacing" />
                         <div className="content--header-breadcrumbs">
                             <ul>
-                                <li>Feedback geven</li>
-                                <li>Feedback op persoon</li>
+                                <li>Give feedback</li>
+                                <li>Feedback on person</li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="content">
-                        <h2>Feedback op persoon</h2>
+                        <h2>Feedback on person</h2>
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
@@ -97,25 +97,25 @@ class FeedbackFormPersonal extends React.Component {
                     <div className="content--header-spacing" />
                     <div className="content--header-breadcrumbs">
                         <ul>
-                            <li>Feedback geven</li>
-                            <li>Feedback op persoon</li>
+                            <li>Give feedback</li>
+                            <li>Feedback on person</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="content">
-                    <h2>Feedback op persoon</h2>
+                    <h2>Feedback on person</h2>
 
                     <div className="feedback-form--wrapper">
                         <table className="feedback-form--meta">
                             <thead>
                                 <tr>
-                                    <th>Persoon</th>
+                                    <th>Person</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td data-label="Persoon">
+                                    <td data-label="Person">
                                         {person.first_name} {person.last_name}
                                     </td>
                                 </tr>
@@ -125,22 +125,22 @@ class FeedbackFormPersonal extends React.Component {
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
                                 <label htmlFor="personalFeedbackQuestion">
-                                    Als {person.first_name} een auto zou zijn wat voor auto zou hij/zij dan zijn en waarom?
+                                    If {person.first_name} was a car, what car would he/she be, and why?
                                 </label>
                                 <textarea
-                                    id="personalFeedbackQuestion"
-                                    rows="5"
-                                    onChange={this._setAnswer}
-                                    value={this.state.answer}
+                                  id="personalFeedbackQuestion"
+                                  rows="5"
+                                  onChange={this._setAnswer}
+                                  value={this.state.answer}
                                 />
                             </div>
                         </div>
                     </div>
 
                     <Link to="/" className="action--button neutral">
-                        <i className="fa fa-chevron-left" /> Terug naar overzicht
+                        <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
-                    <a onClick={this._handleSubmit} className="action--button is-right">Opslaan</a>
+                    <a onClick={this._handleSubmit} className="action--button is-right">Save</a>
                 </div>
             </div>
         );
@@ -151,6 +151,9 @@ FeedbackFormPersonal.propTypes = {
     fetchFeedbackAsSender: React.PropTypes.func,
     as_sender_data: React.PropTypes.object,
     params: React.PropTypes.object,
+    editFeedback: React.PropTypes.func,
+    fetchFeedback: React.PropTypes.func,
+    feedback: React.PropTypes.object,
 };
 
 // Set contextType for route to be able to go back and forth in History.
