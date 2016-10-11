@@ -1,4 +1,4 @@
-const LOCALHOST = 'http://192.168.99.100:8005';
+const LOCALHOST = 'http://localhost:8005';
 const PRODUCTION = 'https://api.feedbag.wearespindle.com';
 let apiUrl;
 

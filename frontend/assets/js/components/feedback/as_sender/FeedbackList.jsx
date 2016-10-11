@@ -48,16 +48,16 @@ class FeedbackList extends React.Component {
         return (
             <div>
                 <div className="feedbacklist--wrapper">
-                    <h2>Openstaande verzoeken ({numberOfIncompletedRequests})</h2>
+                    <h2>Incoming feedback requests ({numberOfIncompletedRequests})</h2>
 
                     <table>
                         <thead>
                             <tr>
-                                <th>Persoon</th>
-                                <th>Rol</th>
-                                <th>Cirkel</th>
-                                <th>Sluitingsdatum</th>
-                                <th>Acties</th>
+                                <th>Person</th>
+                                <th>Role</th>
+                                <th>Circle</th>
+                                <th>Closing date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,16 +76,16 @@ class FeedbackList extends React.Component {
                 </div>
 
                 <div className="feedbacklist--wrapper">
-                    <h2>Gegeven feedback ({numberOfCompletedRequests})</h2>
+                    <h2>Given feedback ({numberOfCompletedRequests})</h2>
 
                     <table>
                         <thead>
                             <tr>
-                                <th>Persoon</th>
-                                <th>Rol</th>
-                                <th>Cirkel</th>
-                                <th>Gegeven op</th>
-                                <th>Acties</th>
+                                <th>Person</th>
+                                <th>Role</th>
+                                <th>Circle</th>
+                                <th>Given on</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
