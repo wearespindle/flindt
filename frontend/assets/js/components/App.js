@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
                 dispatch(Notifications.error({
                     title: 'Error! 😱😪',
-                    message: 'Er ging iets fout bij het ophalen van de feedback.',
+                    message: 'Something went wrong while fetching the data.',
                     position: 'tr',
                     autoDismiss: 4,
                 }));
@@ -81,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
 
                 dispatch(Notifications.error({
                     title: 'Error! 😱😪',
-                    message: 'Er ging iets fout bij het ophalen van de feedback.',
+                    message: 'Something went wrong while fetching the data.',
                     position: 'tr',
                     autoDismiss: 4,
                 }));
@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 
                     dispatch(Notifications.error({
                         title: 'Error! 😱😪',
-                        message: 'Er ging iets fout bij het opslaan',
+                        message: 'Something went wrong while saving the data!',
                         position: 'tr',
                         autoDismiss: 4,
                     }));
@@ -108,8 +108,8 @@ const mapDispatchToProps = (dispatch) => ({
                     dispatch(editFeedbackSuccess(response.payload));
 
                     dispatch(Notifications.success({
-                        title: 'Succes! 💪🏼😁',
-                        message: 'Je gegevens zijn succesvol verwerkt! Thanks!',
+                        title: 'Sweet Success! 💪🏼😁',
+                        message: 'Your data is succesfully saved! Thanks!',
                         position: 'tr',
                         autoDismiss: 4,
                     }));
@@ -129,7 +129,7 @@ const mapDispatchToProps = (dispatch) => ({
 
                 dispatch(Notifications.error({
                     title: 'Error! 😱😪',
-                    message: 'Er ging iets fout bij het ophalen van de data.',
+                    message: 'Something went wrong while fetching the data.',
                     position: 'tr',
                     autoDismiss: 4,
                 }));

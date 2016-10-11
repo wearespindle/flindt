@@ -43,14 +43,14 @@ class Main extends React.Component {
                 <div className="navigation--wrapper">
                     <ul className="navigation">
                         <li><Link activeClassName="is-active" to="/">
-                            Feedback geven <i className="fa fa-undo" /></Link>
+                            Give feedback <i className="fa fa-undo" /></Link>
                         </li>
                         <li><Link activeClassName="is-active" to="/received-feedback">
-                            Ontvangen feedback <i className="fa fa-thumbs-up" /></Link>
+                            Received feedback <i className="fa fa-thumbs-up" /></Link>
                         </li>
                         <li className="logout--link">
                             <a onClick={this.props.handleLoggedOutUser}>
-                                Uitloggen <i className="fa fa-sign-out" />
+                                Logout <i className="fa fa-sign-out" />
                             </a>
                         </li>
                     </ul>

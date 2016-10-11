@@ -104,14 +104,14 @@ class ReceivedFeedback extends React.Component {
                         <div className="content--header-spacing" />
                         <div className="content--header-breadcrumbs">
                             <ul>
-                                <li>Ontvangen feedback</li>
-                                <li>Ontvangen</li>
+                                <li>Received feedback</li>
+                                <li>Received</li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="content">
-                        <h2>Ontvangen feedback</h2>
+                        <h2>Received feedback</h2>
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
@@ -135,21 +135,21 @@ class ReceivedFeedback extends React.Component {
                     <div className="content--header-spacing" />
                     <div className="content--header-breadcrumbs">
                         <ul>
-                            <li>Ontvangen feedback</li>
-                            <li>Feedback van {person.first_name}</li>
+                            <li>Received feedback</li>
+                            <li>Feedback from {person.first_name}</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="content">
-                    <h2>Ontvangen feedback</h2>
+                    <h2>Received feedback</h2>
 
                     <div className="feedback-form--wrapper">
                         <FeedbackContent {...this.props} person={person} receiver={receiver} feedback={feedback} ratings={ratings} />
 
                         <div className="feedback-form--row">
                             <div className="l-48">
-                                <h3>Hoe waardevol vind je de feedback van {person.first_name}?</h3>
+                                <h3>How valuable is the feedback you received from {person.first_name}?</h3>
                                 <input type="range" className="feedback-form--range" step="1" min="1" max="10" value={this.state.howValuable} onChange={this.handleValuableChange} />
                                 <ul className="range-input-list">
                                     <li>1</li>
@@ -165,14 +165,14 @@ class ReceivedFeedback extends React.Component {
                                 </ul>
 
                                 <div className="range-input-list-output">
-                                    Cijfer: <span>1</span>
+                                    Grade: <span>1</span>
                                 </div>
                             </div>
                         </div>
 
                         <div className="feedback-form--row">
                             <div className="l-48">
-                                <h3>Hoe herkenbaar vind je de feedback van {person.first_name}?</h3>
+                                <h3>How recognizable is the feedback you received from {person.first_name}?</h3>
                                 <input type="range" className="feedback-form--range" step="1" min="1" max="10" value={this.state.howRecognizable} onChange={this.handleRecognizableChange} />
                                 <ul className="range-input-list">
                                     <li>1</li>
@@ -188,14 +188,14 @@ class ReceivedFeedback extends React.Component {
                                 </ul>
 
                                 <div className="range-input-list-output">
-                                    Cijfer: <span>1</span>
+                                    Grade: <span>1</span>
                                 </div>
                             </div>
                         </div>
 
                         <div className="feedback-form--row">
                             <div className="l-48">
-                                <h3>Ben je van plan iets met de feedback te gaan doen?</h3>
+                                <h3>Are you planning on doing anything with this feedback?</h3>
                                 <form>
                                     <ul className="feedback--form-radiolist">
                                         <li><input id="yes" name="feedback-action" type="radio" value={true} checked={this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="yes">Ja, namelijk</label></li>
@@ -208,9 +208,9 @@ class ReceivedFeedback extends React.Component {
                     </div>
 
                     <Link to="/" className="action--button neutral">
-                        <i className="fa fa-chevron-left" /> Terug naar overzicht
+                        <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
-                    <a onClick={this._handleSubmit} className="action--button is-right">Opslaan</a>
+                    <a onClick={this._handleSubmit} className="action--button is-right">Save</a>
                 </div>
             </div>
         );

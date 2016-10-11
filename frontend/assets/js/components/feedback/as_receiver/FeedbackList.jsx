@@ -32,16 +32,16 @@ class FeedbackList extends React.Component {
         return (
             <div>
                 <div className="feedbacklist--wrapper">
-                    <h2>Ontvangen feedback</h2>
+                    <h2>Received feedback</h2>
 
                     <table>
                         <thead>
                             <tr>
-                                <th>Persoon</th>
-                                <th>Rol</th>
-                                <th>Cirkel</th>
-                                <th>Gekregen op</th>
-                                <th>Acties</th>
+                                <th>Person</th>
+                                <th>Role</th>
+                                <th>Circle</th>
+                                <th>Received on</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,11 +51,11 @@ class FeedbackList extends React.Component {
                                     return feedbackObject.status === 1;
                                 }).map((feedbackObject) =>
                                     <FeedbackRow
-                                        key={feedbackObject.id}
-                                        index={feedbackObject.id}
-                                        feedbackType="received"
-                                        details={feedbackObject}
-                                        />
+                                      key={feedbackObject.id}
+                                      index={feedbackObject.id}
+                                      feedbackType="received"
+                                      details={feedbackObject}
+                                    />
                                 )
                             }
                         </tbody>

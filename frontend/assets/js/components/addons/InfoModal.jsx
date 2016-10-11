@@ -40,8 +40,6 @@ class InfoModal extends React.Component {
             });
         }).catch((error) => {
         });
-
-        console.log(this.state.data);
     }
 
     render() {

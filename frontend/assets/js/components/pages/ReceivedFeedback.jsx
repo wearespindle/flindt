@@ -13,7 +13,7 @@ const ReceivedFeedback = (props) =>
             <div className="content--header-spacing" />
             <div className="content--header-breadcrumbs">
                 <ul>
-                    <li>Ontvangen feedback</li>
+                    <li>Received feedback</li>
                 </ul>
             </div>
         </div>
