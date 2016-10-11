@@ -1,11 +1,13 @@
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from feedbag.base.models import FeedBagBaseModel
-from feedbag.user.models import User
 from feedbag.role.models import Role
 from feedbag.round.models import Round
+from feedbag.user.models import User
 
 
 class Rating(FeedBagBaseModel):
@@ -125,3 +127,27 @@ class Feedback(FeedBagBaseModel):
 
     def __str__(self):
         return 'Feedback from {} on {}'.format(self.sender, self.recipient)
+
+    # TODO: FEED-71: We should discern between date_created and date_completed.
+    # If we make changing the status from incomplete to complete an action, the
+    # overwriting of __init__ can be skipped.
+    __original_status = None
+
+    def save(self):
+        """
+        If the status changes, the date should be updated.
+        """
+
+        if self.__original_status != self.status:
+            self.date = timezone.now()
+        super(Feedback, self).save()
+
+    def __init__(self, *args, **kwargs):
+        """
+        When the status changes between 'incomplete' to 'complete', `date` should
+        be updated. To check this, we save the value of `status` when the
+        object is initialized.
+        """
+        super(Feedback, self).__init__(*args, **kwargs)
+        self.__original_status = self.status
+    # END_TODO: FEED-71
