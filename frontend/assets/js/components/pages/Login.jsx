@@ -71,7 +71,6 @@ class Login extends React.Component {
 
 
     render() {
-
         if (this.props.user.loading) {
             return (
                 <div className="spinner">

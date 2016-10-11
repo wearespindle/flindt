@@ -89,6 +89,7 @@ CheckGivenFeedback.propTypes = {
     params: React.PropTypes.object,
     showModal: React.PropTypes.func,
     fetchFeedback: React.PropTypes.func,
+    fetchRatings: React.PropTypes.func,
     user: React.PropTypes.object,
     feedbackId: React.PropTypes.string,
 };

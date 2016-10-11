@@ -27,7 +27,7 @@ class ReceivedFeedback extends React.Component {
             howValuable: 5,
             actionable: false,
             actionableContent: '',
-        }
+        };
     }
 
     componentWillMount() {
@@ -70,13 +70,13 @@ class ReceivedFeedback extends React.Component {
     handleRecognizableChange(event) {
         this.setState({
             howRecognizable: event.target.value,
-        })
+        });
     }
 
     handleValuableChange(event) {
         this.setState({
             howValuable: event.target.value,
-        })
+        });
     }
 
     handleActionableChange(event) {
@@ -84,13 +84,13 @@ class ReceivedFeedback extends React.Component {
 
         this.setState({
             actionable: value,
-        })
+        });
     }
 
     handleActionableContentChange(event) {
         this.setState({
             actionableContent: event.target.value,
-        })
+        });
     }
 
     render() {
@@ -202,7 +202,11 @@ class ReceivedFeedback extends React.Component {
                                         <li><input id="no" name="feedback-action" type="radio" value={false} checked={!this.state.actionable} onChange={this.handleActionableChange} /><label htmlFor="no">No, because</label></li>
                                     </ul>
                                 </form>
-                                <textarea rows="5" value={this.state.actionableContent} onChange={this.handleActionableContentChange} />
+                                <textarea
+                                  rows="5"
+                                  value={this.state.actionableContent}
+                                  onChange={this.handleActionableContentChange}
+                                />
                             </div>
                         </div>
                     </div>
@@ -216,5 +220,13 @@ class ReceivedFeedback extends React.Component {
         );
     }
 }
+
+ReceivedFeedback.propTypes = {
+    fetchFeedback: React.PropTypes.func,
+    fetchRatings: React.PropTypes.func,
+    editFeedback: React.PropTypes.func,
+    params: React.PropTypes.object,
+    user: React.PropTypes.object,
+};
 
 export default ReceivedFeedback;
