@@ -9,6 +9,7 @@ class FeedbackContent extends React.Component {
 
     render() {
         const { feedback, ratings, person, receiver } = this.props;
+        console.log(2);
 
         let table;
 
@@ -82,7 +83,7 @@ class FeedbackContent extends React.Component {
                         <div className="feedback-form--row">
                             <div className="feedback-form--form">
                                 <strong>
-                                    If {receiver.first_name} was a car, which car would he/she be, and why?
+                                    If {feedback.recipient.first_name} was a car, which car would he/she be, and why?
                                 </strong>
                                 <p>{feedback.individual.answer}</p>
                             </div>
