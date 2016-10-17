@@ -97,7 +97,7 @@ class ReceivedFeedback extends React.Component {
         const { feedback, loading, error } = this.props.feedback;
         const ratings = this.props.ratings;
 
-        if (loading || !ratings.length) {
+        if (loading) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
