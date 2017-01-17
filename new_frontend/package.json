@@ -1,0 +1,68 @@
+{
+  "name": "Feedbag",
+  "version": "1.0.1",
+  "description": "Refactor of our Feedbag tool with webpack",
+  "author": {
+    "name": "Spindle",
+    "url": "https://wearespindle.com"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wearespindle/feedbacktool-frontend/"
+  },
+  "scripts": {
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
+    "test:watch": "npm run test -- --watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "chai": "^3.5.0",
+    "chai-jquery": "^2.0.0",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0",
+    "jquery": "^2.2.1",
+    "jsdom": "^8.1.0",
+    "mocha": "^2.4.5",
+    "react-addons-test-utils": "^0.14.7"
+  },
+  "dependencies": {
+    "axios": "^0.13.1",
+    "babel-preset-stage-1": "^6.1.18",
+    "connect-history-api-fallback": "1.3.0",
+    "eslint-plugin-react": "^6.9.0",
+    "googleapis": "^12.4.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.8",
+    "gulp-webpack": "^1.5.0",
+    "jquery": "^2.2.3",
+    "lodash": "^3.10.1",
+    "moment": "^2.15.1",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-google-login-component": "^0.5.2",
+    "react-notification-system": "^0.2.10",
+    "react-notification-system-redux": "^1.0.8",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.6.1",
+    "react-router-redux": "^4.0.4",
+    "react-time": "^4.2.0",
+    "redux": "^3.5.2",
+    "redux-form": "^6.4.3",
+    "redux-promise": "^0.5.3",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0",
+    "webpack-stream": "^3.2.0"
+  }
+}
