@@ -1,8 +1,5 @@
 db:
   image: mariadb:latest
-  ports:
-    # ext:int port.
-    - "3306:3306"
   environment:
     - MYSQL_DATABASE=feedbag
     - MYSQL_ROOT_PASSWORD=feedbag
