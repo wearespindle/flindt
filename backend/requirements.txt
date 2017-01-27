@@ -1,11 +1,14 @@
 #######################################################
 ### Base & Server                                   ###
 #######################################################
-django==1.10
-djangorestframework==3.4.6
-django-rest-framework-social-oauth2==1.0.4
+Django==1.10.5
+django-rest-framework-social-oauth2==1.0.5
+djangorestframework==3.5.3
 django-cors-headers==1.1.0
-requests==2.11.1
+social-auth-app-django==1.0.0
+python-social-auth==0.3.4
+requests==2.13.0
+python-social-auth==0.3.4
 
 
 #######################################################
