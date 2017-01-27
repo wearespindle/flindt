@@ -1,7 +1,7 @@
 import datetime
 import factory
 
-from factory.declarations import LazyAttribute, SubFactory, Iterator
+from factory.declarations import LazyAttribute, SubFactory
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyInteger, FuzzyChoice, FuzzyNaiveDateTime
 from faker.factory import Factory
@@ -9,7 +9,6 @@ from faker.factory import Factory
 from feedbag.feedback.models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
 from feedbag.role.tests.factories import RoleFactory
 from feedbag.user.models import User
-from feedbag.role.models import Role
 
 faker = Factory.create('nl_NL')
 past_date = datetime.datetime.today() - datetime.timedelta(days=10)

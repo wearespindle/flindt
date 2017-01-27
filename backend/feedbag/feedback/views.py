@@ -1,4 +1,5 @@
-from rest_framework import viewsets, status
+from django.db.models import Q
+from rest_framework import viewsets
 
 from .models import Rating, Remark, Question, Feedback
 from .serializers import RatingSerializer, RemarkSerializer, QuestionSerializer, FeedbackSerializer
@@ -25,3 +26,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+
+    def get_queryset(self):
+        """
+        Set the queryset here so it filters on user.
+        """
+        return super(FeedbackViewSet, self).get_queryset().filter(Q(sender=self.request.user) |
+                                                                  Q(recipient=self.request.user))

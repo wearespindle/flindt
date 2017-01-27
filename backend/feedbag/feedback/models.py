@@ -137,7 +137,6 @@ class Feedback(FeedBagBaseModel):
         """
         If the status changes, the date should be updated.
         """
-
         if self.__original_status != self.status:
             self.date = timezone.now()
         super(Feedback, self).save()

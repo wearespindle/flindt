@@ -34,7 +34,6 @@ class ReceivedFeedback extends React.Component {
         let accessToken = this.props.user.user.access_token;
 
         this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
-        this.props.fetchRatings(accessToken);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -80,7 +79,7 @@ class ReceivedFeedback extends React.Component {
     }
 
     handleActionableChange(event) {
-        let value = (event.target.value === 'true' ? true : false)
+        let value = (event.target.value === 'true' ? true : false);
 
         this.setState({
             actionable: value,
@@ -95,7 +94,6 @@ class ReceivedFeedback extends React.Component {
 
     render() {
         const { feedback, loading, error } = this.props.feedback;
-        const ratings = this.props.ratings;
 
         if (loading) {
             return (
@@ -145,7 +143,7 @@ class ReceivedFeedback extends React.Component {
                     <h2>Received feedback</h2>
 
                     <div className="feedback-form--wrapper">
-                        <FeedbackContent {...this.props} person={person} receiver={receiver} feedback={feedback} ratings={ratings} />
+                        <FeedbackContent {...this.props} person={person} receiver={receiver} feedback={feedback} />
 
                         <div className="feedback-form--row">
                             <div className="l-48">

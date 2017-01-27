@@ -15,8 +15,10 @@ newrelic.ini
 /.project
 /.settings
 .tags
+tags
 /.tags1
 /.vimrc
+/.vscode/
 /coverage.mysql.xml
 /coverage.sqlite.xml
 /nbproject
