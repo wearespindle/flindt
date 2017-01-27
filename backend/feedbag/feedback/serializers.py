@@ -1,7 +1,9 @@
 from rest_framework import serializers
 
-from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, FeedbackOnRole
 from feedbag.role.serializers import RoleSerializer
+from feedbag.user.serializers import UserSerializer
+
+from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, FeedbackOnRole
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -16,6 +18,7 @@ class RemarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Remark
         fields = ('id', 'rating', 'content',)
+        depth = 1
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -25,6 +28,8 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class FeedbackOnIndividualSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer()
+
     class Meta:
         model = FeedbackOnIndividual
         fields = ('id', 'question', 'answer')
@@ -42,6 +47,8 @@ class FeedbackOnRoleSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.ModelSerializer):
     individual = FeedbackOnIndividualSerializer()
     role = FeedbackOnRoleSerializer()
+    sender = UserSerializer()
+    recipient = UserSerializer()
 
     def update(self, instance, validated_data):
         individual_feedback = validated_data.pop('individual', None)
@@ -88,10 +95,11 @@ class FeedbackSerializer(serializers.ModelSerializer):
         if self.instance and not role_feedback:
             role_feedback = self.instance.role
 
-        # We want either individual or role feedback.
-        # So return an error if both or none are set.
-        if (individual_feedback and role_feedback) or (not individual_feedback and not role_feedback):
-            raise serializers.ValidationError('Please provide either individual or role feedback.')
+        if not self.partial:
+            # We want either individual or role feedback.
+            # So return an error if both or none are set.
+            if (individual_feedback and role_feedback) or (not individual_feedback and not role_feedback):
+                raise serializers.ValidationError('Please provide either individual or role feedback.')
 
         return super(FeedbackSerializer, self).validate(attrs)
 
@@ -110,4 +118,3 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'individual',
             'role',
         )
-        depth = 1

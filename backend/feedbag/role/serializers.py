@@ -16,4 +16,3 @@ class RoleSerializer(serializers.ModelSerializer):
             'users',
             'archived',
         )
-        depth = 1

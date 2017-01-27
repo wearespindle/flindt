@@ -9,7 +9,6 @@ class CheckGivenFeedback extends React.Component {
         let accessToken = this.props.user.user.access_token;
 
         this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
-        this.props.fetchRatings(accessToken);
 
         this.state = {
             id: this.props.params.feedbackId,
@@ -18,7 +17,6 @@ class CheckGivenFeedback extends React.Component {
 
     render() {
         const { feedback, loading, error } = this.props.feedback;
-        const ratings = this.props.ratings;
 
         if (loading) {
             return (
@@ -67,7 +65,7 @@ class CheckGivenFeedback extends React.Component {
                     <h2>Feedback on { (feedback.role) ? ` the role '${feedback.role.role.name}'` : person.first_name }</h2>
 
                     <div className="feedback-form--wrapper">
-                        <FeedbackContent {...this.props} feedback={feedback} person={person} ratings={ratings} />
+                        <FeedbackContent {...this.props} feedback={feedback} person={person} />
                     </div>
 
                     <Link to="/" className="action--button neutral">

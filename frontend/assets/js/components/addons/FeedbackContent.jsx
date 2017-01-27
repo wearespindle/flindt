@@ -8,8 +8,7 @@ require('moment/locale/nl');
 class FeedbackContent extends React.Component {
 
     render() {
-        const { feedback, ratings, person, receiver } = this.props;
-        console.log(2);
+        const { feedback, person, receiver } = this.props;
 
         let table;
 
@@ -75,7 +74,7 @@ class FeedbackContent extends React.Component {
 
                 {
                     feedback.role &&
-                        <RatingRows ratings={ratings} remarks={feedback.role.remarks} />
+                        <RatingRows remarks={feedback.role.remarks} />
                 }
 
                 {
