@@ -150,5 +150,10 @@
         "space-infix-ops": 2,                           // http://eslint.org/docs/rules/space-infix-ops
         "object-curly-spacing": 0,                      // http://eslint.org/docs/rules/space-in-brackets.html
         "array-bracket-spacing": [2, "never"],          // http://eslint.org/docs/rules/array-bracket-spacing
+        "arrow-parens": 0,
+        "jsx-a11y/no-static-element-interactions": 0,
+        "class-methods-use-this": 0,
+        "react/forbid-prop-types": 0,
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     }
 }

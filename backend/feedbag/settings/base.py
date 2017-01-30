@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework_social_oauth2',
     'rest_framework.authtoken',
-    'social.apps.django_app.default',
+    'social_django',
     'django_object_actions',
 
     # Project apps
@@ -215,7 +215,7 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = (
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-    'social.backends.google.GooglePlusAuth',
+    'social_core.backends.google.GooglePlusAuth',
 )
 
 AUTH_USER_MODEL = 'user.User'
@@ -270,5 +270,11 @@ SOCIAL_AUTH_PIPELINE = (
 
 CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 
-FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')
+# Couldnt get the default code up here to work during the refactor so used this
+# hardcoded whitelist to be able to develop locally.
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:8080',
+#     'http://localhost:8080'
+# )
 
+FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')

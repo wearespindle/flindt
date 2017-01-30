@@ -22,7 +22,7 @@ backend:
     # Use the root user to enable creation of a test database.
     - DATABASE_URL=mysql://root:feedbag@db/feedbag
     - DEBUG=1
-    - CORS_ORIGIN_WHITELIST=localhost:3000
+    - CORS_ORIGIN_WHITELIST=localhost:8080
     - SOCIAL_AUTH_GOOGLE_PLUS_KEY=197265624471-f8cb8sdb8dr1uevsscev16191ksr3ln6.apps.googleusercontent.com
     - SOCIAL_AUTH_GOOGLE_PLUS_SECRET=1KDKrqdje9S5zWXKiGlAoRgb
     - SOCIAL_AUTH_GOOGLE_PLUS_WHITELISTED_DOMAINS=wearespindle.com
@@ -35,5 +35,5 @@ frontend:
     - ./frontend:/usr/src/frontend
   ports:
     # ext:int port.
-    - "3000:3000"
+    - "8080:8080"
     - "3001:3001"  # Used by browsersync
