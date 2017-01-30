@@ -16,14 +16,17 @@ class FeedbackRow extends Component {
 
     render() {
         let role = null;
-        let circle = null;
+        let circle = '';
         let action,
             dateLabel,
             url;
 
         if (this.props.details.role) {
             role = this.props.details.role.role.name;
-            circle = this.props.details.role.role.parent.name || '';
+
+            if (this.props.details.role.role.parent) {
+                circle = this.props.details.role.role.parent.name;
+            }
         }
 
         let person = this.props.details.recipient;

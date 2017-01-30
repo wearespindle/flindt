@@ -8,6 +8,7 @@ import ModalButton from '../components/modal_button';
 
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
+const moment = require('moment');
 
 class CheckRoleFeedback extends React.Component {
     componentWillMount() {
@@ -57,6 +58,18 @@ class CheckRoleFeedback extends React.Component {
 
         let person = feedback.recipient;
         let role = feedback.role.role;
+        let showEditButton;
+
+        if (feedback.round) {
+            // Round has an end date, so check if we've passed that date.
+            showEditButton = moment().isBefore(moment(feedback.round.end_date));
+        } else {
+            // Otherwise disable editing if feedback was completed more than a week ago.
+            showEditButton = moment(feedback.date).add('7', 'days').isAfter(moment());
+        }
+
+        console.log(showEditButton);
+
         const accessToken = this.props.user.user.access_token;
 
         return (
@@ -95,9 +108,11 @@ class CheckRoleFeedback extends React.Component {
                                         </ModalButton>
                                     </td>
                                     <td data-label="Circle">
-                                        <ModalButton accessToken={accessToken} role={role.parent.id}>
-                                            { role.parent.name }
-                                        </ModalButton>
+                                        { role.parent &&
+                                            <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                                { role.parent.name }
+                                            </ModalButton>
+                                        }
                                     </td>
                                     <td data-label="Received on">
                                         <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
@@ -115,9 +130,11 @@ class CheckRoleFeedback extends React.Component {
                         <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
-                    <Link to={`/give-feedback/role/${this.state.id}/edit`} className="action--button is-right">
-                        Edit feedback
-                    </Link>
+                    { showEditButton &&
+                        <Link to={`/give-feedback/role/${this.state.id}/edit`} className="action--button is-right">
+                            Edit feedback
+                        </Link>
+                    }
                 </div>
             </div>
         );
