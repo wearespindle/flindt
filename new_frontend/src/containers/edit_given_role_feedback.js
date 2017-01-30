@@ -67,29 +67,31 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
             return null;
         });
 
-        // //
         this.props.editFeedback({
             id,
             status: 1,
             role: {remarks},
         }, accessToken).then((response) => {
             let data = response.payload.data;
+
             if (response.payload.status !== 200) {
                 this.props.dispatch(Notifications.error({
-                    title: 'Error! 😱😪',
+                    title: 'Error!',
                     message: 'Something went wrong while saving the data!',
                     position: 'tr',
                     autoDismiss: 4,
                 }));
             } else {
                 this.props.dispatch(Notifications.success({
-                    title: 'Sweet Success! 💪🏼😁',
+                    title: 'Sweet success!',
                     message: 'Your edited feedback is succesfully saved! Thanks!',
                     position: 'tr',
                     autoDismiss: 4,
                 }));
+
+                // Send the user back to his feedback overview after a succesful action.
+                this.context.router.push('/give-feedback');
             }
-            this.context.router.push('/give-feedback');
         });
     }
 

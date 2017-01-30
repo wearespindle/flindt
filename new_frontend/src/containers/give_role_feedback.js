@@ -55,13 +55,13 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
             return null;
         });
 
-        // //
         this.props.editFeedback({
             id,
             status: 1,
             role: {remarks},
         }, accessToken).then((response) => {
             let data = response.payload.data;
+
             if (response.payload.status !== 200) {
                 this.props.dispatch(Notifications.error({
                     title: 'Error!',
@@ -71,7 +71,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                 }));
             } else {
                 this.props.dispatch(Notifications.success({
-                    title: 'Sweet Success!',
+                    title: 'Sweet success!',
                     message: 'Feedback succesfully saved! Thanks!',
                     position: 'tr',
                     autoDismiss: 4,

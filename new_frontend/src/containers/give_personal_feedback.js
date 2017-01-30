@@ -51,13 +51,14 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
 
         let accessToken = this.props.user.user.access_token;
         let answer = values.personalFeedbackQuestion;
-        //
+
         this.props.editFeedback({
             id,
             status: 1,
             individual: {answer},
         }, accessToken).then((response) => {
             let data = response.payload.data;
+
             if (response.payload.status !== 200) {
                 this.props.dispatch(Notifications.error({
                     title: 'Error!',
@@ -67,7 +68,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
                 }));
             } else {
                 this.props.dispatch(Notifications.success({
-                    title: 'Sweet Success!',
+                    title: 'Sweet success!',
                     message: 'Feedback succesfully saved! Thanks!',
                     position: 'tr',
                     autoDismiss: 4,
