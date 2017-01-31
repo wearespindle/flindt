@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, IndexLink, browserHistory } from 'react-router';
+import Notifications from 'react-notification-system-redux';
 
 import InfoModal from '../components/modal';
 
@@ -23,6 +24,7 @@ class App extends Component {
     }
 
     render() {
+        const { modal, notifications } = this.props;
         return (
             <div className="app-wrapper">
                 <div className="navigation--wrapper">
@@ -46,7 +48,8 @@ class App extends Component {
 
                 {this.props.children}
 
-                <InfoModal details={this.props.modal} isOpen={this.props.modal.isOpen} {...this.props} />
+                <InfoModal details={modal} isOpen={modal.isOpen} {...this.props} />
+                <Notifications notifications={notifications} />
             </div>
         );
     }
@@ -55,10 +58,12 @@ class App extends Component {
 App.propTypes = {
     children: React.PropTypes.object,
     modal: React.PropTypes.object,
+    notifications: React.PropTypes.array,
 };
 
 const mapStateToProps = (state) => ({
     modal: state.Modal,
+    notifications: state.Notifications,
 });
 
 export default connect(mapStateToProps, {showModal})(App);
