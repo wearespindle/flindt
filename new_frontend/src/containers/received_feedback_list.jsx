@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import Notifications from 'react-notification-system-redux';
 
 import { fetchFeedbackAsReceiver } from '../actions/feedback';
 import FeedbackRow from '../components/feedback_row';
@@ -82,8 +81,6 @@ class ReceivedFeedbackList extends Component {
                         </table>
                     </div>
                 </div>
-
-                <Notifications notifications={this.props.notifications} />
             </div>
         );
     }
@@ -93,14 +90,12 @@ const mapStateToProps = (state) => ({
     feedback: state.Feedback.feedback_as_receiver.feedback,
     user: state.User.data,
     user_data: state.User.user_data,
-    notifications: state.Notifications,
 });
 
 ReceivedFeedbackList.propTypes = {
     feedback: React.PropTypes.array,
     fetchFeedbackAsReceiver: React.PropTypes.func,
     user: React.PropTypes.object,
-    notifications: React.PropTypes.array,
 };
 
 export default connect(mapStateToProps, {fetchFeedbackAsReceiver})(ReceivedFeedbackList);

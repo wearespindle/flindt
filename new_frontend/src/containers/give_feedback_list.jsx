@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import Notifications from 'react-notification-system-redux';
 
 import { fetchFeedbackAsSender } from '../actions/feedback';
 import FeedbackRow from '../components/feedback_row';
@@ -49,7 +48,6 @@ class GiveFeedbackList extends Component {
 
             return null;
         });
-
 
         const numberOfIncompletedRequests = Object.keys(incomplete).length;
         const numberOfCompletedRequests = Object.keys(complete).length;
@@ -121,8 +119,6 @@ class GiveFeedbackList extends Component {
                         </table>
                     </div>
                 </div>
-
-                <Notifications notifications={this.props.Notifications} />
             </div>
         );
     }
@@ -132,13 +128,11 @@ const mapStateToProps = (state) => ({
     feedback: state.Feedback.feedback_as_sender.feedback,
     user: state.User.data,
     user_data: state.User.user_data,
-    Notifications: state.Notifications,
 });
 
 GiveFeedbackList.propTypes = {
     feedback: React.PropTypes.array,
     fetchFeedbackAsSender: React.PropTypes.func,
-    Notifications: React.PropTypes.array,
     user: React.PropTypes.object,
 };
 
