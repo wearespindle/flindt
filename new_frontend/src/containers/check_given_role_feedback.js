@@ -119,7 +119,7 @@ class CheckGivenRoleFeedback extends React.Component {
                         <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
-                    <Link to={`/given-role-feedback/${this.state.id}/edit`} className="action--button is-right">
+                    <Link to={`/give-feedback/role/${this.state.id}/edit`} className="action--button is-right">
                         Edit feedback
                     </Link>
                 </div>

@@ -18,7 +18,8 @@ class FeedbackRow extends Component {
         let role = null;
         let circle = null;
         let action,
-            dateLabel;
+            dateLabel,
+            url;
 
         if (this.props.details.role) {
             role = this.props.details.role.role.name;
@@ -27,14 +28,14 @@ class FeedbackRow extends Component {
 
         let person = this.props.details.recipient;
 
+        url = (role) ? 'give-feedback/role' : 'give-feedback/personal';
+
         // Change the labels and links in the table row to reuse this component.
         if (this.props.feedbackType === 'give') {
-            let url;
             dateLabel = 'Closingdate';
 
-            url = (role) ? 'give-role-feedback' : 'give-personal-feedback';
-
-            action = <Link to={`/${url}/${this.props.details.id}`}><i className="fa fa-undo" /> Give feedback</Link>;
+            action =
+                <Link to={`/${url}/${this.props.details.id}/new`}><i className="fa fa-undo" /> Give feedback</Link>;
         } else if (this.props.feedbackType === 'received') {
             dateLabel = 'Received on';
             person = this.props.details.sender;
@@ -46,13 +47,6 @@ class FeedbackRow extends Component {
             );
         } else {
             dateLabel = 'Given on';
-            let url;
-
-            if (role) {
-                url = 'given-role-feedback';
-            } else {
-                url = 'given-personal-feedback';
-            }
 
             action = (
                 <Link to={`/${url}/${this.props.details.id}`}>

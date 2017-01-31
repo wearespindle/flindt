@@ -56,6 +56,10 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
         });
     }
 
+    componentWillUnmount() {
+        this.props.cleanFeedback();
+    }
+
     _handleSubmit(values) {
         const { id } = this.state;
         let remarks = this.props.feedback.feedback.role.remarks;
@@ -90,7 +94,7 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
                 }));
 
                 // Send the user back to his feedback overview after a succesful action.
-                this.context.router.push('/give-feedback');
+                this.context.router.push('/give-feedback/');
             }
         });
     }
@@ -237,7 +241,7 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
                                         })
                                     }
 
-                                    <Link to="/" className="action--button neutral">
+                                    <Link to="/give-feedback" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
                                     <button className="action--button is-right" type="submit">Save</button>
@@ -258,10 +262,6 @@ const mapStateToProps = (state) => ({
     user_data: state.User.user_data,
 });
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({cleanFeedback, fetchFeedback, editFeedback}, dispatch);
-}
-
 // reduxForm validate function.
 function validate(values) {
     const errors = {};
@@ -279,6 +279,7 @@ function validate(values) {
 
 EditGivenRoleFeedbackClass.propTypes = {
     change: React.PropTypes.func,
+    cleanFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
     editFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
@@ -298,4 +299,4 @@ EditGivenRoleFeedbackClass = reduxForm({
     validate,
 })(EditGivenRoleFeedbackClass);
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditGivenRoleFeedbackClass);
+export default connect(mapStateToProps, {cleanFeedback, fetchFeedback, editFeedback})(EditGivenRoleFeedbackClass);

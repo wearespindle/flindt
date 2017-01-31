@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 
 import Notifications from 'react-notification-system-redux';
 
-import { fetchFeedback, editFeedback } from '../actions/feedback';
+import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
 const renderField = ({ input, meta: { touched, error } }) => (
@@ -41,6 +41,10 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
         let accessToken = this.props.user.user.access_token;
 
         this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
+    }
+
+    componentWillUnmount() {
+        this.props.cleanFeedback();
     }
 
     _handleSubmit(values) {
@@ -184,6 +188,7 @@ const mapStateToProps = (state) => ({
 });
 
 GivePersonalFeedbackClass.propTypes = {
+    cleanFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
     editFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
@@ -203,4 +208,4 @@ GivePersonalFeedbackClass = reduxForm({
     validate,
 })(GivePersonalFeedbackClass);
 
-export default connect(mapStateToProps, {fetchFeedback, editFeedback})(GivePersonalFeedbackClass);
+export default connect(mapStateToProps, {cleanFeedback, editFeedback, fetchFeedback})(GivePersonalFeedbackClass);
