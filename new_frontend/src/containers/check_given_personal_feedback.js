@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import Notifications from 'react-notification-system-redux';
 
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
-import { fetchQuestion } from '../actions/questions';
 
 class CheckGivenPersonalFeedback extends React.Component {
     componentWillMount() {
@@ -122,18 +121,13 @@ const mapStateToProps = (state) => ({
     Notifications: state.Notifications,
 });
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({cleanFeedback, fetchFeedback}, dispatch);
-}
-
 CheckGivenPersonalFeedback.propTypes = {
     cleanFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
     fetchFeedback: React.PropTypes.func,
     Notifications: React.PropTypes.array,
     params: React.PropTypes.object,
-    question: React.PropTypes.object,
     user: React.PropTypes.object,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckGivenPersonalFeedback);
+export default connect(mapStateToProps, {cleanFeedback, fetchFeedback})(CheckGivenPersonalFeedback);

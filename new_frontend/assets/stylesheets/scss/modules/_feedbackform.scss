@@ -136,7 +136,7 @@
     position: absolute;
     right: 10px;
     top: 10px;
-    margin-left: 1rem;
+    display: none;
 
     img {
         max-width: 40px;
@@ -146,6 +146,7 @@
         position: relative;
         top: auto;
         right: auto;
+        display: block;
 
         img {
             width: auto;
@@ -159,6 +160,10 @@
     padding-bottom: 0;
     overflow: hidden;
     background: #ebecef;
+
+    > form > .feedback-form--row {
+        padding: 1rem;
+    }
 
     @media (min-width: $breakpoint-30) {
         margin: 0;
@@ -224,4 +229,8 @@
 .feedback-form--answer-container {
     padding: 1rem;
     background: #fff;
+}
+
+.feedback-content {
+    padding: 1rem;
 }

@@ -7,7 +7,6 @@ import { reduxForm, Field, SubmissionError, getFormValues } from 'redux-form';
 import Notifications from 'react-notification-system-redux';
 
 import { fetchFeedback, editFeedback } from '../actions/feedback';
-import { fetchQuestion } from '../actions/questions';
 
 // renderField component for reduxForms.
 const renderTextArea = ({ input, meta: { touched, error } }) => (
@@ -149,7 +148,7 @@ let EditGivenPersonalFeedbackClass = class EditGivenPersonalFeedback extends Rea
                                         <Field name="personalFeedbackQuestion" component={renderTextArea} />
                                     </div>
 
-                                    <Link to="/" className="action--button neutral">
+                                    <Link to="/give-feedback" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
                                     <button className="action--button is-right" type="submit">Save</button>
@@ -170,9 +169,6 @@ const mapStateToProps = (state) => ({
     question: state.Question,
 });
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchFeedback, editFeedback, fetchQuestion}, dispatch);
-}
 
 // reduxForm validate function.
 function validate(values) {
@@ -191,11 +187,9 @@ EditGivenPersonalFeedbackClass.propTypes = {
     editFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
     fetchFeedback: React.PropTypes.func,
-    fetchQuestion: React.PropTypes.func,
     handleSubmit: React.PropTypes.func,
     user: React.PropTypes.object,
     params: React.PropTypes.object,
-    question: React.PropTypes.object,
 };
 
 EditGivenPersonalFeedbackClass.contextTypes = {
@@ -208,4 +202,4 @@ EditGivenPersonalFeedbackClass = reduxForm({
     validate,
 })(EditGivenPersonalFeedbackClass);
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditGivenPersonalFeedbackClass);
+export default connect(mapStateToProps, {fetchFeedback, editFeedback})(EditGivenPersonalFeedbackClass);
