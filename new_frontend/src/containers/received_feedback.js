@@ -15,7 +15,7 @@ import Notifications from 'react-notification-system-redux';
 
 import FeedbackContent from '../components/received_feedback_content';
 
-import { fetchFeedback, editFeedback } from '../actions/feedback';
+import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
 const renderInput = ({ input, meta: { touched, error }, ...props }) => (
@@ -68,6 +68,10 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
         });
     }
 
+    componentWillUnmount() {
+        this.props.cleanFeedback();
+    }
+
     _handleSubmit(values) {
         const { how_recognizable, how_valuable, actionable } = values;
         const accessToken = this.props.user.user.access_token;
@@ -91,14 +95,14 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                     title: 'Error!',
                     message: 'Something went wrong while saving the data!',
                     position: 'tr',
-                    autoDismiss: 4,
+                    autoDismiss: 2,
                 }));
             } else {
                 this.props.dispatch(Notifications.success({
                     title: 'Sweet success!',
                     message: 'Your feedback is succesfully saved! Thanks!',
                     position: 'tr',
-                    autoDismiss: 4,
+                    autoDismiss: 2,
                 }));
 
                 // Send the user back to his feedback overview after a succesful action.
@@ -254,7 +258,7 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                         </div>
                                     </div>
 
-                                    <Link to="/" className="action--button neutral">
+                                    <Link to="/received-feedback/" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
                                     <button className="action--button is-right" type="submit">Save</button>
@@ -288,6 +292,7 @@ function validate(values) {
 
 ReceivedFeedbackClass.propTypes = {
     change: React.PropTypes.func,
+    cleanFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
     editFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
@@ -307,4 +312,4 @@ ReceivedFeedbackClass = reduxForm({
     validate,
 })(ReceivedFeedbackClass);
 
-export default connect(mapStateToProps, {editFeedback, fetchFeedback})(ReceivedFeedbackClass);
+export default connect(mapStateToProps, {cleanFeedback, editFeedback, fetchFeedback})(ReceivedFeedbackClass);
