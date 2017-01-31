@@ -161,7 +161,7 @@ class GlassFrogImporter(object):
         )
         role.users.add(role_fullfiller)
         role.save()
-        logger.info("Circle {} imported as role.".format(role))
+        logger.info("Circle {} imported as role. PK: {}. Parent: {}, parent pk {}".format(role, role.pk, parent, parent.pk))
 
         self.import_run.roles.add(role)
         if self.organization:
