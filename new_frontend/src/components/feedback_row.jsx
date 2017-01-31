@@ -74,8 +74,8 @@ class FeedbackRow extends Component {
                             <span className="feedback-type-indicator">Personal</span>
                     }
                 </td>
-                <td data-label="Circle">{ circle }</td>
-                <td data-label="{dateLabel}">
+                <td data-label="Circle">{ circle || '-'}</td>
+                <td data-label="Date">
                     <Time value={this.props.details.date} locale="EN" format="D MMMM YYYY" />
                 </td>
                 <td data-label="Actions">

@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux';
 import Notifications from 'react-notification-system-redux';
 
 import { fetchFeedback, editFeedback } from '../actions/feedback';
-import { fetchQuestion } from '../actions/questions';
 
 // renderField component for reduxForms.
 const renderField = ({ input, meta: { touched, error } }) => (
@@ -41,9 +40,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
     componentWillMount() {
         let accessToken = this.props.user.user.access_token;
 
-        this.props.fetchFeedback(accessToken, this.props.params.feedbackId).then((response) => {
-            this.props.fetchQuestion(accessToken, response.payload.data.individual.question);
-        });
+        this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
     }
 
     _handleSubmit(values) {
@@ -112,7 +109,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
         }
 
         let person = feedback.recipient;
-        const { handleSubmit, question } = this.props;
+        const { handleSubmit } = this.props;
 
         return (
             <div className="content--wrapper">
@@ -150,12 +147,12 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
                                 <form onSubmit={handleSubmit(this._handleSubmit)}>
                                     <div className="feedback-form--answer-container">
                                         <label htmlFor="personalFeedbackQuestion">
-                                            { question.question.content }
+                                            { feedback.individual.question.content }
                                         </label>
                                         <Field name="personalFeedbackQuestion" component={renderField} />
                                     </div>
 
-                                    <Link to="/" className="action--button neutral">
+                                    <Link to="/give-feedback" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
                                     <button className="action--button is-right" type="submit">Save</button>
@@ -184,24 +181,16 @@ function validate(values) {
 const mapStateToProps = (state) => ({
     feedback: state.Feedback.feedback,
     user: state.User.data,
-    question: state.Question,
 });
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchFeedback, editFeedback, fetchQuestion}, dispatch);
-}
-
 
 GivePersonalFeedbackClass.propTypes = {
     dispatch: React.PropTypes.func,
     editFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
     fetchFeedback: React.PropTypes.func,
-    fetchQuestion: React.PropTypes.func,
     handleSubmit: React.PropTypes.func,
     params: React.PropTypes.object,
     user: React.PropTypes.object,
-    question: React.PropTypes.object,
 };
 
 GivePersonalFeedbackClass.contextTypes = {
@@ -214,4 +203,4 @@ GivePersonalFeedbackClass = reduxForm({
     validate,
 })(GivePersonalFeedbackClass);
 
-export default connect(mapStateToProps, mapDispatchToProps)(GivePersonalFeedbackClass);
+export default connect(mapStateToProps, {fetchFeedback, editFeedback})(GivePersonalFeedbackClass);
