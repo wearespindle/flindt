@@ -6,7 +6,7 @@ import { reduxForm, Field, SubmissionError, getFormValues } from 'redux-form';
 
 import Notifications from 'react-notification-system-redux';
 
-import { fetchFeedback, editFeedback } from '../actions/feedback';
+import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
 const renderTextArea = ({ input, meta: { touched, error } }) => (
@@ -40,6 +40,10 @@ let EditGivenPersonalFeedbackClass = class EditGivenPersonalFeedback extends Rea
         });
     }
 
+    componentWillUnmount() {
+        this.props.cleanFeedback();
+    }
+
     _handleSubmit(values) {
         const { id } = this.state;
 
@@ -69,7 +73,7 @@ let EditGivenPersonalFeedbackClass = class EditGivenPersonalFeedback extends Rea
                 }));
 
                 // Send the user back to his feedback overview after a succesful action.
-                this.context.router.push(`/given-personal-feedback/${id}`);
+                this.context.router.push('/give-feedback/');
             }
         });
     }
@@ -183,6 +187,7 @@ function validate(values) {
 
 EditGivenPersonalFeedbackClass.propTypes = {
     change: React.PropTypes.func,
+    cleanFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
     editFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
@@ -202,4 +207,4 @@ EditGivenPersonalFeedbackClass = reduxForm({
     validate,
 })(EditGivenPersonalFeedbackClass);
 
-export default connect(mapStateToProps, {fetchFeedback, editFeedback})(EditGivenPersonalFeedbackClass);
+export default connect(mapStateToProps, {cleanFeedback, fetchFeedback, editFeedback})(EditGivenPersonalFeedbackClass);

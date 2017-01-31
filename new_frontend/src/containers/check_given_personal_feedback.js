@@ -3,8 +3,6 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Notifications from 'react-notification-system-redux';
-
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
 class CheckGivenPersonalFeedback extends React.Component {
@@ -102,12 +100,10 @@ class CheckGivenPersonalFeedback extends React.Component {
                         <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
-                    <Link to={`/given-personal-feedback/${this.state.id}/edit`} className="action--button is-right">
+                    <Link to={`/give-feedback/personal/${this.state.id}/edit`} className="action--button is-right">
                         Edit feedback
                     </Link>
                 </div>
-
-                <Notifications notifications={this.props.Notifications} />
             </div>
         );
     }
@@ -125,7 +121,6 @@ CheckGivenPersonalFeedback.propTypes = {
     cleanFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
     fetchFeedback: React.PropTypes.func,
-    Notifications: React.PropTypes.array,
     params: React.PropTypes.object,
     user: React.PropTypes.object,
 };

@@ -9,7 +9,7 @@ import Notifications from 'react-notification-system-redux';
 
 import ModalButton from '../components/modal_button';
 
-import { fetchFeedback, editFeedback } from '../actions/feedback';
+import { cleanFeedback, fetchFeedback, editFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
 const renderTextArea = ({ input, meta: { touched, error } }) => (
@@ -42,6 +42,10 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
         let accessToken = this.props.user.user.access_token;
 
         this.props.fetchFeedback(accessToken, this.props.params.feedbackId);
+    }
+
+    componentWillUnmount() {
+        this.props.cleanFeedback();
     }
 
     _handleSubmit(values, dispatch, props) {
@@ -263,6 +267,7 @@ const mapStateToProps = (state) => ({
 });
 
 GiveRoleFeedbackClass.propTypes = {
+    cleanFeedback: React.PropTypes.func,
     editFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
     feedback: React.PropTypes.object,

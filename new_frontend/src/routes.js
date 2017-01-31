@@ -34,19 +34,24 @@ export default (
             <Route component={AuthContainer}>
                 <Route path="/" component={App}>
                     <IndexRoute component={Home} />
-                    <Route path="give-feedback" component={GiveFeedbackList} />
 
-                    <Route path="/give-personal-feedback/:feedbackId" component={GivePersonalFeedback} />
-                    <Route path="/given-personal-feedback/:feedbackId" component={CheckGivenPersonalFeedback} />
-                    <Route path="/given-personal-feedback/:feedbackId/edit" component={EditGivenPersonalFeedback} />
+                    <Route path="give-feedback">
+                        <IndexRoute component={GiveFeedbackList} />
+                        <Route path="personal/:feedbackId/new" component={GivePersonalFeedback} />
+                        <Route path="role/:feedbackId/new" component={GiveRoleFeedback} />
 
-                    <Route path="/give-role-feedback/:feedbackId" component={GiveRoleFeedback} />
-                    <Route path="/given-role-feedback/:feedbackId" component={CheckGivenRoleFeedback} />
-                    <Route path="/given-role-feedback/:feedbackId/edit" component={EditGivenRoleFeedback} />
+                        <Route path="personal/:feedbackId" component={CheckGivenPersonalFeedback} />
+                        <Route path="personal/:feedbackId/edit" component={EditGivenPersonalFeedback} />
 
-                    <Route path="received-feedback" component={ReceivedFeedbackList} />
+                        <Route path="role/:feedbackId" component={CheckGivenRoleFeedback} />
+                        <Route path="role/:feedbackId/edit" component={EditGivenRoleFeedback} />
+                    </Route>
 
-                    <Route path="received-feedback/:feedbackId" component={ReceivedFeedback} />
+                    <Route path="received-feedback">
+                        <IndexRoute component={ReceivedFeedbackList} />
+                        <Route path=":feedbackId" component={ReceivedFeedback} />
+                    </Route>
+
                 </Route>
             </Route>
         </Router>
