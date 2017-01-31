@@ -23,7 +23,7 @@ class CheckGivenPersonalFeedback extends React.Component {
     render() {
         const { feedback } = this.props.feedback;
 
-        if (!feedback.recipient || !feedback.individual) {
+        if (!Object.keys(feedback).length) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">

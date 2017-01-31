@@ -65,14 +65,14 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
                     title: 'Error!',
                     message: 'Something went wrong while saving the data!',
                     position: 'tr',
-                    autoDismiss: 4,
+                    autoDismiss: 2,
                 }));
             } else {
                 this.props.dispatch(Notifications.success({
                     title: 'Sweet success!',
                     message: 'Feedback succesfully saved! Thanks!',
                     position: 'tr',
-                    autoDismiss: 4,
+                    autoDismiss: 2,
                 }));
 
                 // Send the user back to his feedback overview after a succesful action.
@@ -84,7 +84,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
     render() {
         const { feedback } = this.props.feedback;
 
-        if (!feedback.recipient) {
+        if (!Object.keys(feedback).length) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">

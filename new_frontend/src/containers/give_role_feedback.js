@@ -90,7 +90,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
     render() {
         const { feedback } = this.props.feedback;
 
-        if (!feedback.recipient) {
+        if (!Object.keys(feedback).length) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">

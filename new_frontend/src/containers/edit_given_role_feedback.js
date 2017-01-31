@@ -83,14 +83,14 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
                     title: 'Error!',
                     message: 'Something went wrong while saving the data!',
                     position: 'tr',
-                    autoDismiss: 4,
+                    autoDismiss: 2,
                 }));
             } else {
                 this.props.dispatch(Notifications.success({
                     title: 'Sweet success!',
                     message: 'Your edited feedback is succesfully saved! Thanks!',
                     position: 'tr',
-                    autoDismiss: 4,
+                    autoDismiss: 2,
                 }));
 
                 // Send the user back to his feedback overview after a succesful action.
@@ -103,7 +103,7 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
         const { handleSubmit } = this.props;
         const { feedback } = this.props.feedback;
 
-        if (!feedback.recipient) {
+        if (!Object.keys(feedback).length) {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
