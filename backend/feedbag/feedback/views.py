@@ -1,6 +1,5 @@
 from django.db.models import Q
 from rest_framework import viewsets
-from rest_framework import serializers
 
 from .models import Rating, Remark, Question, Feedback
 from .serializers import RatingSerializer, RemarkSerializer, QuestionSerializer, FeedbackSerializer
