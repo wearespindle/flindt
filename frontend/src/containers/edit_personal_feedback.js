@@ -21,7 +21,7 @@ renderTextArea.propTypes = {
     meta: React.PropTypes.object,
 };
 
-let EditGivenPersonalFeedbackClass = class EditGivenPersonalFeedback extends React.Component {
+let EditPersonalFeedbackClass = class EditPersonalFeedback extends React.Component {
     constructor(props) {
         super(props);
 
@@ -55,9 +55,7 @@ let EditGivenPersonalFeedbackClass = class EditGivenPersonalFeedback extends Rea
             status: 1,
             individual: {answer},
         }, accessToken).then((response) => {
-            let data = response.payload.data;
-
-            if (response.payload.status !== 200) {
+            if (response.error) {
                 this.props.dispatch(Notifications.error({
                     title: 'Error!',
                     message: 'Something went wrong while saving the data!',
@@ -185,7 +183,7 @@ function validate(values) {
     return errors;
 }
 
-EditGivenPersonalFeedbackClass.propTypes = {
+EditPersonalFeedbackClass.propTypes = {
     change: React.PropTypes.func,
     cleanFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
@@ -197,14 +195,14 @@ EditGivenPersonalFeedbackClass.propTypes = {
     params: React.PropTypes.object,
 };
 
-EditGivenPersonalFeedbackClass.contextTypes = {
+EditPersonalFeedbackClass.contextTypes = {
     router: React.PropTypes.object,
 };
 
 // Connect reduxForm to our class.
-EditGivenPersonalFeedbackClass = reduxForm({
+EditPersonalFeedbackClass = reduxForm({
     form: 'GivePersonalFeedbackForm',
     validate,
-})(EditGivenPersonalFeedbackClass);
+})(EditPersonalFeedbackClass);
 
-export default connect(mapStateToProps, {cleanFeedback, fetchFeedback, editFeedback})(EditGivenPersonalFeedbackClass);
+export default connect(mapStateToProps, {cleanFeedback, fetchFeedback, editFeedback})(EditPersonalFeedbackClass);

@@ -24,7 +24,7 @@ renderTextArea.propTypes = {
     meta: React.PropTypes.object,
 };
 
-let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Component {
+let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
     constructor(props) {
         super(props);
 
@@ -40,7 +40,7 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
 
         // Get feedback and set default values after promises return succesfully.
         this.props.fetchFeedback(accessToken, this.props.params.feedbackId).then((response) => {
-            if (response.payload.status === 200) {
+            if (!response.error) {
                 response.payload.data.role.remarks.map((remark, index) => {
                     const { rating } = remark;
 
@@ -76,9 +76,7 @@ let EditGivenRoleFeedbackClass = class EditGivenRoleFeedback extends React.Compo
             status: 1,
             role: {remarks},
         }, accessToken).then((response) => {
-            let data = response.payload.data;
-
-            if (response.payload.status !== 200) {
+            if (response.error) {
                 this.props.dispatch(Notifications.error({
                     title: 'Error!',
                     message: 'Something went wrong while saving the data!',
@@ -277,7 +275,7 @@ function validate(values) {
     return errors;
 }
 
-EditGivenRoleFeedbackClass.propTypes = {
+EditRoleFeedbackClass.propTypes = {
     change: React.PropTypes.func,
     cleanFeedback: React.PropTypes.func,
     dispatch: React.PropTypes.func,
@@ -289,14 +287,14 @@ EditGivenRoleFeedbackClass.propTypes = {
     params: React.PropTypes.object,
 };
 
-EditGivenRoleFeedbackClass.contextTypes = {
+EditRoleFeedbackClass.contextTypes = {
     router: React.PropTypes.object,
 };
 
 // Connect reduxForm to our class.
-EditGivenRoleFeedbackClass = reduxForm({
+EditRoleFeedbackClass = reduxForm({
     form: 'EditRoleFeedbackForm',
     validate,
-})(EditGivenRoleFeedbackClass);
+})(EditRoleFeedbackClass);
 
-export default connect(mapStateToProps, {cleanFeedback, fetchFeedback, editFeedback})(EditGivenRoleFeedbackClass);
+export default connect(mapStateToProps, {cleanFeedback, fetchFeedback, editFeedback})(EditRoleFeedbackClass);
