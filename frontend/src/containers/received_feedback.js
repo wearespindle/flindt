@@ -9,7 +9,7 @@ import { Link } from 'react-router';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { reduxForm, Field, SubmissionError, getFormValues } from 'redux-form';
+import { reduxForm, Field, SubmissionError, formValueSelector } from 'redux-form';
 
 import Notifications from 'react-notification-system-redux';
 
@@ -145,7 +145,7 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
         let table;
         let person = feedback.sender;
         let receiver = feedback.recipient;
-        const { handleSubmit } = this.props;
+        const { handleSubmit, rangeValues } = this.props;
         const accessToken = this.props.user.user.access_token;
 
         return (
@@ -197,6 +197,10 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                                 <li>9</li>
                                                 <li>10</li>
                                             </ul>
+
+                                            <div className="range-input-list-output">
+                                                Grade: <span>{ rangeValues.how_valuable }</span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -224,6 +228,11 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                                 <li>9</li>
                                                 <li>10</li>
                                             </ul>
+
+                                            <div className="range-input-list-output">
+                                                Grade: <span>{ rangeValues.how_recognizable }</span>
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -272,11 +281,16 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
     }
 };
 
+const selector = formValueSelector('GivePersonalFeedbackForm');
+
 const mapStateToProps = (state) => ({
     feedback: state.Feedback.feedback,
     user: state.User.data,
     user_data: state.User.user_data,
     question: state.Question,
+    // Set values on state to show them on mobile, when the range input has a
+    // limited UI.
+    rangeValues: selector(state, 'how_valuable', 'how_recognizable'),
 });
 
 // reduxForm validate function.
@@ -299,6 +313,7 @@ ReceivedFeedbackClass.propTypes = {
     fetchFeedback: React.PropTypes.func,
     handleSubmit: React.PropTypes.func,
     params: React.PropTypes.object,
+    rangeValues: React.PropTypes.object,
     user: React.PropTypes.object,
 };
 
