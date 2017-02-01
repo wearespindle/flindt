@@ -1,11 +1,15 @@
 import React from 'react';
+import Time from 'react-time';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
+import RatingRows from '../components/rating_row';
+import ModalButton from '../components/modal_button';
 
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
-class CheckGivenPersonalFeedback extends React.Component {
+
+class CheckRoleFeedback extends React.Component {
     componentWillMount() {
         let accessToken = this.props.user.user.access_token;
 
@@ -31,13 +35,13 @@ class CheckGivenPersonalFeedback extends React.Component {
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Check feedback</li>
-                                <li>Personal feedback</li>
+                                <li>Feedback on role</li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="content">
-                        <h2>Feedback on </h2>
+                        <h2>Feedback on the role </h2>
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
@@ -52,6 +56,8 @@ class CheckGivenPersonalFeedback extends React.Component {
         }
 
         let person = feedback.recipient;
+        let role = feedback.role.role;
+        const accessToken = this.props.user.user.access_token;
 
         return (
             <div className="content--wrapper">
@@ -60,19 +66,23 @@ class CheckGivenPersonalFeedback extends React.Component {
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Check feedback</li>
-                            <li>Personal feedback</li>
+                            <li>Feedback on role</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="content">
-                    <h2>Feedback on { person.first_name }</h2>
+                    <h2>Feedback on the role { feedback.role.role.name }</h2>
 
                     <div className="feedback-form--wrapper">
                         <table className="feedback-form--meta">
                             <thead>
                                 <tr>
                                     <th>Person</th>
+                                    <th>Role</th>
+                                    <th>Subcircle</th>
+                                    <th>Circle</th>
+                                    <th>Received on</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,19 +90,28 @@ class CheckGivenPersonalFeedback extends React.Component {
                                     <td data-label="Person">
                                         { person.first_name } { person.last_name}
                                     </td>
+                                    <td data-label="Role">
+                                        <ModalButton accessToken={accessToken} role={role.id}>
+                                            { role.name }
+                                        </ModalButton>
+                                    </td>
+                                    <td data-label="Subcircle">
+                                        <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                            { role.parent.name }
+                                        </ModalButton>
+                                    </td>
+                                    <td data-label="Circle">
+                                        Devhouse Spindle
+                                    </td>
+                                    <td data-label="Received on">
+                                        <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="feedback-form--row">
-                            <div className="feedback-form--answer-container">
-                                <strong>
-                                    { feedback.individual.question.content }
-                                </strong>
 
-                                <div className="feedback-form--answer">
-                                    <p>{feedback.individual.answer}</p>
-                                </div>
-                            </div>
+                        <div>
+                            <RatingRows remarks={feedback.role.remarks} />
                         </div>
                     </div>
 
@@ -100,7 +119,7 @@ class CheckGivenPersonalFeedback extends React.Component {
                         <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
-                    <Link to={`/give-feedback/personal/${this.state.id}/edit`} className="action--button is-right">
+                    <Link to={`/give-feedback/role/${this.state.id}/edit`} className="action--button is-right">
                         Edit feedback
                     </Link>
                 </div>
@@ -113,16 +132,14 @@ const mapStateToProps = (state) => ({
     feedback: state.Feedback.feedback,
     user: state.User.data,
     user_data: state.User.user_data,
-    question: state.Question,
-    Notifications: state.Notifications,
 });
 
-CheckGivenPersonalFeedback.propTypes = {
+CheckRoleFeedback.propTypes = {
     cleanFeedback: React.PropTypes.func,
     feedback: React.PropTypes.object,
     fetchFeedback: React.PropTypes.func,
-    params: React.PropTypes.object,
     user: React.PropTypes.object,
+    params: React.PropTypes.object,
 };
 
-export default connect(mapStateToProps, {cleanFeedback, fetchFeedback})(CheckGivenPersonalFeedback);
+export default connect(mapStateToProps, {cleanFeedback, fetchFeedback})(CheckRoleFeedback);
