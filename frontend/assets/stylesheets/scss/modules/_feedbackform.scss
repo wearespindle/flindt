@@ -68,16 +68,11 @@
     @include grid (48);
     border-bottom: 1px solid $color-neutral-30;
     background: $white;
-    padding: 1rem;
-
     position: relative;
+    padding: 1.1rem 0 1rem 0;
 
     &:last-child {
         border-bottom: 0;
-    }
-
-    @media (min-width: $breakpoint-20) {
-        padding: 1rem;
     }
 }
 
@@ -141,15 +136,17 @@
     position: absolute;
     right: 10px;
     top: 10px;
+    display: none;
 
     img {
-        width: 50px;
+        max-width: 40px;
     }
 
     @media (min-width: $breakpoint-30) {
         position: relative;
         top: auto;
         right: auto;
+        display: block;
 
         img {
             width: auto;
@@ -160,6 +157,13 @@
 
 .feedback-form--form {
     margin-top: 30px;
+    padding-bottom: 0;
+    overflow: hidden;
+    background: #ebecef;
+
+    > form > .feedback-form--row {
+        padding: 1rem;
+    }
 
     @media (min-width: $breakpoint-30) {
         margin: 0;
@@ -202,4 +206,31 @@
 
 .feedbacklist--wrapper {
     margin-bottom: 3rem;
+}
+
+
+.feedback-form--buttonwrapper {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    background: #ebecef;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    @media (min-width: $breakpoint-30) {
+        margin-left: -2rem;
+        margin-right: -2rem;
+    }
+}
+
+.feedback-form--answer {
+    margin-top: 1rem;
+}
+
+.feedback-form--answer-container {
+    padding: 1rem;
+    background: #fff;
+}
+
+.feedback-content {
+    padding: 1rem;
 }

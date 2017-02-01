@@ -35,11 +35,8 @@ docs/sphinx/build/
 docs/sphinx/source/modules/
 
 npm-debug.log
-/frontend/compiled-assets
+/frontend/dist
 /frontend/node_modules
-/new_frontend/node_modules
-/new_frontend/.tags1
-/new_frontend/dist
 
 .bash_history
 .ipython

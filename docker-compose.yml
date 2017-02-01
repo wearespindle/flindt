@@ -36,4 +36,3 @@ frontend:
   ports:
     # ext:int port.
     - "8080:8080"
-    - "3001:3001"  # Used by browsersync
