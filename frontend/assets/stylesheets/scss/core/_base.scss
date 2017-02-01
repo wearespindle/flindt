@@ -33,6 +33,10 @@ body {
         .spinner > div {
             background-color: $white;
         }
+
+        .content .spinner > div {
+            background-color: $color-primary-50;
+        }
     }
 }
 

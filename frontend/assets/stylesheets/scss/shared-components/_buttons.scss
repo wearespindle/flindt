@@ -44,6 +44,18 @@ button {
     &:focus {
         box-shadow: inset 0 1px 3px rgba($black, 0.2);
     }
+
+    &.action--button {
+        padding-left: 1rem;
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        &:hover {
+            background: $color-primary-30;
+        }
+    }
 }
 
 .button--neutral,
