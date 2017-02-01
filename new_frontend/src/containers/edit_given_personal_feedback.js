@@ -67,7 +67,7 @@ let EditGivenPersonalFeedbackClass = class EditGivenPersonalFeedback extends Rea
             } else {
                 this.props.dispatch(Notifications.success({
                     title: 'Sweet success!',
-                    message: 'Your edited feedback is succesfully saved! Thanks!',
+                    message: 'Your edited feedback is successfully saved! Thanks!',
                     position: 'tr',
                     autoDismiss: 2,
                 }));
