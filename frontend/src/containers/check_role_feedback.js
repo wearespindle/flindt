@@ -80,7 +80,6 @@ class CheckRoleFeedback extends React.Component {
                                 <tr>
                                     <th>Person</th>
                                     <th>Role</th>
-                                    <th>Subcircle</th>
                                     <th>Circle</th>
                                     <th>Received on</th>
                                 </tr>
@@ -95,13 +94,10 @@ class CheckRoleFeedback extends React.Component {
                                             { role.name }
                                         </ModalButton>
                                     </td>
-                                    <td data-label="Subcircle">
+                                    <td data-label="Circle">
                                         <ModalButton accessToken={accessToken} role={role.parent.id}>
                                             { role.parent.name }
                                         </ModalButton>
-                                    </td>
-                                    <td data-label="Circle">
-                                        Devhouse Spindle
                                     </td>
                                     <td data-label="Received on">
                                         <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
