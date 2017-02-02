@@ -21,7 +21,7 @@ class Round(FeedBagBaseModel):
         related_name='+',
     )
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    end_date = models.DateTimeField(help_text="Editing of feedback will be disabled after this date has passed.")
     description = models.CharField(
         _('description'),
         max_length=255,

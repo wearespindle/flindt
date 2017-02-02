@@ -91,7 +91,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if self.instance:
             if self.instance.round:
-                # Round has an end date, so check if we've passed that date.
+                # Round isn't a required field, so only check for end date if there's a round.
                 feedback_closed = datetime.now(timezone.utc) > self.instance.round.end_date
             else:
                 # Otherwise we expire editing of feedback after 7 days.

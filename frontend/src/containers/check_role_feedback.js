@@ -61,14 +61,12 @@ class CheckRoleFeedback extends React.Component {
         let showEditButton;
 
         if (feedback.round) {
-            // Round has an end date, so check if we've passed that date.
+            // Round isn't a required field, so only check for end date if there's a round.
             showEditButton = moment().isBefore(moment(feedback.round.end_date));
         } else {
             // Otherwise disable editing if feedback was completed more than a week ago.
             showEditButton = moment(feedback.date).add('7', 'days').isAfter(moment());
         }
-
-        console.log(showEditButton);
 
         const accessToken = this.props.user.user.access_token;
 
