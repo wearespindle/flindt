@@ -4,7 +4,7 @@ import factory
 from factory.declarations import LazyAttribute, SubFactory
 from factory.django import DjangoModelFactory
 from factory.fuzzy import FuzzyInteger, FuzzyChoice, FuzzyNaiveDateTime
-from faker.factory import Factory
+from faker import Factory
 
 from feedbag.feedback.models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
 from feedbag.role.tests.factories import RoleFactory
@@ -32,7 +32,6 @@ class RatingFactory(DjangoModelFactory):
 
 
 class RemarkFactory(DjangoModelFactory):
-
     rating = SubFactory(RatingFactory)
     content = LazyAttribute(lambda o: faker.text())
 

@@ -1,7 +1,10 @@
+from datetime import datetime, timedelta, timezone
+
 from rest_framework import serializers
 
 from feedbag.role.serializers import RoleSerializer
 from feedbag.user.serializers import UserSerializer
+from feedbag.round.serializers import RoundSerializer
 
 from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, FeedbackOnRole
 
@@ -49,6 +52,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
     role = FeedbackOnRoleSerializer()
     sender = UserSerializer()
     recipient = UserSerializer()
+    round = RoundSerializer()
 
     def update(self, instance, validated_data):
         individual_feedback = validated_data.pop('individual', None)
@@ -85,6 +89,18 @@ class FeedbackSerializer(serializers.ModelSerializer):
         return instance
 
     def validate(self, attrs):
+        if self.instance:
+            if self.instance.round:
+                # Round has an end date, so check if we've passed that date.
+                feedback_closed = datetime.now(timezone.utc) > self.instance.round.end_date
+            else:
+                # Otherwise we expire editing of feedback after 7 days.
+                feedback_closed = self.instance.date + timedelta(days=7) < datetime.now(timezone.utc)
+
+            if feedback_closed:
+                raise serializers.ValidationError('This feedback has been finalized \
+                and you can\'t edit this feedback anymore.')
+
         individual_feedback = attrs.get('individual')
 
         if self.instance and not individual_feedback:
@@ -117,4 +133,6 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'actionable_content',
             'individual',
             'role',
+            'round',
         )
+        read_only_fields = ('date', 'round',)

@@ -40,6 +40,7 @@ npm-debug.log
 
 .bash_history
 .ipython
+yarn.lock
 
 .env
 

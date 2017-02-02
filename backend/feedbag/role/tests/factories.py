@@ -2,7 +2,7 @@ import factory
 import random
 
 from factory.declarations import LazyAttribute
-from faker.factory import Factory
+from faker import Factory
 
 from feedbag.role.models import Role
 from feedbag.user.models import User

@@ -268,13 +268,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.user_details',
 )
 
-CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
+# CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 
 # Couldnt get the default code up here to work during the refactor so used this
 # hardcoded whitelist to be able to develop locally.
-# CORS_ORIGIN_WHITELIST = (
-#     'localhost:8080',
-#     'http://localhost:8080'
-# )
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+    'http://localhost:8080'
+)
 
 FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')

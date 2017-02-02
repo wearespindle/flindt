@@ -133,7 +133,7 @@ class Feedback(FeedBagBaseModel):
     # overwriting of __init__ can be skipped.
     __original_status = None
 
-    def save(self):
+    def save(self, *args, **kwargs):
         """
         If the status changes, the date should be updated.
         """

@@ -35,9 +35,11 @@ const ReceivedFeedbackContent = (props) => {
                             </ModalButton>
                         </td>
                         <td data-label="Circle">
-                            <ModalButton accessToken={accessToken} role={role.parent.id}>
-                                { role.parent.name }
-                            </ModalButton>
+                            { role.parent &&
+                                <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                    { role.parent.name }
+                                </ModalButton>
+                            }
                         </td>
                         <td data-label="Received on">
                             <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
