@@ -22,7 +22,18 @@ To create a superuser for the backend, do:
 `docker-compose run backend python manage.py createsuperuser`
 
 Visit the backend at http://localhost:8005. The frontend is available at
-http://localhost:3000.
+http://localhost:8080.
 
 
+To make use of the Google API to login you need to create an `.env` file in your backend folder.
 
+The following info needs to be added:
+```
+SOCIAL_AUTH_GOOGLE_PLUS_KEY=
+SOCIAL_AUTH_GOOGLE_PLUS_SECRET=
+SOCIAL_AUTH_GOOGLE_PLUS_WHITELISTED_DOMAINS=
+
+CORS_ORIGIN_WHITELIST=localhost:8080,yourdomain.com
+```
+
+The Google keys can be found in your Google Developer dashboard.
