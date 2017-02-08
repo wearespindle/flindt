@@ -28,9 +28,10 @@ http://localhost:8080.
 To make use of the Google API to login you need to create an `.env` file in your backend folder.
 
 The following info needs to be added to your .env file:
+
 .. code:: bash
     
-    SOCIAL_AUTH_GOOGLE_PLUS_KEY=your_client_id
+    SOCIAL_AUTH_GOOGLE_PLUS_KEY=your_client_id 
     SOCIAL_AUTH_GOOGLE_PLUS_SECRET=your_client_secret
     SOCIAL_AUTH_GOOGLE_PLUS_WHITELISTED_DOMAINS=your_whitelisted_domains
     CORS_ORIGIN_WHITELIST=localhost:8080,yourdomain.com
