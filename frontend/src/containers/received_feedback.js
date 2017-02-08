@@ -17,6 +17,8 @@ import FeedbackContent from '../components/received_feedback_content';
 
 import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
+const moment = require('moment');
+
 // renderField component for reduxForms.
 const renderInput = ({ input, meta: { touched, error }, ...props }) => (
     <span>
@@ -142,11 +144,21 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
             );
         }
 
-        let table;
+        let table,
+            isEditable;
+
         let person = feedback.sender;
         let receiver = feedback.recipient;
         const { handleSubmit, rangeValues } = this.props;
         const accessToken = this.props.user.user.access_token;
+
+        if (feedback.round) {
+            // Round isn't a required field, so only check for end date if there's a round.
+            isEditable = moment().isBefore(moment(feedback.round.end_date));
+        } else {
+            // Otherwise disable editing if feedback was completed more than a week ago.
+            isEditable = moment(feedback.date).add('7', 'days').isAfter(moment());
+        }
 
         return (
             <div className="content--wrapper">
@@ -163,6 +175,13 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                 <div className="content">
                     <h2>Received feedback</h2>
 
+                    { !isEditable &&
+                        <div className="label--neutral">
+                            <i className="fa fa-info-circle" />
+                            The round has been closed, this means you can&apos;t edit your feedback anymore.
+                        </div>
+                    }
+
                     <div className="feedback-form--wrapper">
                         <FeedbackContent
                           {...this.props}
@@ -178,29 +197,46 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                     <div className="feedback-form--row">
                                         <div className="l-48">
                                             <h3>How valuable is the feedback you received from {person.first_name}?</h3>
-                                            <Field
-                                              name="how_valuable"
-                                              component={renderInput}
-                                              className="feedback-form--range"
-                                              type="range"
-                                              step="1" min="1" max="10"
-                                            />
-                                            <ul className="range-input-list">
-                                                <li>1</li>
-                                                <li>2</li>
-                                                <li>3</li>
-                                                <li>4</li>
-                                                <li>5</li>
-                                                <li>6</li>
-                                                <li>7</li>
-                                                <li>8</li>
-                                                <li>9</li>
-                                                <li>10</li>
-                                            </ul>
 
-                                            <div className="range-input-list-output">
-                                                Grade: <span>{ rangeValues.how_valuable }</span>
-                                            </div>
+                                            { isEditable &&
+                                                <div>
+                                                    <Field
+                                                      name="how_valuable"
+                                                      component={renderInput}
+                                                      className="feedback-form--range"
+                                                      type="range"
+                                                      step="1" min="1" max="10"
+                                                    />
+                                                    <ul className="range-input-list">
+                                                        <li>1</li>
+                                                        <li>2</li>
+                                                        <li>3</li>
+                                                        <li>4</li>
+                                                        <li>5</li>
+                                                        <li>6</li>
+                                                        <li>7</li>
+                                                        <li>8</li>
+                                                        <li>9</li>
+                                                        <li>10</li>
+                                                    </ul>
+
+                                                    <div className="range-input-list-output">
+                                                        Grade: <span>{ rangeValues.how_valuable }</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            { !isEditable &&
+                                                <div>
+                                                    <div className="feedback-form--finalgrade">
+                                                        <div
+                                                          style={{width: `${feedback.how_valuable * 10}%`}}
+                                                        />
+                                                    </div>
+
+                                                    <span>{ feedback.how_valuable } / 10</span>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
 
@@ -209,29 +245,46 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                             <h3>
                                                 How recognizable is the feedback you received from {person.first_name}?
                                             </h3>
-                                            <Field
-                                              name="how_recognizable"
-                                              component={renderInput}
-                                              className="feedback-form--range"
-                                              type="range"
-                                              step="1" min="1" max="10"
-                                            />
-                                            <ul className="range-input-list">
-                                                <li>1</li>
-                                                <li>2</li>
-                                                <li>3</li>
-                                                <li>4</li>
-                                                <li>5</li>
-                                                <li>6</li>
-                                                <li>7</li>
-                                                <li>8</li>
-                                                <li>9</li>
-                                                <li>10</li>
-                                            </ul>
 
-                                            <div className="range-input-list-output">
-                                                Grade: <span>{ rangeValues.how_recognizable }</span>
-                                            </div>
+                                            { isEditable &&
+                                                <div>
+                                                    <Field
+                                                      name="how_recognizable"
+                                                      component={renderInput}
+                                                      className="feedback-form--range"
+                                                      type="range"
+                                                      step="1" min="1" max="10"
+                                                    />
+                                                    <ul className="range-input-list">
+                                                        <li>1</li>
+                                                        <li>2</li>
+                                                        <li>3</li>
+                                                        <li>4</li>
+                                                        <li>5</li>
+                                                        <li>6</li>
+                                                        <li>7</li>
+                                                        <li>8</li>
+                                                        <li>9</li>
+                                                        <li>10</li>
+                                                    </ul>
+
+                                                    <div className="range-input-list-output">
+                                                        Grade: <span>{ rangeValues.how_recognizable }</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            { !isEditable &&
+                                                <div>
+                                                    <div className="feedback-form--finalgrade">
+                                                        <div
+                                                          style={{width: `${feedback.how_recognizable * 10}%`}}
+                                                        />
+                                                    </div>
+
+                                                    <span>{ feedback.how_recognizable } / 10</span>
+                                                </div>
+                                            }
 
                                         </div>
                                     </div>
@@ -239,38 +292,57 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                     <div className="feedback-form--row">
                                         <div className="l-48">
                                             <h3>Are you planning on doing anything with this feedback?</h3>
+                                            { isEditable &&
+                                                <div>
+                                                    <ul className="feedback--form-radiolist">
+                                                        <li>
+                                                            <Field
+                                                              name="actionable"
+                                                              component={renderInput}
+                                                              type="radio"
+                                                              id="yes"
+                                                              value="true"
+                                                            />
+                                                            <label htmlFor="yes">Yes, because</label>
+                                                        </li>
+                                                        <li>
+                                                            <Field
+                                                              name="actionable"
+                                                              component={renderInput}
+                                                              type="radio"
+                                                              id="no"
+                                                              value="false"
+                                                            />
+                                                            <label htmlFor="no">No</label>
+                                                        </li>
+                                                    </ul>
 
-                                            <ul className="feedback--form-radiolist">
-                                                <li>
-                                                    <Field
-                                                      name="actionable"
-                                                      component={renderInput}
-                                                      type="radio"
-                                                      id="yes"
-                                                      value="true"
-                                                    />
-                                                    <label htmlFor="yes">Yes, because</label>
-                                                </li>
-                                                <li>
-                                                    <Field
-                                                      name="actionable"
-                                                      component={renderInput}
-                                                      type="radio"
-                                                      id="no"
-                                                      value="false"
-                                                    />
-                                                    <label htmlFor="no">No</label>
-                                                </li>
-                                            </ul>
+                                                    <Field name="actionable_content" component={renderTextArea} />
+                                                </div>
+                                            }
 
-                                            <Field name="actionable_content" component={renderTextArea} />
+                                            { !isEditable &&
+                                                <div>
+                                                    <p>{feedback.actionable ? 'Yes' : 'No'}</p>
+                                                    { feedback.actionable_content &&
+                                                        <div>
+                                                            <strong>Reason:</strong>
+                                                            <p>{feedback.actionable_content}</p>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            }
                                         </div>
                                     </div>
 
                                     <Link to="/received-feedback/" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
-                                    <button className="action--button is-right" type="submit">Save</button>
+
+                                    { isEditable &&
+                                        <button className="action--button is-right" type="submit">Save</button>
+                                    }
                                 </form>
                             </div>
                         </div>
