@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
+const moment = require('moment');
+
 class CheckPersonalFeedback extends React.Component {
     componentWillMount() {
         let accessToken = this.props.user.user.access_token;
@@ -53,6 +55,16 @@ class CheckPersonalFeedback extends React.Component {
 
         let person = feedback.recipient;
 
+        let isEditable;
+
+        if (feedback.round) {
+            // Round isn't a required field, so only check for end date if there's a round.
+            isEditable = moment().isBefore(moment(feedback.round.end_date));
+        } else {
+            // Otherwise disable editing if feedback was completed more than a week ago.
+            isEditable = moment(feedback.date).add('7', 'days').isAfter(moment());
+        }
+
         return (
             <div className="content--wrapper">
                 <div className="content--header">
@@ -67,6 +79,13 @@ class CheckPersonalFeedback extends React.Component {
 
                 <div className="content">
                     <h2>Feedback on { person.first_name }</h2>
+
+                    { !isEditable &&
+                        <div className="label--neutral">
+                            <i className="fa fa-info-circle" />
+                            The round has been closed, this means you can&apos;t edit your feedback anymore.
+                        </div>
+                    }
 
                     <div className="feedback-form--wrapper">
                         <table className="feedback-form--meta">
@@ -100,9 +119,11 @@ class CheckPersonalFeedback extends React.Component {
                         <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
-                    <Link to={`/give-feedback/personal/${this.state.id}/edit`} className="action--button is-right">
-                        Edit feedback
-                    </Link>
+                    { isEditable &&
+                        <Link to={`/give-feedback/personal/${this.state.id}/edit`} className="action--button is-right">
+                            Edit feedback
+                        </Link>
+                    }
                 </div>
             </div>
         );

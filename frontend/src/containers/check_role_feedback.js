@@ -58,14 +58,14 @@ class CheckRoleFeedback extends React.Component {
 
         let person = feedback.recipient;
         let role = feedback.role.role;
-        let showEditButton;
+        let isEditable;
 
         if (feedback.round) {
             // Round isn't a required field, so only check for end date if there's a round.
-            showEditButton = moment().isBefore(moment(feedback.round.end_date));
+            isEditable = moment().isBefore(moment(feedback.round.end_date));
         } else {
             // Otherwise disable editing if feedback was completed more than a week ago.
-            showEditButton = moment(feedback.date).add('7', 'days').isAfter(moment());
+            isEditable = moment(feedback.date).add('7', 'days').isAfter(moment());
         }
 
         const accessToken = this.props.user.user.access_token;
@@ -84,6 +84,13 @@ class CheckRoleFeedback extends React.Component {
 
                 <div className="content">
                     <h2>Feedback on the role { feedback.role.role.name }</h2>
+
+                    { !isEditable &&
+                        <div className="label--neutral">
+                            <i className="fa fa-info-circle" />
+                            The round has been closed, this means you can&apos;t edit your feedback anymore.
+                        </div>
+                    }
 
                     <div className="feedback-form--wrapper">
                         <table className="feedback-form--meta">
@@ -128,7 +135,7 @@ class CheckRoleFeedback extends React.Component {
                         <i className="fa fa-chevron-left" /> Back to overview
                     </Link>
 
-                    { showEditButton &&
+                    { isEditable &&
                         <Link to={`/give-feedback/role/${this.state.id}/edit`} className="action--button is-right">
                             Edit feedback
                         </Link>

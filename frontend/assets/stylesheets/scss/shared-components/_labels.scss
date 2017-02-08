@@ -15,8 +15,13 @@
 
 .label--neutral {
     @extend %label;
-    background: $color-neutral-30;
-    color: $color-neutral-70;
+    background: #5bc0de;
+    color: $white;
+    margin-bottom: 1rem;
+
+    i {
+        margin-right: 5px;
+    }
 }
 
 .label--success {
