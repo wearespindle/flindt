@@ -1,10 +1,11 @@
-
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
 from feedbag.base.models import FeedBagBaseModel
+from feedbag.integrations.messenger import Messenger
 from feedbag.role.models import Role
 from feedbag.round.models import Round
 from feedbag.user.models import User
@@ -135,10 +136,25 @@ class Feedback(FeedBagBaseModel):
 
     def save(self, *args, **kwargs):
         """
-        If the status changes, the date should be updated.
+        If the status changes, the date should be updated and a message should be
+        send to the recipient.
         """
-        if self.__original_status != self.status:
+        def send_feedback_received_message():
+            pk = str(self.recipient_id)
+            message = _(
+                'You just received feedback. Read and rate it! {}'.
+                format(settings.FRONTEND_HOSTNAME+'/received-feedback/'+pk)
+            )
+            messenger = Messenger(user=self.recipient)
+            messenger.send_message(message)
+
+        # Check if the status has changed and is complete.
+        if self.__original_status != self.status and self.status == self.COMPLETE:
+            # Update the date.
             self.date = timezone.now()
+            # Send a message to the recipient.
+            send_feedback_received_message()
+
         super(Feedback, self).save()
 
     def __init__(self, *args, **kwargs):
