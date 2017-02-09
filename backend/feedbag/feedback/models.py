@@ -18,11 +18,11 @@ class Rating(FeedBagBaseModel):
     by an image, which is normally a emoji to confer the feeling.
     """
     name = models.CharField(max_length=255,)
-    # TODO: FEED-29: Add pillow, so that we can use ImageFields
-    # image = models.ImageField(
-    #     _('image'),
-    #     blank=True,
-    # )
+    image = models.ImageField(
+        _('image'),
+        blank=True,
+        upload_to=b'ratings'
+    )
     description = models.TextField(blank=True,)
 
     def __str__(self):

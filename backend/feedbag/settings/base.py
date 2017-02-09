@@ -125,6 +125,8 @@ STATIC_URL = '/static/'
 # Static files are collected to this directory.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/')
+MEDIA_URL = '/static/images/'
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT', 587)

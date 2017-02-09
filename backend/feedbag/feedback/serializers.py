@@ -10,9 +10,11 @@ from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, Fe
 
 
 class RatingSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, use_url=True)
+
     class Meta:
         model = Rating
-        fields = ('id', 'name', 'description',)
+        fields = ('id', 'name', 'image', 'description',)
 
 
 class RemarkSerializer(serializers.ModelSerializer):
