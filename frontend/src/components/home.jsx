@@ -13,9 +13,9 @@ const Home = (props) =>
         </div>
 
         <div className="content">
-            <h1>Welkom bij de feedback tool!</h1>
+            <h1>Welkom to Feedbag!</h1>
 
-            <p>In deze tool kun je feedback geven en bekijken welke feedback je hebt gekregen van je collega&apos;s.</p>
+            <p>Use the left navigation bar to check for open feedback requests or received feedback!</p>
         </div>
     </div>;
 
