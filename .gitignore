@@ -31,8 +31,8 @@ tags
 /xunit-sipp.xml
 
 # /docs/sphinx/
-docs/sphinx/build/
-docs/sphinx/source/modules/
+backend/docs/sphinx/build/
+backend/docs/sphinx/source/modules/
 
 npm-debug.log
 /frontend/dist

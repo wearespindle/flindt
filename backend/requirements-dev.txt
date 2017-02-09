@@ -15,3 +15,11 @@ ipdb==0.10.1
 ### Testing                                         ###
 #######################################################
 factory_boy==2.8.1
+
+#######################################################
+### Docs                                            ###
+#######################################################
+sphinx==1.4.8
+# Allows 'Edit on github' button in Sphinx docs.
+https://github.com/westurner/sphinxcontrib-srclinks/archive/master.zip
+sphinx_rtd_theme==0.1.9
