@@ -1,8 +1,14 @@
 import logging
 
+import datetime
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 from feedbag.base.models import FeedBagBaseModel
+from feedbag.feedback.models import Feedback
+from feedbag.integrations.messenger import Messenger
 from feedbag.role.models import Role
 from feedbag.user.models import User
 
@@ -24,3 +30,21 @@ class Organization(FeedBagBaseModel):
 
     def __str__(self):
         return self.name
+
+    def message_for_reminder(self):
+        """
+        Send a message to all users that have unfinished feedbacks that is
+        older than 7 days.
+        """
+        now = timezone.now()
+        week_ago = now - datetime.timedelta(days=7)
+
+        message = _(
+            _("Hey, we noticed that people are waiting for your feedback, please help your colleagues by giving them "
+              "some feedback at {}/give-feedback.").
+            format(settings.FRONTEND_HOSTNAME)
+        )
+        for user in self.users.all():
+            if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE, round__start_date__lt=week_ago).exists():
+                messenger = Messenger(user=user)
+                messenger.send_message(message)

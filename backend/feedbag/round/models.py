@@ -64,19 +64,3 @@ class Round(FeedBagBaseModel):
         for user in self.participants_receivers.all():
             messenger = Messenger(user=user)
             messenger.send_message(message)
-
-    def message_for_reminder(self):
-        """
-        Send a message to all participants_senders that have unfisnished
-        feedbacks.
-        """
-        # Prevent circular import.
-        from feedbag.feedback.models import Feedback
-        message = _(
-            "Hey, we noticed that you haven't given feedback yet, please help your colleagues by giving them some feedback at {}".
-            format(settings.FRONTEND_HOSTNAME)
-        )
-        for user in self.participants_senders.all():
-            if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE).exists():
-                messenger = Messenger(user=user)
-                messenger.send_message(message)
