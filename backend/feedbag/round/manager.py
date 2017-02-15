@@ -128,6 +128,7 @@ class RoundManager:
         Raises:
             NoSolutionPossible: If no roles can be found for the user.
         """
+        logger.info('Creating role feedback for user: {}'.format(participant))
         role = participant.role_set.order_by('?').exclude(parent_id=None).exclude(archived=True).first()
         if not role:
             raise NoSolutionPossible

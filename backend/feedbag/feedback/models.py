@@ -127,7 +127,12 @@ class Feedback(FeedBagBaseModel):
     round = models.ForeignKey(Round, null=True, blank=True)
 
     def __str__(self):
-        return 'Feedback from {} on {}'.format(self.sender, self.recipient)
+        if self.role:
+            return 'Feedback from {} on role: {} for {}'.format(self.sender, self.role, self.recipient)
+        if self.individual:
+            return 'Feedback from {} on individual: {}'.format(self.sender, self.recipient)
+
+
 
     # TODO: FEED-71: We should discern between date_created and date_completed.
     # If we make changing the status from incomplete to complete an action, the
