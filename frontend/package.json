@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "jest"
+    "test": "jest",
+    "build": "NODE_ENV=production webpack -p --config ./webpack.production.config.js"
   },
   "jest": {
     "transformIgnorePatterns": [

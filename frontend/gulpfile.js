@@ -1,4 +1,5 @@
 const autoprefixer = require('gulp-autoprefixer');
+var exec = require('child_process').exec;
 const gulp = require('gulp');
 const historyApiFallback = require('connect-history-api-fallback');
 const path = require('path');
@@ -26,6 +27,12 @@ gulp.task('js', () =>
     gulp.src('src/entry.js')
     .pipe(webpackStream(webpackConfig))
     .pipe(gulp.dest('dist/'))
+);
+
+gulp.task('js-production', (cb) =>
+    exec('npm run build', (err, stdout, stderr) => {
+        cb(err);
+    })
 );
 
 
@@ -89,4 +96,16 @@ gulp.task('fonts', () =>
     .pipe(gulp.dest('./dist/fonts'))
 );
 
+
+/**
+ * Copies and compiles the right files to the /dist folder.
+ * This tasks takes a bit of time as the js-production task compiles, bundles
+ * and minifies all React related code and dependencies.
+ */
+gulp.task('build-production', ['sass', 'fonts', 'images', 'js-production']);
+
+
+/**
+ * Default gulp task.
+ */
 gulp.task('default', ['js', 'sass', 'fonts', 'images', 'webpack-dev-server', 'watch']);
