@@ -82,7 +82,7 @@
     "redux": "^3.5.2",
     "redux-form": "^6.4.3",
     "redux-promise": "^0.5.3",
-    "webpack": "^1.12.9",
+    "webpack": "^1.14.0",
     "webpack-dev-server": "^1.14.0",
     "webpack-stream": "^3.2.0"
   }
