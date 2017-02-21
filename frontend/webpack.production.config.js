@@ -5,10 +5,6 @@ module.exports = {
     entry: [
         './src/index.js',
     ],
-    preLoaders: [
-        // Javascript
-        { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ },
-    ],
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js',
@@ -23,7 +19,7 @@ module.exports = {
         }],
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['.js', '.jsx'],
     },
     devServer: {
         historyApiFallback: true,

@@ -10,6 +10,6 @@ RUN npm install
 ENV NODE_PATH /usr/src/node_modules
 
 # gulp-cli needs to be installed globally.
-RUN npm install -g gulp-cli
+RUN npm install -g gulp-cli webpack
 
 WORKDIR /usr/src/frontend

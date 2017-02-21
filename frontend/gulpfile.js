@@ -118,8 +118,9 @@ gulp.task('clean', () => del(['./dist']));
  * This tasks takes a bit of time as the js-production task compiles, bundles
  * and minifies all React related code and dependencies.
  */
-gulp.task('build-production', ['clean', 'fonts'], () => {
+gulp.task('build-production', ['clean'], () => {
     isProduction = true;
+    gulp.start('fonts');
     gulp.start('sass');
     gulp.start('images');
     gulp.start('js-production');
