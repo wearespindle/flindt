@@ -33,7 +33,6 @@ module.exports = {
             },
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
-        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             beautify: false,
             mangle: {
