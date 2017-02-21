@@ -180,38 +180,13 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                             let value = '';
                                             const { rating } = remark;
 
-                                            if (rating.name.toLowerCase() === 'positives') {
-                                                return (
-                                                    <div key={rating.id} className="feedback-form--row">
-                                                        <div className="l-5 feedback-form--row-smiley">
-                                                            <img
-                                                              src="/dist/images/positive-feedback.png"
-                                                              alt="Positive feedback"
-                                                            />
-                                                        </div>
-
-                                                        <div className="l-43">
-                                                            <label htmlFor="positiveFeedback">
-                                                                {rating.description}
-                                                                <span className="is-required">*</span>
-                                                            </label>
-                                                            <Field
-                                                              name="positiveFeedback"
-                                                              component={renderTextArea}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                );
-                                            }
-
                                             return (
                                                 <div key={rating.id} className="feedback-form--row">
-                                                    <div className="l-5 feedback-form--row-smiley">
-                                                        <img
-                                                          src="/dist/images/negative-feedback.png"
-                                                          alt="Improvement feedback"
-                                                        />
-                                                    </div>
+                                                    { rating.image &&
+                                                        <div className="l-5 feedback-form--row-smiley">
+                                                            <img alt="Rating" src={rating.image} />
+                                                        </div>
+                                                    }
 
                                                     <div className="l-43">
                                                         <label htmlFor="improvementFeedback">

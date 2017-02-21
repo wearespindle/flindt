@@ -1,7 +1,10 @@
 const autoprefixer = require('gulp-autoprefixer');
-var exec = require('child_process').exec;
+const exec = require('child_process').exec;
+const del = require('del');
 const gulp = require('gulp');
 const historyApiFallback = require('connect-history-api-fallback');
+const ifElse = require('gulp-if-else');
+const imagemin = require('gulp-imagemin');
 const path = require('path');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
@@ -12,16 +15,21 @@ const gutil = require('gulp-util');
 
 const webpackConfig = require('./webpack.config.js');
 
-const paths = {
-    browser: './',
-    fonts: './assets/fonts',
-    html: './**/*.html',
-    img: './assets/images',
-    sass: {
-        src: './assets/stylesheets/**/*.scss',
-        sassIndex: './assets/stylesheets/scss/styles.scss',
+const config = {
+    paths: {
+        browser: './',
+        fonts: './assets/fonts',
+        html: './**/*.html',
+        img: './assets/images',
+        sass: {
+            src: './assets/stylesheets/**/*.scss',
+            sassIndex: './assets/stylesheets/scss/styles.scss',
+        },
     },
+    env: process.env.NODE_ENV || 'development',
 };
+
+let isProduction = (config.env === 'production');
 
 gulp.task('js', () =>
     gulp.src('src/entry.js')
@@ -41,7 +49,8 @@ gulp.task('js-production', (cb) =>
  * files for the last two browser versions.
  */
 gulp.task('sass', () =>
-    gulp.src(paths.sass.sassIndex)
+    gulp.src(config.paths.sass.sassIndex)
+        .pipe(ifElse(!isProduction, () => sourcemaps.init()))
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
@@ -57,7 +66,7 @@ gulp.task('sass', () =>
  * refresh the browser.
  */
 gulp.task('watch', () => {
-    gulp.watch(paths.sass.src, ['sass']);
+    gulp.watch(config.paths.sass.src, ['sass']);
 });
 
 
@@ -66,7 +75,8 @@ gulp.task('watch', () => {
  * directory. Later we can add some functionality here.
  */
 gulp.task('images', () =>
-    gulp.src(path.join(paths.img, '**'))
+    gulp.src(path.join(config.paths.img, '**'))
+        .pipe(ifElse(!isProduction, () => imagemin()))
         .pipe(gulp.dest('./dist/images'))
     );
 
@@ -92,9 +102,15 @@ gulp.task('webpack-dev-server', (callback) => {
  * Process all fonts.
  */
 gulp.task('fonts', () =>
-    gulp.src(path.join(paths.fonts, '**'))
+    gulp.src(path.join(config.paths.fonts, '**'))
     .pipe(gulp.dest('./dist/fonts'))
 );
+
+
+/**
+ * Clean the assets folder before building
+ */
+gulp.task('clean', () => del(['./dist']));
 
 
 /**
@@ -102,7 +118,12 @@ gulp.task('fonts', () =>
  * This tasks takes a bit of time as the js-production task compiles, bundles
  * and minifies all React related code and dependencies.
  */
-gulp.task('build-production', ['sass', 'fonts', 'images', 'js-production']);
+gulp.task('build-production', ['clean', 'fonts'], () => {
+    isProduction = true;
+    gulp.start('sass');
+    gulp.start('images');
+    gulp.start('js-production');
+});
 
 
 /**
