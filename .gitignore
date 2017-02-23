@@ -45,3 +45,4 @@ yarn.lock
 .env
 
 /backend/feedbag/static
+/backend/feedbag/settings/local.py
