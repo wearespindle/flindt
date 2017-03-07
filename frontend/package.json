@@ -1,7 +1,7 @@
 {
-  "name": "Feedbag",
+  "name": "Flindt",
   "version": "1.0.1",
-  "description": "Refactor of our Feedbag tool with webpack",
+  "description": "The Flindt feedback tool",
   "author": {
     "name": "Spindle",
     "url": "https://wearespindle.com"
