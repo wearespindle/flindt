@@ -161,7 +161,9 @@ class GlassFrogImporter(object):
         )
         role.users.add(role_fullfiller)
         role.save()
-        logger.info("Circle {} imported as role. PK: {}. Parent: {}, parent pk {}".format(role, role.pk, parent, parent.pk))
+        if parent_role:
+            logger.info("Circle {} imported as role. PK: {}. Parent: {}, parent pk {}".format(
+                role, role.pk, parent_role, parent_role.pk))
 
         self.import_run.roles.add(role)
         if self.organization:
@@ -305,6 +307,9 @@ class GlassFrogImporter(object):
             str: The purpose for the circle.
         """
         purpose = self._get_circle_leadlink(id).get('purpose')
+        # Make sure a string is returned, instead of None.
+        if not purpose:
+            return ''
         return purpose
 
     def _get_circle_accountabilities_by_id(self, id):
@@ -322,7 +327,7 @@ class GlassFrogImporter(object):
         """
         accountability_ids = self._get_circle_leadlink(id).get('links').get('accountabilities')
         if not accountability_ids:
-            return ""
+            return ''
         accountabilities = []
         for accountability_id in accountability_ids:
             accountabilities.append(self._get_accountability_by_id(accountability_id))
@@ -340,7 +345,7 @@ class GlassFrogImporter(object):
         """
         domain_ids = self._get_circle_leadlink(id).get('links').get('domains')
         if not domain_ids:
-            return ""
+            return ''
         domains = []
         for domain_id in domain_ids:
             domains.append(self._get_domain_by_id(domain_id))
@@ -358,7 +363,7 @@ class GlassFrogImporter(object):
         """
         accountability_ids = self._get_role_by_id(id).get('links').get('accountabilities')
         if not accountability_ids:
-            return ""
+            return ''
         accountabilities = []
         for accountability_id in accountability_ids:
             accountabilities.append(self._get_accountability_by_id(accountability_id))
@@ -376,7 +381,7 @@ class GlassFrogImporter(object):
         """
         domain_ids = self._get_role_by_id(id).get('links').get('domains/')
         if not domain_ids:
-            return ""
+            return ''
         domains = []
         for domain_id in domain_ids:
             domains.append(self._get_domain_by_id(domain_id))

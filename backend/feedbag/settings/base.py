@@ -194,9 +194,6 @@ LOGGING = {
     }
 }
 
-# TODO: Ask Lily, why this should be a choice
-MULTI_TENANT = True
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -273,5 +270,9 @@ SOCIAL_AUTH_PIPELINE = (
 CORS_ORIGIN_WHITELIST = os.getenv('CORS_ORIGIN_WHITELIST', '').split(',')
 CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+# ALLOWED_HOSTS = ['localhost']
 
 FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')
+
+DEBUG = boolean(os.environ.get('DEBUG', 0))
+TEMPLATE_DEBUG = boolean(os.environ.get('DEBUG', DEBUG))
