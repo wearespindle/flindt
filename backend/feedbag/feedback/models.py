@@ -142,7 +142,8 @@ class Feedback(FeedBagBaseModel):
     def save(self, *args, **kwargs):
         """
         If the status changes, the date should be updated and a message should be
-        send to the recipient.
+        send to the recipient. If feedback is rated, a message should be send to the
+        giver of the feedback.
         """
         def send_feedback_received_message():
             pk = str(self.recipient_id)
@@ -153,12 +154,21 @@ class Feedback(FeedBagBaseModel):
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
 
+        def send_rating_received_message():
+            message = _('{} just rated the feedback that you gave.'.format(self.recipient))
+            messenger = Messenger(user=self.sender)
+            messenger.send_message(message)
+
         # Check if the status has changed and is complete.
         if self.__original_status != self.status and self.status == self.COMPLETE:
             # Update the date.
             self.date = timezone.now()
             # Send a message to the recipient.
             send_feedback_received_message()
+
+        # Check if the feedback has been rated.
+        if self.how_recognizable and self.how_valuable and self.actionable:
+            send_rating_received_message()
 
         super(Feedback, self).save()
 
