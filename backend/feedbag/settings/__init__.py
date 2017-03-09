@@ -19,4 +19,7 @@ except:
 if os.getenv('ENVIRONMENT', 'local') == 'prod':
     from .prod import *  # noqa
 else:
-    from .local import *  # noqa
+    try:
+        from .local import *  # noqa
+    except ImportError:
+        from .base import *

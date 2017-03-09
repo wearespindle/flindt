@@ -15,11 +15,11 @@ class Role(FeedBagBaseModel):
     world, but can also be used to reflect a more traditional organisation.
     """
     name = models.TextField()
-    purpose = models.TextField(blank=True)
+    purpose = models.TextField(blank=True, default='')
     # TODO: FEED-41: Use a JSON field to validate contents.
-    accountabilities = models.TextField(blank=True)  # Used to store JSON
+    accountabilities = models.TextField(blank=True, default='')  # Used to store JSON
     # TODO: FEED-41: Use a JSON field to validate contents.
-    domains = models.TextField(blank=True)  # Used to store JSON
+    domains = models.TextField(blank=True, default='')  # Used to store JSON
     parent = models.ForeignKey('Role', related_name='children', blank=True, null=True)
     users = models.ManyToManyField(User, blank=True)
     archived = models.BooleanField(default=False)

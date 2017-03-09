@@ -20,6 +20,7 @@ backend:
     - db
   environment:
     # Use the root user to enable creation of a test database.
+    - ALLOWED_HOSTS=localhost,0.0.0.0
     - DATABASE_URL=mysql://root:feedbag@db/feedbag
     - DEBUG=1
 
