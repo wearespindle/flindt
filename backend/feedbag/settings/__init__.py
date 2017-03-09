@@ -22,4 +22,4 @@ else:
     try:
         from .local import *  # noqa
     except ImportError:
-        from .base import *
+        from .base import * # noqa
