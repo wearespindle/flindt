@@ -14,7 +14,7 @@ import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback'
 // renderField component for reduxForms.
 const renderTextArea = ({ input, meta: { touched, error } }) => (
     <div>
-        <textarea {...input} />
+        <textarea {...input} required />
         {touched && error && <span className="label--alert">{error}</span>}
     </div>
 );
@@ -199,11 +199,11 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                                                     }
 
                                                     <div className="l-43">
-                                                        <label htmlFor="improvementFeedback">
+                                                        <label htmlFor={rating.name}>
                                                             {rating.description}
                                                         </label>
                                                         <Field
-                                                          name="improvementFeedback"
+                                                          name={rating.name}
                                                           component={renderTextArea}
                                                         />
                                                     </div>
@@ -237,13 +237,13 @@ const mapStateToProps = (state) => ({
 function validate(values) {
     const errors = {};
 
-    if (!values.positiveFeedback) {
-        errors.positiveFeedback = 'Please try to fill in some positive feedback';
-    }
-
-    if (!values.improvementFeedback) {
-        errors.improvementFeedback = 'Please try to fill in some improvements or note you don\'t have any';
-    }
+    // if (!values.positiveFeedback) {
+    //     errors.positiveFeedback = 'Please try to fill in some positive feedback';
+    // }
+    //
+    // if (!values.improvementFeedback) {
+    //     errors.improvementFeedback = 'Please try to fill in some improvements or note you don\'t have any';
+    // }
 
     return errors;
 }
