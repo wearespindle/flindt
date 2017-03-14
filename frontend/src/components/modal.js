@@ -33,8 +33,11 @@ class InfoModal extends Component {
 
         let {name, purpose, accountabilities} = this.props.details.data;
         let accountabilitiesArray;
-        accountabilitiesArray = accountabilities.replace(/'/g, '"');
-        accountabilitiesArray = JSON.parse(accountabilitiesArray);
+
+        if (accountabilities) {
+            accountabilitiesArray = accountabilities.replace(/'/g, '"');
+            accountabilitiesArray = JSON.parse(accountabilitiesArray);
+        }
 
         return (
             <div>
