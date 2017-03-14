@@ -146,7 +146,7 @@ class Feedback(FeedBagBaseModel):
         giver of the feedback.
         """
         def send_feedback_received_message():
-            pk = str(self.recipient_id)
+            pk = str(self.pk)
             message = _(
                 'You just received feedback. Read and rate it! {}'.
                 format(settings.FRONTEND_HOSTNAME+'/received-feedback/'+pk)

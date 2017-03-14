@@ -14,7 +14,7 @@ import { cleanFeedback, fetchFeedback, editFeedback } from '../actions/feedback'
 // renderField component for reduxForms.
 const renderTextArea = ({ input, meta: { touched, error } }) => (
     <div>
-        <textarea {...input} />
+        <textarea {...input} required />
         {touched && error && <span className="label--alert">{error}</span>}
     </div>
 );
@@ -189,12 +189,12 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                                     }
 
                                                     <div className="l-43">
-                                                        <label htmlFor="improvementFeedback">
+                                                        <label htmlFor={rating.name}>
                                                             {rating.description}
                                                             <span className="is-required">*</span>
                                                         </label>
                                                         <Field
-                                                          name="improvementFeedback"
+                                                          name={rating.name}
                                                           component={renderTextArea}
                                                         />
                                                     </div>
@@ -221,14 +221,14 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
 // reduxForm validate function.
 function validate(values) {
     const errors = {};
-
-    if (!values.improvementFeedback) {
-        errors.improvementFeedback = 'Please fill in some improvements';
-    }
-
-    if (!values.positiveFeedback) {
-        errors.positiveFeedback = 'Please try to fill in any positive notes for this role';
-    }
+    //
+    // if (!values.improvementFeedback) {
+    //     errors.improvementFeedback = 'Please fill in some improvements';
+    // }
+    //
+    // if (!values.positiveFeedback) {
+    //     errors.positiveFeedback = 'Please try to fill in any positive notes for this role';
+    // }
 
     return errors;
 }
