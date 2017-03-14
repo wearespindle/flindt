@@ -260,4 +260,4 @@ GiveRoleFeedbackClass = reduxForm({
     validate,
 })(GiveRoleFeedbackClass);
 
-export default connect(mapStateToProps, {fetchFeedback, editFeedback})(GiveRoleFeedbackClass);
+export default connect(mapStateToProps, {fetchFeedback, editFeedback, cleanFeedback})(GiveRoleFeedbackClass);
