@@ -15,8 +15,11 @@ import os
 
 import dj_database_url
 
+
 # Turn 0 or 1 into False/True respectively
 boolean = lambda value: bool(int(value))
+
+DEBUG = boolean(os.environ.get('DEBUG', 0))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -83,6 +86,7 @@ ROOT_URLCONF = 'feedbag.urls'
 
 TEMPLATES = [
     {
+        'TEMPLATE_DEBUG': boolean(os.environ.get('DEBUG', DEBUG)),
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
@@ -274,5 +278,3 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'feedbag.wearespindle.com')
 
-DEBUG = boolean(os.environ.get('DEBUG', 0))
-TEMPLATE_DEBUG = boolean(os.environ.get('DEBUG', DEBUG))
