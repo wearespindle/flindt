@@ -141,4 +141,3 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'round',
         )
         read_only_fields = ('date', 'round',)
-        # depth = 5
