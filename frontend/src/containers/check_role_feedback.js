@@ -58,7 +58,9 @@ class CheckRoleFeedback extends React.Component {
 
         let person = feedback.recipient;
         let role = feedback.role.role;
-        let isEditable;
+        let isEditable,
+            isRated;
+        let closedReason = 'The round has been closed, this means you can&apos;t edit your feedback anymore.';
 
         if (feedback.round) {
             // Round isn't a required field, so only check for end date if there's a round.
@@ -66,6 +68,12 @@ class CheckRoleFeedback extends React.Component {
         } else {
             // Otherwise disable editing if feedback was completed more than a week ago.
             isEditable = moment(feedback.date).add('7', 'days').isAfter(moment());
+        }
+
+        if (feedback.how_recognizable && feedback.how_valuable) {
+            isEditable = false;
+            isRated = true;
+            closedReason = 'Your feedback was rated and is not editable anymore.';
         }
 
         const accessToken = this.props.user.user.access_token;
@@ -88,7 +96,7 @@ class CheckRoleFeedback extends React.Component {
                     { !isEditable &&
                         <div className="label--neutral">
                             <i className="fa fa-info-circle" />
-                            The round has been closed, this means you can&apos;t edit your feedback anymore.
+                            { closedReason }
                         </div>
                     }
 
@@ -129,6 +137,64 @@ class CheckRoleFeedback extends React.Component {
                         <div>
                             <RatingRows remarks={feedback.role.remarks} />
                         </div>
+
+                        { isRated &&
+                            <div className="feedback-form--row padding-bottom-0">
+                                <div className="feedback-form--form">
+
+                                    <div className="feedback-form--row">
+                                        <div className="l-48 feedback-content">
+                                            <h3>Rating</h3>
+                                            <h4>
+                                                This is how recognizable {person.first_name} found your feedback.
+                                            </h4>
+
+                                            <div className="feedback-form--finalgrade">
+                                                <div style={{width: `${feedback.how_recognizable * 10}%`}} />
+                                            </div>
+
+                                            <span>{ feedback.how_recognizable } / 10</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="feedback-form--row">
+                                        <div className="l-48 feedback-content">
+                                            <h3>
+                                                This is how valuable {person.first_name} found your feedback.
+                                            </h3>
+
+                                            <div className="feedback-form--finalgrade">
+                                                <div style={{width: `${feedback.how_valuable * 10}%`}} />
+                                            </div>
+
+                                            <span>{ feedback.how_valuable } / 10</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="feedback-form--row">
+                                        <div className="l-48 feedback-content">
+                                            <div>
+                                                <div>
+                                                    <strong>
+                                                        Does {person.first_name}
+                                                        want to do something with your feedback?
+                                                    </strong>
+                                                    <p>{feedback.actionable ? 'Yes' : 'No'}</p>
+                                                </div>
+                                                { feedback.actionable_content &&
+                                                    <div>
+                                                        <strong>Reason:</strong>
+                                                        <p>{feedback.actionable_content}</p>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
                     </div>
 
                     <Link to="/give-feedback" className="action--button neutral">
