@@ -33,6 +33,7 @@ class Round(FeedBagBaseModel):
     # How many people need to be given feedback before being able to view the “report”.
     min_feedback_sent = models.PositiveIntegerField()
     question_for_individual_feedback = models.ForeignKey('feedback.Question', blank=True, null=True)
+    available_ratings = models.ManyToManyField('feedback.Rating')
 
     def __str__(self):
         return 'Description: {}, Receivers: #{}, senders: {}, roles: {}, indiv: {}'.format(
