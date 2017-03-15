@@ -7,7 +7,7 @@ const RatingRows = ({remarks}) =>
                 const { rating } = remark;
 
                 return (
-                    <div key={rating.name} className="feedback-form--row">
+                    <div key={rating.id} className="feedback-form--row">
                         { rating.image &&
                             <div className="l-5 feedback-form--row-smiley">
                                 <img alt="Rating" src={rating.image} />

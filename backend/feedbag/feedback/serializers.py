@@ -10,20 +10,21 @@ from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, Fe
 
 
 class RatingSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(max_length=None, use_url=True)
+    image = serializers.ImageField(max_length=None, use_url=True, required=False, allow_null=True)
+    rating_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Rating
-        fields = ('id', 'name', 'image', 'description',)
+        fields = ('id', 'name', 'image', 'description', 'rating_id', )
 
 
 class RemarkSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
+    rating = RatingSerializer()
 
     class Meta:
         model = Remark
         fields = ('id', 'rating', 'content',)
-        depth = 1
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -52,9 +53,9 @@ class FeedbackOnRoleSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.ModelSerializer):
     individual = FeedbackOnIndividualSerializer()
     role = FeedbackOnRoleSerializer()
-    sender = UserSerializer()
-    recipient = UserSerializer()
-    round = RoundSerializer()
+    sender = UserSerializer(read_only=True)
+    recipient = UserSerializer(read_only=True)
+    round = RoundSerializer(read_only=True)
 
     def update(self, instance, validated_data):
         individual_feedback = validated_data.pop('individual', None)
@@ -81,6 +82,8 @@ class FeedbackSerializer(serializers.ModelSerializer):
                     role_remark.content = remark.get('content')
                     role_remark.save()
                 else:
+                    rating = Rating.objects.get(pk=remark.pop('rating').get('rating_id'))
+                    remark['rating'] = rating
                     instance.role.remarks.create(**remark)
 
         for (key, value) in validated_data.items():

@@ -50,12 +50,21 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
 
     _handleSubmit(values, dispatch, props) {
         const { id } = this.state;
-        let remarks = this.props.feedback.feedback.role.remarks;
+        let ratings = this.props.feedback.feedback.round.available_ratings;
         let accessToken = this.props.user.user.access_token;
+        let remarks = [];
 
-        // Loop through remarks and set the content for the values.
-        remarks.map((remark, index) => {
-            remarks[index].content = Object.values(values)[index];
+        // Loop through ratings and set the content for the values.
+        ratings.map((rating, index) => {
+            remarks.push({
+                rating: {
+                    rating_id: rating.id,
+                    name: rating.name,
+                    description: rating.description,
+                },
+                content: Object.values(values)[index],
+            });
+
             return null;
         });
 
@@ -120,7 +129,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
 
         let person = feedback.recipient;
         const { handleSubmit} = this.props;
-        const remarks = feedback.role.remarks;
+        const ratings = feedback.round.available_ratings;
         const role = feedback.role.role;
         const accessToken = this.props.user.user.access_token;
 
@@ -176,9 +185,8 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                             <div className="feedback-form--form">
                                 <form onSubmit={handleSubmit(this._handleSubmit)}>
                                     {
-                                        remarks.map((remark) => {
+                                        ratings.map((rating) => {
                                             let value = '';
-                                            const { rating } = remark;
 
                                             return (
                                                 <div key={rating.id} className="feedback-form--row">
