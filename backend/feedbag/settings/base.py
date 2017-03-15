@@ -86,7 +86,6 @@ ROOT_URLCONF = 'feedbag.urls'
 
 TEMPLATES = [
     {
-        'TEMPLATE_DEBUG': boolean(os.environ.get('DEBUG', DEBUG)),
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
@@ -101,6 +100,7 @@ TEMPLATES = [
                 'social.apps.django_app.context_processors.backends',
                 'social.apps.django_app.context_processors.login_redirect',
             ],
+            'debug': boolean(os.environ.get('DEBUG', DEBUG)),
         },
     },
 ]
