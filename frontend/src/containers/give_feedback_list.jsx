@@ -73,7 +73,7 @@ class GiveFeedbackList extends Component {
                                     <th>Person</th>
                                     <th>Role</th>
                                     <th>Circle</th>
-                                    <th>Closing date</th>
+                                    <th>Requested on</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>

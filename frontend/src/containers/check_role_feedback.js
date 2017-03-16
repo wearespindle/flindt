@@ -178,7 +178,7 @@ class CheckRoleFeedback extends React.Component {
                                                 <div>
                                                     <strong>
                                                         Does {person.first_name}
-                                                        want to do something with your feedback?
+                                                         want to do something with your feedback?
                                                     </strong>
                                                     <p>{feedback.actionable ? 'Yes' : 'No'}</p>
                                                 </div>

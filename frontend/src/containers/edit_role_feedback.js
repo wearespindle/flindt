@@ -153,7 +153,7 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                                     <th>Person</th>
                                     <th>Role</th>
                                     <th>Circle</th>
-                                    <th>Received on</th>
+                                    <th>Edited on</th>
                                 </tr>
                             </thead>
                             <tbody>

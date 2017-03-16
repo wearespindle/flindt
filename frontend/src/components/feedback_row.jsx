@@ -35,7 +35,7 @@ class FeedbackRow extends Component {
 
         // Change the labels and links in the table row to reuse this component.
         if (this.props.feedbackType === 'give') {
-            dateLabel = 'Closingdate';
+            dateLabel = 'Requested on';
 
             action =
                 <Link to={`/${url}/${this.props.details.id}/new`}><i className="fa fa-undo" /> Give feedback</Link>;

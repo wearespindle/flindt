@@ -155,7 +155,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                     <th>Person</th>
                                     <th>Role</th>
                                     <th>Circle</th>
-                                    <th>Received on</th>
+                                    <th>Requested on</th>
                                 </tr>
                             </thead>
                             <tbody>
