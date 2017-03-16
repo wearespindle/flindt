@@ -7,8 +7,8 @@ import {
 } from '../actions/feedback';
 
 const INITIAL_STATE = {
-    feedback_as_sender: { feedback: [] },
-    feedback_as_receiver: { feedback: [] },
+    feedback_as_sender: { feedback: [], loading: true},
+    feedback_as_receiver: { feedback: [], loading: true },
     feedback: { feedback: {} },
 };
 
@@ -18,10 +18,10 @@ export default function(state = INITIAL_STATE, action) {
 
     switch (action.type) {
     case FETCH_FEEDBACK_AS_SENDER:
-        return { ...state, feedback_as_sender: { feedback: action.payload.data } };
+        return { ...state, feedback_as_sender: { feedback: action.payload.data, loading: false } };
 
     case FETCH_FEEDBACK_AS_RECEIVER:
-        return { ...state, feedback_as_receiver: { feedback: action.payload.data } };
+        return { ...state, feedback_as_receiver: { feedback: action.payload.data, loading: false } };
 
     case FETCH_FEEDBACK:
         return { ...state, feedback: { feedback: action.payload.data } };

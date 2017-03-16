@@ -25,10 +25,23 @@ class GiveFeedbackList extends Component {
                         </div>
                     </div>
 
-                    <div className="content is-text-center has-margin-top-100">
-                        <h3>Unfortunately there are currently no feedback requests for you!</h3>
-                        <div className="content--no-feedback" />
-                    </div>
+                    {
+                        this.props.loading &&
+                        <div className="content">
+                            <div className="spinner">
+                                <div className="bounce1" />
+                                <div className="bounce2" />
+                                <div className="bounce3" />
+                            </div>
+                        </div>
+                    }
+                    {
+                        !this.props.loading &&
+                        <div className="content is-text-center has-margin-top-100">
+                            <h3>Unfortunately there are currently no feedback requests for you!</h3>
+                            <div className="content--no-feedback" />
+                        </div>
+                    }
                 </div>
             );
         }
@@ -123,6 +136,7 @@ class GiveFeedbackList extends Component {
 
 const mapStateToProps = (state) => ({
     feedback: state.Feedback.feedback_as_sender.feedback,
+    loading: state.Feedback.feedback_as_sender.loading,
     user: state.User.data,
     user_data: state.User.user_data,
 });
@@ -131,6 +145,7 @@ GiveFeedbackList.propTypes = {
     feedback: React.PropTypes.array,
     fetchFeedbackAsSender: React.PropTypes.func,
     user: React.PropTypes.object,
+    loading: React.PropTypes.bool,
 };
 
 export default connect(mapStateToProps, {fetchFeedbackAsSender})(GiveFeedbackList);
