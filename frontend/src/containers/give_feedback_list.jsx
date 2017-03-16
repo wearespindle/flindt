@@ -25,12 +25,9 @@ class GiveFeedbackList extends Component {
                         </div>
                     </div>
 
-                    <div className="content">
-                        <div className="spinner">
-                            <div className="bounce1" />
-                            <div className="bounce2" />
-                            <div className="bounce3" />
-                        </div>
+                    <div className="content is-text-center has-margin-top-100">
+                        <h3>Unfortunately there are currently no feedback requests for you!</h3>
+                        <div className="content--no-feedback" />
                     </div>
                 </div>
             );

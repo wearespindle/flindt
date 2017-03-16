@@ -35,7 +35,7 @@ class UserViewSet(viewsets.ModelViewSet):
         """
         This view returns all the feedback the user has received.
         """
-        received_feedback = Feedback.objects.filter(recipient=self.request.user)
+        received_feedback = Feedback.objects.filter(recipient=self.request.user, status=Feedback.COMPLETE)
         serializer = FeedbackSerializer(received_feedback, many=True)
 
         return Response(serializer.data)

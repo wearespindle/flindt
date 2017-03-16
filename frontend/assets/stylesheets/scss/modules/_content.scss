@@ -148,3 +148,18 @@
 .fa-info-circle {
     margin-left: 4px;
 }
+
+.content--no-feedback {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    background-position: 20%;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 50px;
+    background-image: url('/dist/images/no-feedback.gif');
+
+    &.received {
+        background-image: url('/dist/images/no-feedback-received.gif');
+    }
+}
