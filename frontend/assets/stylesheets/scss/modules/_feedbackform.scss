@@ -160,7 +160,6 @@
 }
 
 .feedback-form--form {
-    margin-top: 30px;
     padding-bottom: 0;
     overflow: hidden;
     background: #ebecef;
@@ -171,6 +170,7 @@
 
     @media (min-width: $breakpoint-30) {
         margin: 0;
+        margin-top: 30px;
     }
 }
 

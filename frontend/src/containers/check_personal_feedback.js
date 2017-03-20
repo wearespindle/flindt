@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Header from '../components/header';
+
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
 const moment = require('moment');
@@ -29,7 +31,7 @@ class CheckPersonalFeedback extends React.Component {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Check feedback</li>
@@ -57,7 +59,7 @@ class CheckPersonalFeedback extends React.Component {
 
         let isEditable,
             isRated;
-        let closedReason = 'The round has been closed, this means you can&apos;t edit your feedback anymore.';
+        let closedReason = 'The round has been closed, this means you can\'t edit your feedback anymore.';
 
         if (feedback.round) {
             // Round isn't a required field, so only check for end date if there's a round.
@@ -76,7 +78,7 @@ class CheckPersonalFeedback extends React.Component {
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Check feedback</li>

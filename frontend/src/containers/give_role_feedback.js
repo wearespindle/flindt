@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Notifications from 'react-notification-system-redux';
 
 import ModalButton from '../components/modal_button';
+import Header from '../components/header';
 
 import { cleanFeedback, fetchFeedback, editFeedback } from '../actions/feedback';
 
@@ -103,17 +104,17 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Give feedback</li>
-                                <li>Feedback on person</li>
+                                <li>Feedback on role</li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="content">
-                        <h2>Feedback on person</h2>
+                        <h2>Feedback on role</h2>
 
                         <div className="feedback-form--wrapper">
                             <div className="spinner">
@@ -136,17 +137,17 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Give feedback</li>
-                            <li>Feedback on person</li>
+                            <li>Feedback on role</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="content">
-                    <h2>Feedback on person</h2>
+                    <h2>Feedback on role</h2>
 
                     <div className="feedback-form--wrapper">
                         <table className="feedback-form--meta">
@@ -211,7 +212,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                         })
                                     }
 
-                                    <Link to="/" className="action--button neutral">
+                                    <Link to="/give-feedback" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
                                     <button className="action--button is-right" type="submit">Save</button>

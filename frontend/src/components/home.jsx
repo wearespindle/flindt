@@ -1,10 +1,11 @@
 import React from 'react';
+import Header from './header';
 
 const Home = (props) =>
 
     <div className="content--wrapper">
         <div className="content--header">
-            <div className="content--header-spacing" />
+            <Header />
             <div className="content--header-breadcrumbs">
                 <ul>
                     <li>Home</li>

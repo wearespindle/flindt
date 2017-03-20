@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 
 import { fetchFeedbackAsSender } from '../actions/feedback';
 import FeedbackRow from '../components/feedback_row';
+import Header from '../components/header';
 
 class GiveFeedbackList extends Component {
     componentWillMount() {
@@ -17,7 +18,7 @@ class GiveFeedbackList extends Component {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Give feedback</li>
@@ -65,7 +66,7 @@ class GiveFeedbackList extends Component {
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Give feedback</li>

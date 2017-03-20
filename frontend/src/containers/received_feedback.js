@@ -14,6 +14,7 @@ import { reduxForm, Field, SubmissionError, formValueSelector } from 'redux-form
 import Notifications from 'react-notification-system-redux';
 
 import FeedbackContent from '../components/received_feedback_content';
+import Header from '../components/header';
 
 import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
@@ -120,7 +121,7 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Received feedback</li>
@@ -163,7 +164,7 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Received feedback</li>
