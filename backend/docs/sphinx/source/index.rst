@@ -1,4 +1,4 @@
-Welcome to Feedbag's documentation!
+Welcome to Flindt's documentation!
 ===================================
 
 .. toctree::
