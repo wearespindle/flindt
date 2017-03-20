@@ -1,5 +1,5 @@
 const LOCALHOST = 'http://localhost:8005';
-const PRODUCTION = 'https://api.feedbag.wearespindle.com';
+const PRODUCTION = 'https://api.flindt.wearespindle.com';
 let apiUrl;
 
 if (location && location.hostname === 'localhost') {

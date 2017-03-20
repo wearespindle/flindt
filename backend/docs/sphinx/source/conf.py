@@ -9,11 +9,11 @@ from sphinx_rtd_theme import get_html_theme_path
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 sys.path.append(os.path.abspath('../../..'))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'feedbag.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flindt.settings')
 
 django.setup()
 
-from feedbag import VERSION  # noqa
+from flindt import VERSION  # noqa
 
 # -- General configuration ------------------------------------------------
 
@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Feedbag'
+project = u'Flindt'
 copyright = u'2017, Devhouse Spindle'
 author = u'Devhouse Spindle'
 
@@ -88,7 +88,7 @@ todo_include_todos = False
 html_theme = 'sphinx_rtd_theme'
 html_theme_path = [get_html_theme_path()]
 
-html_title = 'Feedbag documentation'
+html_title = 'Flindt documentation'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -105,7 +105,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Feedbagdoc'
+htmlhelp_basename = 'Flindtdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------

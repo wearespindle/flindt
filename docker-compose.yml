@@ -1,17 +1,17 @@
 db:
   image: mariadb:latest
   environment:
-    - MYSQL_DATABASE=feedbag
-    - MYSQL_ROOT_PASSWORD=feedbag
-    - MYSQL_USER=feedbag
-    - MYSQL_PASSWORD=feedbag
+    - MYSQL_DATABASE=flindt
+    - MYSQL_ROOT_PASSWORD=flindt
+    - MYSQL_USER=flindt
+    - MYSQL_PASSWORD=flindt
 
 backend:
   build: backend
   command: python manage.py runserver 0:8000
   # command: uwsgi --ini uwsgi.ini # For production.
   volumes:
-    - ./backend:/usr/src/feedbag
+    - ./backend:/usr/src/flindt
   ports:
     # ext:int port.
     - "8005:8000"
@@ -21,7 +21,7 @@ backend:
   environment:
     # Use the root user to enable creation of a test database.
     - ALLOWED_HOSTS=localhost,0.0.0.0
-    - DATABASE_URL=mysql://root:feedbag@db/feedbag
+    - DATABASE_URL=mysql://root:flindt@db/flindt
     - DEBUG=1
 
 frontend:
