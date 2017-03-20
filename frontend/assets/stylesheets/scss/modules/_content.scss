@@ -19,6 +19,31 @@
 .content--header-spacing {
     height: 4rem;
     background-color: $white;
+    text-align: center;
+    line-height: 4rem;
+    display: none;
+
+    img {
+        vertical-align: middle;
+    }
+
+    &.mobile {
+        display: block;
+    }
+
+    @media (min-width: $breakpoint-30) {
+        display: block;
+
+        &.mobile {
+            display: none;
+        }
+
+        img {
+            // Move logo 80px to the left so the text looks visually centered
+            // because of the brandmark.
+            margin-left: -80px;
+        }
+    }
 }
 
 .content--header-breadcrumbs {
@@ -32,7 +57,7 @@
         list-style-type: none;
 
         li {
-            font-size: 0.8rem;
+            // font-size: 0.8rem;
             line-height: 2rem;
             display: inline;
             border-left: 1px solid $color-neutral-30;

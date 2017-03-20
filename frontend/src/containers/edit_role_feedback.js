@@ -8,6 +8,7 @@ import { reduxForm, Field, SubmissionError } from 'redux-form';
 import Notifications from 'react-notification-system-redux';
 
 import ModalButton from '../components/modal_button';
+import Header from '../components/header';
 
 import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
@@ -102,7 +103,7 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Check feedback</li>
@@ -134,7 +135,7 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Check feedback</li>
