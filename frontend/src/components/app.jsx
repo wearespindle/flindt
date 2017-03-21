@@ -30,7 +30,7 @@ class App extends Component {
             <div className="app-wrapper">
                 <div className="navigation--wrapper">
                     <div className="content--header-spacing mobile">
-                        <img src="/dist/images/logo.png" alt="Flindt" />
+                        <img src="/dist/images/logo.svg" alt="Flindt" />
                     </div>
 
                     <ul className="navigation">
