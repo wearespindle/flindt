@@ -131,7 +131,7 @@ latex_elements = {
 html_show_copyright = True
 html_show_sphinx = False
 
-srclink_project = 'https://github.com/wearespindle/feedbacktool-frontend'
+srclink_project = 'https://github.com/wearespindle/flindt'
 srclink_src_path = 'backend/docs/sphinx/source/'
 srclink_branch = 'master'
 

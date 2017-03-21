@@ -21,8 +21,8 @@ Docker environment
 
 .. code:: bash
 
-    git git@github.com:wearespindle/feedbacktool-frontend.git
-    cd feedbacktool-frontend
+    git git@github.com:wearespindle/flindt.git
+    cd flindt
 
 2. Build the docker image. This takes a while the first time.
 
@@ -88,7 +88,7 @@ The Flindt tool uses Google Login to register and login users from the domain yo
 
  .. code:: bash
 
-    vim /feedbacktool-frontend/backend/.env
+    vim /flindt/backend/.env
 
 Add the following information in your file:
 

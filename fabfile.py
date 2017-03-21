@@ -37,7 +37,7 @@ def docker_compose(command):
     """
     Run a docker compose command on the production vm.
     """
-    with cd('/srv/feedbacktool-frontend'):
+    with cd('/srv/flindt'):
         run('docker-compose -f docker-compose.prod.yml {}'.format(command))
 
 
@@ -63,7 +63,7 @@ def deploy_backend():
     """
     Deploy the latest version of the backend.
     """
-    with cd('/srv/feedbacktool-frontend'):
+    with cd('/srv/flindt'):
         run('git pull --rebase')
 
     docker_compose('build')
