@@ -45,7 +45,7 @@ class RoundManager:
     # All role feedback objects created
     role_feedback = []
     # All individual feedback created
-    individual_feedback = []
+    individual_feedback_to_be_received = []
     # The users giving feedback
     users_giving_feedback = None
     # Counter that keeps track how often a user has given feedback on roles
@@ -72,14 +72,16 @@ class RoundManager:
         """
         # We do a maximum of tries that is equal to number of users giving feedback.
         logger.info('starting a new round: {}'.format(self.round))
-        for i in range(len(self.users_giving_feedback)):
+
+        for i in range(self.round.min_feedback_sent + 100):
             # After every 3th try to fix the round, we increment the maximum number of reviews that needs to be given.
             self.max_reviews_per_user = self.round.roles_to_review + i // 3
             try:
-                logger.info('Solution {}, max number of reviews: {}'.format(i, self.max_reviews_per_user))
+                logger.info('Trying to create role feedback {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
                 self._create_role_feedback_for_participants()
                 self._sort_feedback_on_circle_size()
                 self._match_role_feedback_to_senders(self.role_feedback)
+                logger.info('succesfully matched all role feedback on the {}th try'.format(i+1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -88,12 +90,13 @@ class RoundManager:
                 self.max_depth = 0
                 self.users_have_given_feedback_on_role = Counter()
 
-        for i in range(len(self.users_giving_feedback)):
+        for i in range(10000):
             self.max_reviews_per_user = self.round.individuals_to_review + i // 3
             try:
-                logger.info('Solution {}, max number of reviews: {}'.format(i, self.max_reviews_per_user))
+                logger.info('Trying to create individual feedback Solution {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
                 self._create_individual_feedback_for_participants()
-                self._match_individual_feedback_to_senders(self.individual_feedback)
+                self._match_individual_feedback_to_senders(self.individual_feedback_to_be_received)
+                logger.info('succesfully matched all individual feedback on the {}th try'.format(i+1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -145,23 +148,24 @@ class RoundManager:
 
     def _create_individual_feedback_for_participants(self):
         """
-        This will create a Feedback + FeedbackForIndividual object for the participants.
-
-        Returns:
-            Feedback object with FeedbackForIndividual object.
+        This will create a Feedback + FeedbackForIndividual object for the
+        participants and store it in the list
+        `self.individual_feedback_to_be_received`.
         """
-        self.individual_feedback = []
-        for participant in self.round.participants_receivers.all():
-            question = self.round.question_for_individual_feedback
-            individual = FeedbackOnIndividual(question=question)
-            feedback = Feedback(
-                actionable=False,
-                round=self.round,
-                recipient=participant,
-                date=timezone.now(),
-                individual=individual,
-            )
-            self.individual_feedback.append(feedback)
+        self.individual_feedback_to_be_received = []
+
+        for i in range(self.round.individuals_to_review):
+            for participant in self.round.participants_receivers.all():
+                question = self.round.question_for_individual_feedback
+                individual = FeedbackOnIndividual(question=question)
+                feedback = Feedback(
+                    actionable=False,
+                    round=self.round,
+                    recipient=participant,
+                    date=timezone.now(),
+                    individual=individual,
+                )
+                self.individual_feedback_to_be_received.append(feedback)
 
     def _sort_feedback_on_circle_size(self):
         """
@@ -208,7 +212,9 @@ class RoundManager:
 
     def _get_senders_for_user(self, user):
         """
-        This will find all the users that are in the same circles as the user.
+        This will find all the users that share a parent circle with ``user``
+        and are in the selection of senders for `self.round`. ``user`` will be
+        excluded from the result.
 
         Args:
             user: User object
@@ -222,7 +228,8 @@ class RoundManager:
         circles = list(set(user.role_set.all().values_list('parent_id', flat=True)))
 
         users = set(User.objects.filter(
-            role__parent_id__in=circles
+            role__parent_id__in=circles,
+            id__in=self.round.participants_senders.values_list('id', flat=True)
         ).exclude(
             id=user.id
         ).distinct().values_list(
@@ -257,6 +264,8 @@ class RoundManager:
         senders.remove(feedback.recipient.id)
 
         users_done = self.users_have_given_feedback_on_role.copy()
+        # From the list of users that have given feedback, remove the users
+        # that have given the maximum number of reviews.
         for key, count in dropwhile(lambda user: user[1] >= self.max_reviews_per_user, users_done.most_common()):
             del users_done[key]
 
