@@ -63,7 +63,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                     name: rating.name,
                     description: rating.description,
                 },
-                content: Object.values(values)[index],
+                content: values[rating.name],
             });
 
             return null;
