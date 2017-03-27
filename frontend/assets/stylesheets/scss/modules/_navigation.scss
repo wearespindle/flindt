@@ -23,6 +23,7 @@
     li {
         list-style-type: none;
         border-bottom: 1px solid #6d717e;
+        font-size: 16px;
 
         a {
             color: $white;
@@ -33,6 +34,8 @@
             i {
                 color: #6d717e;
                 float: right;
+                top: 5px;
+                position: relative;
             }
 
             &:hover,

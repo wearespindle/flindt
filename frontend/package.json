@@ -10,7 +10,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wearespindle/feedbacktool-frontend/"
+    "url": "https://github.com/wearespindle/flindt/"
   },
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",

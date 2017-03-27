@@ -21,8 +21,8 @@ Docker environment
 
 .. code:: bash
 
-    git git@github.com:wearespindle/feedbacktool-frontend.git
-    cd feedbacktool-frontend
+    git git@github.com:wearespindle/flindt.git
+    cd flindt
 
 2. Build the docker image. This takes a while the first time.
 
@@ -77,7 +77,7 @@ http://localhost:8080 (both via Docker as well as  locally)
 Google Login Setup
 ==================
 
-The Feedbag tool uses Google Login to register and login users from the domain you whitelist. To set this up you need to go through a couple of steps:
+The Flindt tool uses Google Login to register and login users from the domain you whitelist. To set this up you need to go through a couple of steps:
 
  * Login to the `Google APIs website <https://console.developers.google.com>`_
  * From the *Overview* screen, fill in *Google+ API* in the Search bar and select it from the search results
@@ -85,16 +85,16 @@ The Feedbag tool uses Google Login to register and login users from the domain y
  * Now you need to create Credentials. Click on the *Credentials* button in the navigation on the left.
  * Click on the blue *Create Credentials* button and select OAuth Client ID:
    * Application type? *Web application*
- * Give the credentials a name, e.g. *Feedbag*
+ * Give the credentials a name, e.g. *Flindt*
  * In *Authorized JavaScript origins* fill in your development url, e.g. localhost:8080
  * Click on the *Save* button
- * The current screen should be the Credentials overview; click on Feedbag
+ * The current screen should be the Credentials overview; click on Flindt
 
  The credentials are needed for our Google Login setup. For this to work we need to add them to a .env file
 
  .. code:: bash
 
-    vim /feedbacktool-frontend/backend/.env
+    vim /flindt/backend/.env
 
 Add the following information in your file:
 

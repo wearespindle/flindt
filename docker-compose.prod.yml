@@ -2,7 +2,7 @@ backend:
   build: backend
   command: uwsgi --ini uwsgi.ini # For production.
   volumes:
-    - ./backend:/usr/src/feedbag
+    - ./backend:/usr/src/flindt
   ports:
     # ext:int port.
     - "8005:8000"

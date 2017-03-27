@@ -4,6 +4,7 @@ import { Link, IndexLink, browserHistory } from 'react-router';
 import Notifications from 'react-notification-system-redux';
 
 import InfoModal from '../components/modal';
+import Header from '../components/header';
 
 import { showModal } from '../actions/modal';
 
@@ -28,6 +29,10 @@ class App extends Component {
         return (
             <div className="app-wrapper">
                 <div className="navigation--wrapper">
+                    <div className="content--header-spacing mobile">
+                        <img src="/dist/images/logo.svg" alt="Flindt" />
+                    </div>
+
                     <ul className="navigation">
                         <li><IndexLink activeClassName="is-active" to="/">
                         Home <i className="fa fa-home" /></IndexLink>

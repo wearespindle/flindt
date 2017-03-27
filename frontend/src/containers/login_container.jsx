@@ -55,7 +55,7 @@ class Login extends Component {
         return (
             <div className="l-container">
                 <div className="login--wrapper">
-                    <h1>Login</h1>
+                    <img className="login--logo" src="/dist/images/logo.svg" alt="Flindt" />
                     <p>Use the button below to sign in with your Google account.</p>
 
                     { this.props.user.error &&

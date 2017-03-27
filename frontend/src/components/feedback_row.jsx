@@ -4,84 +4,74 @@ import Time from 'react-time';
 
 require('moment/locale/nl');
 
-class FeedbackRow extends Component {
+const FeedbackRow = (props) => {
+    let role = null;
+    let circle = '';
+    let action,
+        dateLabel,
+        url;
 
-    renderType(type, role) {
-        if (type === 'personal') {
-            return (<span className="feedback-type-indicator">Personal</span>);
+    if (props.details.role) {
+        role = props.details.role.role.name;
+
+        if (props.details.role.role.parent) {
+            circle = props.details.role.role.parent.name;
         }
-
-        return role.name;
     }
 
-    render() {
-        let role = null;
-        let circle = '';
-        let action,
-            dateLabel,
-            url;
+    let person = props.details.recipient;
 
-        if (this.props.details.role) {
-            role = this.props.details.role.role.name;
+    url = (role) ? 'give-feedback/role' : 'give-feedback/personal';
 
-            if (this.props.details.role.role.parent) {
-                circle = this.props.details.role.role.parent.name;
-            }
-        }
+    // Change the labels and links in the table row to reuse this component.
+    if (props.feedbackType === 'give') {
+        dateLabel = 'Requested on';
 
-        let person = this.props.details.recipient;
+        action =
+            <Link to={`/${url}/${props.details.id}/new`}><i className="fa fa-undo" /> Give feedback</Link>;
+    } else if (props.feedbackType === 'received') {
+        dateLabel = 'Received on';
+        person = props.details.sender;
 
-        url = (role) ? 'give-feedback/role' : 'give-feedback/personal';
+        action = (
+            <Link to={`/received-feedback/${props.details.id}`}>
+                <i className="fa fa-eye" /> Check feedback
+            </Link>
+        );
+    } else {
+        dateLabel = 'Given on';
 
-        // Change the labels and links in the table row to reuse this component.
-        if (this.props.feedbackType === 'give') {
-            dateLabel = 'Requested on';
-
-            action =
-                <Link to={`/${url}/${this.props.details.id}/new`}><i className="fa fa-undo" /> Give feedback</Link>;
-        } else if (this.props.feedbackType === 'received') {
-            dateLabel = 'Received on';
-            person = this.props.details.sender;
-
-            action = (
-                <Link to={`/received-feedback/${this.props.details.id}`}>
-                    <i className="fa fa-eye" /> Check feedback
-                </Link>
-            );
-        } else {
-            dateLabel = 'Given on';
-
-            action = (
-                <Link to={`/${url}/${this.props.details.id}`}>
-                    <i className="fa fa-eye" /> Check feedback
-                </Link>
-            );
-        }
-
-        return (
-            <tr>
-                <td data-label="Person">{person.first_name} { person.last_name }</td>
-                <td data-label="Role">
-                    {
-                        role &&
-                            <span>{role}</span>
-                    }
-                    {
-                        !role &&
-                            <span className="feedback-type-indicator">Personal</span>
-                    }
-                </td>
-                <td data-label="Circle">{ circle || '-'}</td>
-                <td data-label="Date">
-                    <Time value={this.props.details.date} locale="EN" format="D MMMM YYYY" />
-                </td>
-                <td data-label="Actions">
-                    { action }
-                </td>
-            </tr>
+        action = (
+            <Link to={`/${url}/${props.details.id}`}>
+                <i className="fa fa-eye" /> Check feedback
+            </Link>
         );
     }
-}
+
+    return (
+        <tr>
+            <td data-label="Person">{person.first_name} { person.last_name }</td>
+            <td data-label="Role">
+                {
+                    role &&
+                        <span>{role}</span>
+                }
+                {
+                    !role &&
+                        <span className="feedback-type-indicator">Personal</span>
+                }
+            </td>
+            <td data-label="Circle">{ circle || '-'}</td>
+            <td data-label="Date">
+                <Time value={props.details.date} locale="EN" format="D MMMM YYYY" />
+            </td>
+            <td data-label="Actions">
+                { action }
+            </td>
+        </tr>
+    );
+};
+
 
 FeedbackRow.propTypes = {
     feedbackType: React.PropTypes.string,

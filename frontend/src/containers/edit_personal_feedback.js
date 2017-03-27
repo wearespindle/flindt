@@ -6,6 +6,8 @@ import { reduxForm, Field, SubmissionError, getFormValues } from 'redux-form';
 
 import Notifications from 'react-notification-system-redux';
 
+import Header from '../components/header';
+
 import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
@@ -83,7 +85,7 @@ let EditPersonalFeedbackClass = class EditPersonalFeedback extends React.Compone
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Check feedback</li>
@@ -113,7 +115,7 @@ let EditPersonalFeedbackClass = class EditPersonalFeedback extends React.Compone
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Check feedback</li>

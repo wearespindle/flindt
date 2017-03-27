@@ -1,5 +1,5 @@
 """
-Fabfile to deploy the feedbag tool front- and backend using fabric.
+Fabfile to deploy Flindt front- and backend using fabric.
 
 For the frontend you need aws cli installed.
    pip install awscli
@@ -20,7 +20,7 @@ The backend can then be deployed using
 from fabric.api import local, cd, run
 from fabric.state import env
 
-# The feedbag ec2 backend
+# The Flindt ec2 backend
 env.hosts = ['ec2-54-171-230-15.eu-west-1.compute.amazonaws.com']
 env.user = 'admin'
 env.forward_agent = True

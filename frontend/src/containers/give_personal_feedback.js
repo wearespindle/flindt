@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux';
 
 import Notifications from 'react-notification-system-redux';
 
+import Header from '../components/header';
+
 import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
@@ -88,7 +90,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
             return (
                 <div className="content--wrapper">
                     <div className="content--header">
-                        <div className="content--header-spacing" />
+                        <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Give feedback</li>
@@ -118,7 +120,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
         return (
             <div className="content--wrapper">
                 <div className="content--header">
-                    <div className="content--header-spacing" />
+                    <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Give feedback</li>
