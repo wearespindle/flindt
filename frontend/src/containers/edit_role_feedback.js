@@ -45,7 +45,7 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                 response.payload.data.role.remarks.map((remark, index) => {
                     const { rating } = remark;
 
-                    this.props.change(rating.name, response.payload.data.role.remarks[index].content);
+                    this.props.change(rating.name, remark.content);
 
                     // // Map function expects a return.
                     return null;
