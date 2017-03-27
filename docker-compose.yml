@@ -1,34 +1,50 @@
-db:
-  image: mariadb:latest
-  environment:
-    - MYSQL_DATABASE=flindt
-    - MYSQL_ROOT_PASSWORD=flindt
-    - MYSQL_USER=flindt
-    - MYSQL_PASSWORD=flindt
+version: '2'
 
-backend:
-  build: backend
-  command: python manage.py runserver 0:8000
-  # command: uwsgi --ini uwsgi.ini # For production.
-  volumes:
-    - ./backend:/usr/src/flindt
-  ports:
-    # ext:int port.
-    - "8005:8000"
-  links:
-    # Define all containers for easy running of development setup.
-    - db
-  environment:
-    # Use the root user to enable creation of a test database.
-    - ALLOWED_HOSTS=localhost,0.0.0.0
-    - DATABASE_URL=mysql://root:flindt@db/flindt
-    - DEBUG=1
+networks:
+  internal:
+  # external:  # Reserved for load balancer / proxy.
 
-frontend:
-  build: frontend
-  command: gulp
-  volumes:
-    - ./frontend:/usr/src/frontend
-  ports:
-    # ext:int port.
-    - "8080:8080"
+services:
+  db:
+    image: mariadb:latest
+    container_name: db
+    environment:
+      - MYSQL_DATABASE=flindt
+      - MYSQL_ROOT_PASSWORD=flindt
+      - MYSQL_USER=flindt
+      - MYSQL_PASSWORD=flindt
+    networks:
+      internal:
+
+  backend:
+    build: backend
+    container_name: backend
+    command: python manage.py runserver 0:8000
+    # command: uwsgi --ini uwsgi.ini # For production.
+    volumes:
+      - ./backend:/usr/src/flindt
+    ports:
+      # ext:int port.
+      - "8005:8000"
+    depends_on:
+      # Define all containers for easy running of development setup.
+      - db
+    environment:
+      # Use the root user to enable creation of a test database.
+      - ALLOWED_HOSTS=localhost,0.0.0.0
+      - DATABASE_URL=mysql://root:flindt@db/flindt
+      - DEBUG=1
+    networks:
+      internal:
+
+  frontend:
+    build: frontend
+    container_name: frontend
+    command: gulp
+    volumes:
+      - ./frontend:/usr/src/frontend
+    ports:
+      # ext:int port.
+      - "8080:8080"
+    networks:
+      internal:

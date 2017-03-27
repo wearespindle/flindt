@@ -32,25 +32,31 @@ Docker environment
 
 .. note:: This command needs to run every time the Dockerfile, requirements or patches are adjusted. Good practice would be to run it every time the git repo is updated. If nothing changed, the command would complete almost instantly.
 
-3. Do a migration of the models
+3. First start the database-container and keep it running in the background. This container is needed by the backend-container.
 
 .. code:: bash
 
-    docker-compose run backend python manage.py migrate
+    docker-compose up -d db
 
-4. Create a superuser for your backend
+4. Do a migration of the models
 
 .. code:: bash
 
-    docker-compose run backend python manage.py createsuperuser
+    docker-compose run --rm backend python manage.py migrate
 
-5. Run the containers
+5. Create a superuser for your backend
+
+.. code:: bash
+
+    docker-compose run --rm backend python manage.py createsuperuser
+
+6. Run the containers
 
 .. code:: bash
 
     docker-compose up
 
-6. If you want to only run the backend via Docker and the frontend locally
+7. If you want to only run the backend via Docker and the frontend locally
 
 .. code:: bash
 
