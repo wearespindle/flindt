@@ -36,6 +36,7 @@ class Round(FlindtBaseModel):
     available_ratings = models.ManyToManyField('feedback.Rating')
 
     def __str__(self):
+        # return 'blub'
         return 'Description: {}, Receivers: #{}, senders: {}, roles: {}, indiv: {}'.format(
             self.description, self.participants_receivers.count(), self.participants_senders.count(),
             self.roles_to_review, self.individuals_to_review

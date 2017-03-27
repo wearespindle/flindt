@@ -77,11 +77,14 @@ class RoundManager:
             # After every 3th try to fix the round, we increment the maximum number of reviews that needs to be given.
             self.max_reviews_per_user = self.round.roles_to_review + i // 3
             try:
-                logger.info('Trying to create role feedback {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
+                logger.info(
+                    'Trying to create role feedback {}th try, max number of reviews: {}'.
+                    format(i + 1, self.max_reviews_per_user)
+                )
                 self._create_role_feedback_for_participants()
                 self._sort_feedback_on_circle_size()
                 self._match_role_feedback_to_senders(self.role_feedback)
-                logger.info('succesfully matched all role feedback on the {}th try'.format(i+1))
+                logger.info('succesfully matched all role feedback on the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -93,10 +96,13 @@ class RoundManager:
         for i in range(10000):
             self.max_reviews_per_user = self.round.individuals_to_review + i // 3
             try:
-                logger.info('Trying to create individual feedback Solution {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
+                logger.info(
+                    'Trying to create individual feedback Solution {}th try, max number of reviews: {}'.
+                    format(i + 1, self.max_reviews_per_user)
+                )
                 self._create_individual_feedback_for_participants()
                 self._match_individual_feedback_to_senders(self.individual_feedback_to_be_received)
-                logger.info('succesfully matched all individual feedback on the {}th try'.format(i+1))
+                logger.info('succesfully matched all individual feedback on the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -227,15 +233,16 @@ class RoundManager:
         """
         circles = list(set(user.role_set.all().values_list('parent_id', flat=True)))
 
-        users = set(User.objects.filter(
-            role__parent_id__in=circles,
-            id__in=self.round.participants_senders.values_list('id', flat=True)
-        ).exclude(
-            id=user.id
-        ).distinct().values_list(
-            'id',
-            flat=True,
-        ))
+        users = set(
+            User.objects.filter(
+                role__parent_id__in=circles, id__in=self.round.participants_senders.values_list(
+                    'id', flat=True
+                )
+            ).exclude(id=user.id).distinct().values_list(
+                'id',
+                flat=True,
+            )
+        )
 
         if not users:
             raise NoSolutionPossible
@@ -284,9 +291,8 @@ class RoundManager:
                 self.max_depth = max(self.counter, self.max_depth)
                 if self.tries % 10000 == 0:
                     logger.info(
-                        '(tries: {}, max depth: {}) counter: {}{}'.format(
-                            self.tries, self.max_depth, self.counter * '#', ' ' * 100
-                        )
+                        '(tries: {}, max depth: {}) counter: {}{}'.
+                        format(self.tries, self.max_depth, self.counter * '#', ' ' * 100)
                     )
                 self._match_role_feedback_to_senders(feedbacks[1:])
             except MatchNotFoundError:
@@ -345,9 +351,8 @@ class RoundManager:
                 self.max_depth = max(self.counter, self.max_depth)
                 if self.tries % 10000 == 0:
                     logger.info(
-                        '(tries: {}, max depth: {}) counter: {}{}'.format(
-                            self.tries, self.max_depth, self.counter * '#', ' ' * 100
-                        )
+                        '(tries: {}, max depth: {}) counter: {}{}'.
+                        format(self.tries, self.max_depth, self.counter * '#', ' ' * 100)
                     )
                 self._match_individual_feedback_to_senders(feedbacks[1:])
             except MatchNotFoundError:

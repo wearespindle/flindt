@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .factories import RoleFactory
+from flindt.role.factories import RoleFactory
 
 
 class RoleTestCase(TestCase):
