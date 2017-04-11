@@ -65,6 +65,14 @@ const FeedbackRow = (props) => {
             <td data-label="Date">
                 <Time value={props.details.date} locale="EN" format="D MMMM YYYY" />
             </td>
+            { props.completed &&
+                <td data-label="Rated">
+                    { props.details.how_recognizable && props.details.how_valuable &&
+                        <i className="fa fa-check" />
+                    }
+                    &nbsp;
+                </td>
+            }
             <td data-label="Actions">
                 { action }
             </td>
@@ -78,6 +86,7 @@ FeedbackRow.propTypes = {
     recipient: React.PropTypes.object,
     role: React.PropTypes.object,
     details: React.PropTypes.object,
+    completed: React.PropTypes.bool,
 };
 
 

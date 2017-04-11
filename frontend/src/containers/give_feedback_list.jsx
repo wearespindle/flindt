@@ -113,6 +113,7 @@ class GiveFeedbackList extends Component {
                                     <th>Role</th>
                                     <th>Circle</th>
                                     <th>Given on</th>
+                                    <th>Rated</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -123,6 +124,7 @@ class GiveFeedbackList extends Component {
                                           key={completeObject.id}
                                           index={completeObject.id}
                                           details={completeObject}
+                                          completed
                                         />
                                     )
                                 }
