@@ -90,10 +90,11 @@ class Feedback(FlindtBaseModel):
     """
     Base feedback model which contains fields used for both feedback models.
     """
-    INCOMPLETE, COMPLETE = range(2)
+    INCOMPLETE, COMPLETE, SKIPPED = range(3)
 
     STATUS_CHOICES = ((INCOMPLETE, _('Incomplete')),
-                      (COMPLETE, _('Complete')),)
+                      (COMPLETE, _('Complete')),
+                      (SKIPPED, _('Skipped')),)
 
     date = models.DateTimeField()
     recipient = models.ForeignKey(
@@ -159,12 +160,25 @@ class Feedback(FlindtBaseModel):
             messenger = Messenger(user=self.sender)
             messenger.send_message(message)
 
+        def send_feedback_skipped_message():
+            message = _(
+                '{} unfortunately could not say anything about you and skipped giving feedback.'.
+                format(self.sender)
+            )
+            messenger = Messenger(user=self.recipient)
+            messenger.send_message(message)
+
         # Check if the status has changed and is complete.
         if self.__original_status != self.status and self.status == self.COMPLETE:
             # Update the date.
             self.date = timezone.now()
             # Send a message to the recipient.
             send_feedback_received_message()
+
+        if self.__original_status != self.status and self.status == self.SKIPPED:
+            self.date = timezone.now()
+
+            send_feedback_skipped_message()
 
         # Check if the feedback has been rated.
         if self.how_recognizable and self.how_valuable and self.actionable:

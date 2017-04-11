@@ -49,10 +49,13 @@ class GiveFeedbackList extends Component {
 
         let complete = [];
         let incomplete = [];
+        let skipped = [];
 
         this.props.feedback.map((feedbackObject) => {
             if (feedbackObject.status === 0) {
                 incomplete.push(feedbackObject);
+            } else if (feedbackObject.status === 2) {
+                skipped.push(feedbackObject);
             } else {
                 complete.push(feedbackObject);
             }
@@ -62,6 +65,7 @@ class GiveFeedbackList extends Component {
 
         const numberOfIncompletedRequests = Object.keys(incomplete).length;
         const numberOfCompletedRequests = Object.keys(complete).length;
+        const numberOfSkippedRequests = Object.keys(skipped).length;
 
         return (
             <div className="content--wrapper">
@@ -125,6 +129,33 @@ class GiveFeedbackList extends Component {
                                           index={completeObject.id}
                                           details={completeObject}
                                           completed
+                                        />
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="feedbacklist--wrapper">
+                        <h2>Skipped feedback ({numberOfSkippedRequests})</h2>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Person</th>
+                                    <th>Role</th>
+                                    <th>Circle</th>
+                                    <th>Skipped on</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    skipped.map((completeObject) =>
+                                        <FeedbackRow
+                                          key={completeObject.id}
+                                          index={completeObject.id}
+                                          details={completeObject}
+                                          skipped
                                         />
                                     )
                                 }

@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Link, IndexLink, browserHistory } from 'react-router';
 import Notifications from 'react-notification-system-redux';
 
-import InfoModal from '../components/modal';
+import RoleModal from '../components/role_modal';
+import SkipFeedbackModal from '../components/skip_feedback_modal';
 import Header from '../components/header';
 
-import { showModal } from '../actions/modal';
+import { showRoleModal } from '../actions/modal';
 
 class App extends Component {
 
@@ -26,6 +27,7 @@ class App extends Component {
 
     render() {
         const { modal, notifications } = this.props;
+
         return (
             <div className="app-wrapper">
                 <div className="navigation--wrapper">
@@ -53,7 +55,8 @@ class App extends Component {
 
                 {this.props.children}
 
-                <InfoModal details={modal} isOpen={modal.isOpen} {...this.props} />
+                <RoleModal details={modal} isOpen={modal.isOpen} {...this.props} />
+                <SkipFeedbackModal isOpen={modal.skipFeedbackModalisOpen} {...this.props} />
                 <Notifications notifications={notifications} />
             </div>
         );
@@ -71,4 +74,4 @@ const mapStateToProps = (state) => ({
     notifications: state.Notifications,
 });
 
-export default connect(mapStateToProps, {showModal})(App);
+export default connect(mapStateToProps, {showRoleModal})(App);

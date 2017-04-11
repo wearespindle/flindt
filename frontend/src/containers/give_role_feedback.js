@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 
 import Notifications from 'react-notification-system-redux';
 
-import ModalButton from '../components/modal_button';
+import RoleModalButton from '../components/role_modal_button';
+import SkipFeedbackModalButton from '../components/skip_feedback_modal_button';
 import Header from '../components/header';
 
 import { cleanFeedback, fetchFeedback, editFeedback } from '../actions/feedback';
@@ -165,15 +166,15 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                         { person.first_name } { person.last_name}
                                     </td>
                                     <td data-label="Role">
-                                        <ModalButton accessToken={accessToken} role={role.id}>
+                                        <RoleModalButton accessToken={accessToken} role={role.id}>
                                             { role.name }
-                                        </ModalButton>
+                                        </RoleModalButton>
                                     </td>
                                     <td data-label="Circle">
                                         { role.parent &&
-                                            <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                            <RoleModalButton accessToken={accessToken} role={role.parent.id}>
                                                 { role.parent.name }
-                                            </ModalButton>
+                                            </RoleModalButton>
                                         }
                                     </td>
                                     <td data-label="Received on">
@@ -215,7 +216,9 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                     <Link to="/give-feedback" className="action--button neutral">
                                         <i className="fa fa-chevron-left" /> Back to overview
                                     </Link>
+
                                     <button className="action--button is-right" type="submit">Save</button>
+                                    <SkipFeedbackModalButton />
 
                                 </form>
                             </div>

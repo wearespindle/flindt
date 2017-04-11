@@ -7,7 +7,7 @@ import { reduxForm, Field, SubmissionError } from 'redux-form';
 
 import Notifications from 'react-notification-system-redux';
 
-import ModalButton from '../components/modal_button';
+import RoleModalButton from '../components/role_modal_button';
 import Header from '../components/header';
 
 import { cleanFeedback, editFeedback, fetchFeedback } from '../actions/feedback';
@@ -163,15 +163,15 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                                         { person.first_name } { person.last_name}
                                     </td>
                                     <td data-label="Role">
-                                        <ModalButton accessToken={accessToken} role={role.id}>
+                                        <RoleModalButton accessToken={accessToken} role={role.id}>
                                             { role.name }
-                                        </ModalButton>
+                                        </RoleModalButton>
                                     </td>
                                     <td data-label="Circle">
                                         { role.parent &&
-                                            <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                            <RoleModalButton accessToken={accessToken} role={role.parent.id}>
                                                 { role.parent.name }
-                                            </ModalButton>
+                                            </RoleModalButton>
                                         }
                                     </td>
                                     <td data-label="Received on">

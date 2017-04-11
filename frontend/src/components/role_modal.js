@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { hideModal } from '../actions/modal';
 
-class InfoModal extends Component {
+class RoleModal extends Component {
 
     render() {
         if (!this.props.isOpen) {
@@ -72,10 +72,10 @@ class InfoModal extends Component {
     }
 }
 
-InfoModal.propTypes = {
+RoleModal.propTypes = {
     hideModal: React.PropTypes.func,
     details: React.PropTypes.object,
     isOpen: React.PropTypes.bool,
 };
 
-export default connect(null, {hideModal})(InfoModal);
+export default connect(null, {hideModal})(RoleModal);
