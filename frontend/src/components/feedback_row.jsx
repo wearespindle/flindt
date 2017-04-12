@@ -73,9 +73,6 @@ const FeedbackRow = (props) => {
                     &nbsp;
                 </td>
             }
-            <td data-label="Actions">
-                { action }
-            </td>
             { !props.skipped &&
                 <td data-label="Actions">
                     { action }
@@ -92,7 +89,7 @@ FeedbackRow.propTypes = {
     role: React.PropTypes.object,
     details: React.PropTypes.object,
     completed: React.PropTypes.bool,
-    skipped: React.PropTypes.boolean,
+    skipped: React.PropTypes.bool,
 };
 
 

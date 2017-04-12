@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { showSkipFeedbackModal } from '../actions/modal';
 
 const SkipFeedbackModalButton = (props) => (
-    <a className="action--button neutral is-right" onClick={() => props.showSkipFeedbackModal()} >
+    <a className="action--button neutral skip--button is-right" onClick={() => props.showSkipFeedbackModal()} >
         Skip this feedback
     </a>
 );

@@ -70,7 +70,7 @@ class SkipFeedbackModal extends Component {
                         or their presence in the circle. Saying something about this is also feedback.</p>
 
                         <a className="action--button neutral" onClick={() => this.props.hideModal()} >Give feedback</a>
-                        <a className="action--button is-right" onClick={this.skipFeedback}>Skip role</a>
+                        <a className="action--button has-padding-right-10 is-right" onClick={this.skipFeedback}>Skip feedback</a>
 
                     </div>
                 </div>

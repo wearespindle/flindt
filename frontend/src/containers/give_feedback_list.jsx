@@ -136,32 +136,34 @@ class GiveFeedbackList extends Component {
                         </table>
                     </div>
 
-                    <div className="feedbacklist--wrapper">
-                        <h2>Skipped feedback ({numberOfSkippedRequests})</h2>
+                    { skipped.length > 0 &&
+                        <div className="feedbacklist--wrapper">
+                            <h2>Skipped feedback ({numberOfSkippedRequests})</h2>
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Person</th>
-                                    <th>Role</th>
-                                    <th>Circle</th>
-                                    <th>Skipped on</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    skipped.map((completeObject) =>
-                                        <FeedbackRow
-                                          key={completeObject.id}
-                                          index={completeObject.id}
-                                          details={completeObject}
-                                          skipped
-                                        />
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Person</th>
+                                        <th>Role</th>
+                                        <th>Circle</th>
+                                        <th>Skipped on</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        skipped.map((completeObject) =>
+                                            <FeedbackRow
+                                              key={completeObject.id}
+                                              index={completeObject.id}
+                                              details={completeObject}
+                                              skipped
+                                            />
+                                        )
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 </div>
             </div>
         );
