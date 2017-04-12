@@ -94,6 +94,11 @@ class FeedbackSerializer(serializers.ModelSerializer):
         return instance
 
     def validate(self, attrs):
+
+        # If a user skips a feedback object, don't validate fields.
+        if attrs.get('status') == 2:
+            return super(FeedbackSerializer, self).validate(attrs)
+
         if self.instance:
             if self.instance.round:
                 # Round isn't a required field, so only check for end date if there's a round.

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Header from '../components/header';
 import RatingRows from '../components/rating_row';
-import ModalButton from '../components/modal_button';
+import RoleModalButton from '../components/role_modal_button';
 
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
@@ -117,15 +117,15 @@ class CheckRoleFeedback extends React.Component {
                                         { person.first_name } { person.last_name}
                                     </td>
                                     <td data-label="Role">
-                                        <ModalButton accessToken={accessToken} role={role.id}>
+                                        <RoleModalButton accessToken={accessToken} role={role.id}>
                                             { role.name }
-                                        </ModalButton>
+                                        </RoleModalButton>
                                     </td>
                                     <td data-label="Circle">
                                         { role.parent &&
-                                            <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                            <RoleModalButton accessToken={accessToken} role={role.parent.id}>
                                                 { role.parent.name }
-                                            </ModalButton>
+                                            </RoleModalButton>
                                         }
                                     </td>
                                     <td data-label="Received on">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Time from 'react-time';
-import ModalButton from '../components/modal_button';
+import RoleModalButton from '../components/role_modal_button';
 import RatingRows from '../components/rating_row';
 
 require('moment/locale/nl');
@@ -30,15 +30,15 @@ const ReceivedFeedbackContent = (props) => {
                             { person.first_name } { person.last_name}
                         </td>
                         <td data-label="Role">
-                            <ModalButton accessToken={accessToken} role={role.id}>
+                            <RoleModalButton accessToken={accessToken} role={role.id}>
                                 { role.name }
-                            </ModalButton>
+                            </RoleModalButton>
                         </td>
                         <td data-label="Circle">
                             { role.parent &&
-                                <ModalButton accessToken={accessToken} role={role.parent.id}>
+                                <RoleModalButton accessToken={accessToken} role={role.parent.id}>
                                     { role.parent.name }
-                                </ModalButton>
+                                </RoleModalButton>
                             }
                         </td>
                         <td data-label="Received on">

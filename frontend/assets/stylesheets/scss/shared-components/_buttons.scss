@@ -153,3 +153,16 @@ button.button--alert {
         }
     }
 }
+
+.skip--button {
+    padding-right: 10px;
+    margin-right: 10px;
+
+    float: none;
+    margin-left: 0;
+
+    @media (min-width: $breakpoint-10) {
+        float: right;
+
+    }
+}
