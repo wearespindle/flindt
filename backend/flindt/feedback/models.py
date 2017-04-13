@@ -156,14 +156,15 @@ class Feedback(FlindtBaseModel):
             messenger.send_message(message)
 
         def send_rating_received_message():
-            message = _('{} just rated the feedback that you gave.'.format(self.recipient))
+            message = _('{} {} just rated the feedback that you gave.'.format(self.recipient.first_name,
+                                                                              self.recipient.last_name))
             messenger = Messenger(user=self.sender)
             messenger.send_message(message)
 
         def send_feedback_skipped_message():
             message = _(
-                '{} unfortunately could not say anything about you and skipped giving feedback.'.
-                format(self.sender)
+                'Unfortunately {} {} could not say anything about the role: {} and skipped giving feedback.'.
+                format(self.sender.first_name, self.sender.last_name, self.role.role)
             )
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
