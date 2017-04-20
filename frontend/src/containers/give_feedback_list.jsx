@@ -67,6 +67,9 @@ class GiveFeedbackList extends Component {
         const numberOfCompletedRequests = Object.keys(complete).length;
         const numberOfSkippedRequests = Object.keys(skipped).length;
 
+        // Set to four to only show 4 complete objects.
+        complete.length = 4;
+
         return (
             <div className="content--wrapper">
                 <div className="content--header">
@@ -108,7 +111,7 @@ class GiveFeedbackList extends Component {
                     </div>
 
                     <div className="feedbacklist--wrapper">
-                        <h2>Given feedback ({numberOfCompletedRequests})</h2>
+                        <h2>Latest given feedback</h2>
 
                         <table>
                             <thead>
@@ -134,6 +137,10 @@ class GiveFeedbackList extends Component {
                                 }
                             </tbody>
                         </table>
+                        <Link to="/give-feedback/archive" className="action--button neutral is-right">
+                            <i className="fa fa-archive" /> View all given feedback
+                        </Link>
+
                     </div>
 
                     { skipped.length > 0 &&

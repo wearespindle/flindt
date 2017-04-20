@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 // Containers (manage redux state)
 import AuthContainer from './containers/auth_container';
 import GiveFeedbackList from './containers/give_feedback_list';
+import GiveFeedbackListArchive from './containers/give_feedback_list_archive';
 import Login from './containers/login_container';
 import ReceivedFeedback from './containers/received_feedback';
 import ReceivedFeedbackList from './containers/received_feedback_list';
@@ -46,6 +47,8 @@ export default (
 
                         <Route path="role/:feedbackId" component={CheckRoleFeedback} />
                         <Route path="role/:feedbackId/edit" component={EditRoleFeedback} />
+
+                        <Route path="archive" component={GiveFeedbackListArchive} />
                     </Route>
 
                     <Route path="received-feedback">

@@ -75,6 +75,7 @@
     "react-google-login-component": "^0.5.2",
     "react-notification-system": "^0.2.10",
     "react-notification-system-redux": "^1.0.8",
+    "react-paginate": "^4.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
     "react-router-redux": "^4.0.4",
