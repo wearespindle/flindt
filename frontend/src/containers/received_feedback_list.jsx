@@ -71,6 +71,7 @@ class ReceivedFeedbackList extends Component {
                                     <th>Role</th>
                                     <th>Circle</th>
                                     <th>Received on</th>
+                                    <th>Rated</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -85,6 +86,7 @@ class ReceivedFeedbackList extends Component {
                                           index={feedbackObject.id}
                                           feedbackType="received"
                                           details={feedbackObject}
+                                          completed
                                         />
                                     )
                                 }
