@@ -212,7 +212,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 8,
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -277,4 +279,3 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 # ALLOWED_HOSTS = ['localhost']
 
 FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'flindt.wearespindle.com')
-

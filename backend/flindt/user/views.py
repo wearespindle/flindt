@@ -26,8 +26,12 @@ class UserViewSet(viewsets.ModelViewSet):
         This view returns all the feedback the user has sent.
         """
         sent_feedback = Feedback.objects.filter(sender=self.request.user)
-        serializer = FeedbackSerializer(sent_feedback, many=True)
+        page = self.paginate_queryset(sent_feedback)
+        if page is not None:
+            serializer = FeedbackSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
+        serializer = FeedbackSerializer(sent_feedback, many=True)
         return Response(serializer.data)
 
     @list_route(methods=['GET'], url_path='feedback-as-receiver')
@@ -36,8 +40,12 @@ class UserViewSet(viewsets.ModelViewSet):
         This view returns all the feedback the user has received.
         """
         received_feedback = Feedback.objects.filter(recipient=self.request.user, status=Feedback.COMPLETE)
-        serializer = FeedbackSerializer(received_feedback, many=True)
+        page = self.paginate_queryset(received_feedback)
+        if page is not None:
+            serializer = FeedbackSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
+        serializer = FeedbackSerializer(received_feedback, many=True)
         return Response(serializer.data)
 
 
