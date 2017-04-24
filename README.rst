@@ -1,7 +1,7 @@
 =======
  Flindt
 =======
-*Shoving feedback down your throat since 2016*
+*Sparks conversations since 2016*
 
 Development
 ===========
