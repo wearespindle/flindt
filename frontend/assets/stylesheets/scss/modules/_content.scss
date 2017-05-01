@@ -188,3 +188,14 @@
         background-image: url('/dist/images/no-feedback-received.gif');
     }
 }
+
+.content--not-found {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    background-position: 60%;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 50px;
+    background-image: url('/dist/images/notfound.gif');
+}

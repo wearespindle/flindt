@@ -23,6 +23,7 @@ import GiveRoleFeedback from './containers/give_role_feedback';
 // Components
 import App from './components/app';
 import Home from './components/home';
+import NotFound from './components/not_found';
 
 // Store
 import configureStore from './store/store';
@@ -56,8 +57,12 @@ export default (
                         <Route path=":feedbackId" component={ReceivedFeedback} />
                     </Route>
 
+                    <Route path="*" component={NotFound} />
+
                 </Route>
+
             </Route>
+
         </Router>
     </Provider>
 );
