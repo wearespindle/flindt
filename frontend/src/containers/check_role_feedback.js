@@ -108,7 +108,7 @@ class CheckRoleFeedback extends React.Component {
                                     <th>Person</th>
                                     <th>Role</th>
                                     <th>Circle</th>
-                                    <th>Received on</th>
+                                    <th>Given on</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,14 +141,15 @@ class CheckRoleFeedback extends React.Component {
 
                         { isRated &&
                             <div className="feedback-form--row padding-bottom-0">
+                                <div className="rated-feedback-spacer" />
                                 <div className="feedback-form--form">
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48 feedback-content">
+                                        <div className="feedback-content">
                                             <h3>Rating</h3>
-                                            <h4>
+                                            <strong>
                                                 This is how recognizable {person.first_name} found your feedback.
-                                            </h4>
+                                            </strong>
 
                                             <div className="feedback-form--finalgrade">
                                                 <div style={{width: `${feedback.how_recognizable * 10}%`}} />
@@ -160,10 +161,10 @@ class CheckRoleFeedback extends React.Component {
                                     </div>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48 feedback-content">
-                                            <h3>
+                                        <div className="feedback-content">
+                                            <strong>
                                                 This is how valuable {person.first_name} found your feedback.
-                                            </h3>
+                                            </strong>
 
                                             <div className="feedback-form--finalgrade">
                                                 <div style={{width: `${feedback.how_valuable * 10}%`}} />
@@ -174,7 +175,7 @@ class CheckRoleFeedback extends React.Component {
                                     </div>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48 feedback-content">
+                                        <div className="feedback-content">
                                             <div>
                                                 <div>
                                                     <strong>

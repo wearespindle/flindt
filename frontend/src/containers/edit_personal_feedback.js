@@ -88,8 +88,8 @@ let EditPersonalFeedbackClass = class EditPersonalFeedback extends React.Compone
                         <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
-                                <li>Check feedback</li>
-                                <li>Edit Personal feedback</li>
+                                <li>Edit feedback</li>
+                                <li>Personal feedback</li>
                             </ul>
                         </div>
                     </div>
@@ -118,8 +118,8 @@ let EditPersonalFeedbackClass = class EditPersonalFeedback extends React.Compone
                     <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
-                            <li>Check feedback</li>
-                            <li>Edit Personal feedback</li>
+                            <li>Edit feedback</li>
+                            <li>Personal feedback</li>
                         </ul>
                     </div>
                 </div>
@@ -147,7 +147,7 @@ let EditPersonalFeedbackClass = class EditPersonalFeedback extends React.Compone
                                 <form onSubmit={handleSubmit(this._handleSubmit)}>
                                     <div className="feedback-form--answer-container">
                                         <label htmlFor="personalFeedbackQuestion">
-                                            { feedback.individual.question.content }
+                                            <strong>{ feedback.individual.question.content }</strong>
                                         </label>
                                         <Field name="personalFeedbackQuestion" component={renderTextArea} />
                                     </div>

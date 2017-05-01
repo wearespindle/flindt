@@ -170,7 +170,6 @@
 
     @media (min-width: $breakpoint-30) {
         margin: 0;
-        margin-top: 30px;
     }
 }
 
@@ -237,6 +236,15 @@
 
 .feedback-content {
     padding: 1rem;
+
+    strong {
+        display: block;
+    }
+}
+
+.rated-feedback-spacer {
+    height: 4px;
+    background: $color-neutral-10;
 }
 
 .feedback-form--finalgrade {

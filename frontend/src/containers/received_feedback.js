@@ -196,8 +196,8 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                 <form onSubmit={handleSubmit(this._handleSubmit)}>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48">
-                                            <h3>How valuable is the feedback you received from {person.first_name}?</h3>
+                                        <div>
+                                            <strong>How valuable is the feedback you received from {person.first_name}?</strong>
 
                                             { isEditable &&
                                                 <div>
@@ -242,10 +242,10 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                     </div>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48">
-                                            <h3>
+                                        <div>
+                                            <strong>
                                                 How recognizable is the feedback you received from {person.first_name}?
-                                            </h3>
+                                            </strong>
 
                                             { isEditable &&
                                                 <div>
@@ -291,8 +291,8 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
                                     </div>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48">
-                                            <h3>Are you planning on doing anything with this feedback?</h3>
+                                        <div>
+                                            <strong>Are you planning on doing anything with this feedback?</strong>
                                             { isEditable &&
                                                 <div>
                                                     <ul className="feedback--form-radiolist">

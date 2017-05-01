@@ -8,16 +8,18 @@ const RatingRows = ({remarks}) =>
 
                 return (
                     <div key={rating.id} className="feedback-form--row">
-                        { rating.image &&
-                            <div className="l-5 feedback-form--row-smiley">
-                                <img alt="Rating" src={rating.image} />
-                            </div>
-                        }
-                        <div className="l-43 feedback-content">
-                            <h3>{rating.description}</h3>
+                        <div className="feedback-form--answer-container">
+                            { rating.image &&
+                                <div className="l-5 feedback-form--row-smiley">
+                                    <img alt="Rating" src={rating.image} />
+                                </div>
+                            }
+                            <div className={`${(rating.image ? 'l-43' : '')}`}>
+                                <strong>{rating.description}</strong>
 
-                            <div key={remark.id}>
-                                <p>{remark.content}</p>
+                                <div className="feedback-form--answer" key={remark.id}>
+                                    <p>{remark.content}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

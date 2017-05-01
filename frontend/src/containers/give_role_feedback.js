@@ -198,9 +198,9 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                                                         </div>
                                                     }
 
-                                                    <div className="l-43">
+                                                    <div className={(rating.image ? 'l-43' : '')}>
                                                         <label htmlFor={rating.name}>
-                                                            {rating.description}
+                                                            <strong>{rating.description}</strong>
                                                             <span className="is-required">*</span>
                                                         </label>
                                                         <Field

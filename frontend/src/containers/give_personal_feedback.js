@@ -94,7 +94,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
                         <div className="content--header-breadcrumbs">
                             <ul>
                                 <li>Give feedback</li>
-                                <li>Feedback on person</li>
+                                <li>Personal feedback</li>
                             </ul>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
                     <div className="content--header-breadcrumbs">
                         <ul>
                             <li>Give feedback</li>
-                            <li>Feedback on person</li>
+                            <li>Personal feedback</li>
                         </ul>
                     </div>
                 </div>
@@ -153,7 +153,7 @@ let GivePersonalFeedbackClass = class GivePersonalFeedback extends Component {
                                 <form onSubmit={handleSubmit(this._handleSubmit)}>
                                     <div className="feedback-form--answer-container">
                                         <label htmlFor="personalFeedbackQuestion">
-                                            { feedback.individual.question.content }
+                                            <strong>{ feedback.individual.question.content }</strong>
                                         </label>
                                         <Field name="personalFeedbackQuestion" component={renderField} />
                                     </div>

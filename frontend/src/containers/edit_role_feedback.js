@@ -106,8 +106,8 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                         <Header />
                         <div className="content--header-breadcrumbs">
                             <ul>
-                                <li>Check feedback</li>
-                                <li>Edit Personal feedback</li>
+                                <li>Edit feedback</li>
+                                <li>Feedback on role</li>
                             </ul>
                         </div>
                     </div>
@@ -138,8 +138,8 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                     <Header />
                     <div className="content--header-breadcrumbs">
                         <ul>
-                            <li>Check feedback</li>
-                            <li>Edit Personal feedback</li>
+                            <li>Edit feedback</li>
+                            <li>Feedback on role</li>
                         </ul>
                     </div>
                 </div>
@@ -196,9 +196,9 @@ let EditRoleFeedbackClass = class EditRoleFeedback extends React.Component {
                                                         </div>
                                                     }
 
-                                                    <div className="l-43">
+                                                    <div className={(rating.image ? 'l-43' : '')}>
                                                         <label htmlFor={rating.name}>
-                                                            {rating.description}
+                                                            <strong>{rating.description}</strong>
                                                         </label>
                                                         <Field
                                                           name={rating.name}

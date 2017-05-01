@@ -129,11 +129,11 @@ class CheckPersonalFeedback extends React.Component {
                                 <div className="feedback-form--form">
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48 feedback-content">
+                                        <div className="feedback-content">
                                             <h3>Rating</h3>
-                                            <h4>
+                                            <strong>
                                                 This is how recognizable {person.first_name} found your feedback.
-                                            </h4>
+                                            </strong>
 
                                             <div className="feedback-form--finalgrade">
                                                 <div style={{width: `${feedback.how_recognizable * 10}%`}} />
@@ -145,10 +145,10 @@ class CheckPersonalFeedback extends React.Component {
                                     </div>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48 feedback-content">
-                                            <h3>
+                                        <div className="feedback-content">
+                                            <strong>
                                                 This is how valuable {person.first_name} found your feedback.
-                                            </h3>
+                                            </strong>
 
                                             <div className="feedback-form--finalgrade">
                                                 <div style={{width: `${feedback.how_valuable * 10}%`}} />
@@ -159,7 +159,7 @@ class CheckPersonalFeedback extends React.Component {
                                     </div>
 
                                     <div className="feedback-form--row">
-                                        <div className="l-48 feedback-content">
+                                        <div className="feedback-content">
                                             <div>
                                                 <div>
                                                     <strong>
