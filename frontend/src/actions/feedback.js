@@ -19,10 +19,10 @@ export const CLEAN_FEEDBACK = 'CLEAN_FEEDBACK';
 // Test URL to get data as a json to show in our view.
 const ROOT_URL = `${API_URL}/api/v1`;
 
-export function fetchFeedbackAsSender(accessToken, limit = 9999, offset = 0) {
+export function fetchFeedbackAsSender(accessToken, limit = 9999, offset = 0, order = '-date') {
     const request = axios({
         method: 'GET',
-        url: `${ROOT_URL}/users/feedback-as-sender/?limit=${limit}&offset=${offset}`,
+        url: `${ROOT_URL}/users/feedback-as-sender/?limit=${limit}&offset=${offset}&ordering=${order}`,
         headers: {Authorization: `Bearer ${accessToken}`},
     });
 
@@ -32,10 +32,10 @@ export function fetchFeedbackAsSender(accessToken, limit = 9999, offset = 0) {
     };
 }
 
-export function fetchFeedbackAsReceiver(accessToken, limit = 9999, offset = 0) {
+export function fetchFeedbackAsReceiver(accessToken, limit = 9999, offset = 0, order = '-date') {
     const request = axios({
         method: 'GET',
-        url: `${ROOT_URL}/users/feedback-as-receiver/?limit=${limit}&offset=${offset}`,
+        url: `${ROOT_URL}/users/feedback-as-receiver/?limit=${limit}&offset=${offset}&ordering=${order}`,
         headers: {Authorization: `Bearer ${accessToken}`},
     });
 
