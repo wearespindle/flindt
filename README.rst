@@ -17,8 +17,35 @@ Pull the repository from GitHub to your local machine:
 ::
 
     cd ~Projects/wearespindle
-    git clone git@github.com:wearespindle/feedbacktool-frontend.git
-    cd feedbacktool-frontend
+    git clone git@github.com:wearespindle/flindt.git
+    cd flindt
+
+Docker related
+^^^^^^^^^^^^^^
+
+-  Build the containers:
+
+``docker-compose build``
+
+-  Start the containers, running in the background:
+
+``docker-compose up -d``
+
+-  Wait something like 10 to 15 seconds for the DB-container to initialize and run the default Django migrate-stuff:
+
+``docker-compose run --rm backend python manage.py migrate``
+
+-  Add a superuser, e.g. ``john.doe@wearespindle.com``:
+
+``docker-compose run --rm backend python manage.py createsuperuser``
+
+You'll **have to restart** the environment to get anything to show up in the browser:
+
+``docker-compose restart``
+
+Now you can connect to the backend at http://localhost:8005/admin/.
+
+Login with the superuser & password you've just created. You are now ready to add an OAuth2-enabled application.
 
 OAuth2 authentication
 ^^^^^^^^^^^^^^^^^^^^^
@@ -44,12 +71,13 @@ Follow these steps:
 
 1. Browse to
    ``http://localhost:8005/admin/oauth2_provider/application/``
-2. Create an application
+2. Add application (button on top right corner)
 3. Add this (hard-coded) "Client id" -->
    ``DsHaTowmFoOr3GQLOOoJaXQpViaV6NsIFzOVY3ME``
-4. "User" should point to the added superuser
+4. "User" should point to the added superuser. Use the looking glass to find it.
 5. "Client type" --> Public
 6. "Authorization grant type" --> Resource owner password-based
+7. "Name" is OK to remain empty
 
 You should be able to login to the frontend using the superuser's email-address at http://localhost:8080/.
 
@@ -57,31 +85,3 @@ At this point selecting the options "Give feedback" and "Received feedback" are 
 
 Continue with the setup following the documentation:
 ``backend/docs/sphinx/source/starting/starting.rst``
-
-Docker related
-^^^^^^^^^^^^^^
-
--  Build the containers:
-
-``docker-compose build``
-
--  Start the containers, running in the background:
-
-``docker-compose up -d``
-
--  Wait something like 10 seconds (for the DB-container to initialize)
-   and run the default Django migrate-stuff:
-
-``docker-compose run --rm backend python manage.py migrate``
-
--  Add a superuser, e.g. ``john.doe@example.com``:
-
-``docker-compose run --rm backend python manage.py createsuperuser``
-
-You'll **have to restart** the environment to get anything to show up in the browser:
-
-``docker-compose restart``
-
-Now you can connect to the backend at http://localhost:8005/admin/.
-
-Login with the superuser & password you've just created and add an application in the next step.
