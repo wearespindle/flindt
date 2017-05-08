@@ -2,7 +2,8 @@ import os
 import sys
 
 # import django
-from sphinx_rtd_theme import get_html_theme_path
+import sphinx_rtd_theme
+# from sphinx_rtd_theme import get_html_theme_path
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -32,7 +33,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'sphinxcontrib.srclinks'
+    # 'sphinxcontrib.srclinks'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -86,7 +87,7 @@ todo_include_todos = False
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-html_theme_path = [get_html_theme_path()]
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 html_title = 'Flindt documentation'
 
