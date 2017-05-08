@@ -63,8 +63,10 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
         this.props.fetchFeedback(accessToken, this.props.params.feedbackId).then((response) => {
             if (response.payload.status === 200) {
                 const { how_recognizable, how_valuable, actionable, actionable_content } = response.payload.data;
-                this.props.change('how_recognizable', how_recognizable);
-                this.props.change('how_valuable', how_valuable);
+                // eslint-disable-next-line camelcase
+                this.props.change('how_recognizable', how_recognizable || 6);
+                // eslint-disable-next-line camelcase
+                this.props.change('how_valuable', how_valuable || 6);
                 this.props.change('actionable', actionable ? 'true' : 'false');
                 this.props.change('actionable_content', actionable_content);
             }
@@ -197,7 +199,9 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
 
                                     <div className="feedback-form--row">
                                         <div>
-                                            <strong>How valuable is the feedback you received from {person.first_name}?</strong>
+                                            <strong>
+                                                How valuable is the feedback you received from {person.first_name}?
+                                            </strong>
 
                                             { isEditable &&
                                                 <div>
