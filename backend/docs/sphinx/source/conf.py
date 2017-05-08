@@ -1,7 +1,7 @@
 import os
 import sys
 
-import django
+# import django
 from sphinx_rtd_theme import get_html_theme_path
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -11,7 +11,7 @@ from sphinx_rtd_theme import get_html_theme_path
 sys.path.append(os.path.abspath('../../..'))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flindt.settings')
 
-django.setup()
+# django.setup()
 
 from flindt import VERSION  # noqa
 
@@ -138,6 +138,6 @@ srclink_branch = 'master'
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'python': ('http://python.readthedocs.org/en/v2.7.2/', None),
-    'django': ('http://django.readthedocs.org/en/1.8.x/', None),
+    'django': ('http://readthedocs.org/docs/django/en/latest/', None),
     'sphinx': ('http://sphinx.readthedocs.org/en/latest/', None),
 }
