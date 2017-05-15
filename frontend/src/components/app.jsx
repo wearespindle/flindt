@@ -45,6 +45,9 @@ class App extends Component {
                         <li><Link activeClassName="is-active" to="/received-feedback">
                             Received feedback <i className="fa fa-thumbs-up" /></Link>
                         </li>
+                        <li><Link activeClassName="is-active" to="/happiness">
+                            Happiness <i className="fa fa-heart" /></Link>
+                        </li>
                         <li className="logout--link">
                             <a href="/logout" tabIndex="-1" onClick={this.handleLoggedOutUser}>
                                 Logout <i className="fa fa-sign-out" />

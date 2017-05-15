@@ -7,6 +7,7 @@ import FeedbackReducer from './reducer_feedback';
 import UserReducer from './reducer_user';
 import QuestionReducer from './reducer_question';
 import ModalReducer from './reducer_modal';
+import HappinessReducer from './reducer_happiness';
 
 const rootReducer = combineReducers({
     Feedback: FeedbackReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     Question: QuestionReducer,
     Notifications,
     Modal: ModalReducer,
+    Happiness: HappinessReducer,
 });
 
 export default rootReducer;

@@ -20,6 +20,8 @@ import CheckRoleFeedback from './containers/check_role_feedback';
 import EditRoleFeedback from './containers/edit_role_feedback';
 import GiveRoleFeedback from './containers/give_role_feedback';
 
+import HappinessContainer from './containers/happiness_container';
+
 // Components
 import App from './components/app';
 import Home from './components/home';
@@ -55,6 +57,10 @@ export default (
                     <Route path="received-feedback">
                         <IndexRoute component={ReceivedFeedbackList} />
                         <Route path=":feedbackId" component={ReceivedFeedback} />
+                    </Route>
+
+                    <Route path="happiness">
+                        <IndexRoute component={HappinessContainer} />
                     </Route>
 
                     <Route path="*" component={NotFound} />

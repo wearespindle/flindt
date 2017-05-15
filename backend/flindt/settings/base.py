@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     'flindt.role',
     'flindt.integrations',
     'flindt.organization',
+    'flindt.happiness',
 
     'django_extensions',
 )
