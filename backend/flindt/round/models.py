@@ -21,7 +21,10 @@ class Round(FlindtBaseModel):
         related_name='+',
     )
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField(help_text="Editing of feedback will be disabled after this date has passed.")
+    end_date = models.DateTimeField(
+        help_text='Editing of feedback will be disabled after this date '
+        'has passed.'
+    )
     description = models.CharField(
         _('description'),
         max_length=255,
@@ -30,14 +33,21 @@ class Round(FlindtBaseModel):
     roles_to_review = models.PositiveSmallIntegerField()
     # determines the amount of people each user has to review
     individuals_to_review = models.PositiveSmallIntegerField()
-    # How many people need to be given feedback before being able to view the “report”.
+    # How many people need to be given feedback before being able to view
+    # the “report”.
     min_feedback_sent = models.PositiveIntegerField()
-    question_for_individual_feedback = models.ForeignKey('feedback.Question', blank=True, null=True)
+    question_for_individual_feedback = models.ForeignKey(
+        'feedback.Question',
+        blank=True,
+        null=True
+    )
     available_ratings = models.ManyToManyField('feedback.Rating')
 
     def __str__(self):
-        return 'Description: {}, Receivers: #{}, senders: {}, roles: {}, indiv: {}'.format(
-            self.description, self.participants_receivers.count(), self.participants_senders.count(),
+        return 'Description: {}, Receivers: #{}, senders: {}, roles: {}, '
+        'indiv: {}'.format(
+            self.description, self.participants_receivers.count(),
+            self.participants_senders.count(),
             self.roles_to_review, self.individuals_to_review
         )
 
@@ -46,7 +56,8 @@ class Round(FlindtBaseModel):
         TODO: FEED-20: Call this method when a new round is started.
         """
         message = _(
-            'Hey, a new feedback round started. Start helping colleagues by giving them some feedback at {}.'.
+            'Hey, a new feedback round started. Start helping colleagues by '
+            'giving them some feedback at {}.'.
             format(settings.FRONTEND_HOSTNAME)
         )
         for user in self.participants_senders.all():

@@ -6,7 +6,8 @@ from .models import User, ExtraUserInfo, ExtraUserInfoCategory
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'prefix', 'glassfrog_id', 'extra_info')
+        fields = ('id', 'first_name', 'last_name', 'prefix', 'glassfrog_id',
+                  'extra_info')
         depth = 2
 
 

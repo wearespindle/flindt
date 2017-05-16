@@ -17,7 +17,8 @@ class RoleFactory(factory.django.DjangoModelFactory):
     @factory.post_generation
     def users(self, create, extracted, **kwargs):
         if create:
-            # Get all users, convert to list, shuffle and get between 1 and 6 users.
+            # Get all users, convert to list, shuffle and get between 1 and
+            # 6 users.
             users = list(User.objects.all())
             random.shuffle(users)
             self.users.add(*users[:random.randint(1, 6)])

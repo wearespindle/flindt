@@ -1,7 +1,8 @@
 # To understand the customized Django User model, see:
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.utils.translation import ugettext as _
 
 from flindt.base.models import FlindtBaseModel
@@ -95,9 +96,12 @@ class ExtraUserInfo(FlindtBaseModel):
     Example:
         This can be used to link a DISC profile to a user like so:
 
-        >>> category = ExtraUserInfoCategory.objects.create(name='DISC profile')
-        >>> extrauserinfo = ExtraUserInfo.object.create(category=category,link='http://example.com/keycardforjohndoe')
-        >>> User.objects.create(extra_info=[extrauserinfo], first_name='John', last_name='Doe')
+        >>> category = ExtraUserInfoCategory.objects.create(
+            name='DISC profile')
+        >>> extrauserinfo = ExtraUserInfo.object.create(
+            category=category,link='http://example.com/keycardforjohndoe')
+        >>> User.objects.create(
+            extra_info=[extrauserinfo], first_name='John', last_name='Doe')
     """
     category = models.ForeignKey(
         'ExtraUserInfoCategory',

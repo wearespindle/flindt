@@ -40,11 +40,14 @@ class Organization(FlindtBaseModel):
         week_ago = now - datetime.timedelta(days=7)
 
         message = _(
-            _("Hey, we noticed that people are waiting for your feedback, please help your colleagues by giving them "
-              "some feedback at {}/give-feedback.").
+            _('Hey, we noticed that people are waiting for your feedback, '
+              'please help your colleagues by giving them some feedback '
+              'at {}/give-feedback.').
             format(settings.FRONTEND_HOSTNAME)
         )
         for user in self.users.all():
-            if user.feedback_sent_feedback.filter(status=Feedback.INCOMPLETE, round__start_date__lt=week_ago).exists():
+            if user.feedback_sent_feedback.filter(
+                    status=Feedback.INCOMPLETE,
+                    round__start_date__lt=week_ago).exists():
                 messenger = Messenger(user=user)
                 messenger.send_message(message)

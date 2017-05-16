@@ -27,7 +27,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'a$%t0hx(9v36a9psxpbj6llf05vhe8zy*vy9y$&-o%^8vjne21')
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'a$%t0hx(9v36a9psxpbj6llf05vhe8zy*vy9y$&-o%^8vjne21'
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -151,7 +154,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'default': {
-            'format': '%(asctime)s  [%(name)s:%(lineno)s]  %(levelname)s - %(message)s',
+            'format': '%(asctime)s  [%(name)s:%(lineno)s]  %(levelname)s '
+            '- %(message)s',
         },
         'simple': {
             'format': '%(levelname)s %(message)s',
@@ -213,7 +217,8 @@ REST_FRAMEWORK = {
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 8,
 }
 
@@ -226,7 +231,9 @@ AUTHENTICATION_BACKENDS = (
 AUTH_USER_MODEL = 'user.User'
 
 SOCIAL_AUTH_GOOGLE_PLUS_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_PLUS_KEY', '')
-SOCIAL_AUTH_GOOGLE_PLUS_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_PLUS_SECRET', '')
+SOCIAL_AUTH_GOOGLE_PLUS_SECRET = os.getenv(
+    'SOCIAL_AUTH_GOOGLE_PLUS_SECRET', ''
+)
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple

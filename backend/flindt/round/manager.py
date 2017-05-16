@@ -5,7 +5,8 @@ from random import shuffle
 
 from django.utils import timezone
 
-from flindt.feedback.models import (Feedback, FeedbackOnIndividual, FeedbackOnRole)
+from flindt.feedback.models import (Feedback, FeedbackOnIndividual,
+                                    FeedbackOnRole)
 from flindt.user.models import User
 
 logger = logging.getLogger(__name__)
@@ -29,10 +30,10 @@ class RoundManager:
 
     When initializing the class, a Round object is needed.
     When you want to create a round, use `start_round`. This will try to
-    create feedback objects for every receiver and sender associated with the round.
-    It will raise NoSolutionFound if no solution could be found in a reasonable amount of tries.
-    It will raise NoSolutionPossible if there is no solution possible (eg. when
-    a user has no roles within a circle).
+    create feedback objects for every receiver and sender associated with the
+    round. It will raise NoSolutionFound if no solution could be found in a
+    reasonable amount of tries. It will raise NoSolutionPossible if there is no
+    solution possible (eg. when a user has no roles within a circle).
     """
     # Current depth of solution
     counter = 0
@@ -50,38 +51,46 @@ class RoundManager:
     users_giving_feedback = None
     # Counter that keeps track how often a user has given feedback on roles
     users_have_given_feedback_on_role = Counter()
-    # Counter that keeps track how often a user has given feedback on individuals
+    # Counter that keeps track how often a user has given feedback on
+    # individuals.
     users_have_given_feedback_on_individual = Counter()
     # caching of users in particular circle
     users_in_circle = {}
-    # Keeps track on what the maximum number of feedback a user is allowed to give.
-    # Will increase if no solution can be found.
+    # Keeps track on what the maximum number of feedback a user is allowed to
+    # give. Will increase if no solution can be found.
     max_reviews_per_user = 0
 
     def __init__(self, round):
         self.round = round
-        self.users_giving_feedback = set(self.round.participants_senders.all().values_list('id', flat=True))
+        self.users_giving_feedback = set(self.round.participants_senders.all()
+                                         .values_list('id', flat=True))
 
     def start_round(self):
         """
         This will try to
-        create feedback objects for every receiver and sender associated with the round.
-        It will raise NoSolutionFound if no solution could be found in a reasonable amount of tries.
-        It will raise NoSolutionPossible if there is no solution possible (eg. when
-        a user has no roles within a circle).
+        create feedback objects for every receiver and sender associated with
+        the round. It will raise NoSolutionFound if no solution could be found
+        in a reasonable amount of tries. It will raise NoSolutionPossible if
+        there is no solution possible (eg. when a user has no roles within a
+        circle).
         """
-        # We do a maximum of tries that is equal to number of users giving feedback.
+        # We do a maximum of tries that is equal to number of users giving
+        # feedback.
         logger.info('starting a new round: {}'.format(self.round))
 
         for i in range(self.round.min_feedback_sent + 100):
-            # After every 3th try to fix the round, we increment the maximum number of reviews that needs to be given.
+            # After every 3th try to fix the round, we increment the maximum
+            # number of reviews that needs to be given.
             self.max_reviews_per_user = self.round.roles_to_review + i // 3
             try:
-                logger.info('Trying to create role feedback {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
+                logger.info('Trying to create role feedback {}th try, max'
+                            ' number of reviews: {}'
+                            .format(i + 1, self.max_reviews_per_user))
                 self._create_role_feedback_for_participants()
                 self._sort_feedback_on_circle_size()
                 self._match_role_feedback_to_senders(self.role_feedback)
-                logger.info('succesfully matched all role feedback on the {}th try'.format(i+1))
+                logger.info('succesfully matched all role feedback on the {}th'
+                            ' try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -91,12 +100,18 @@ class RoundManager:
                 self.users_have_given_feedback_on_role = Counter()
 
         for i in range(10000):
-            self.max_reviews_per_user = self.round.individuals_to_review + i // 3
+            self.max_reviews_per_user = self.round.individuals_to_review + i //
+            3
             try:
-                logger.info('Trying to create individual feedback Solution {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
+                logger.info('Trying to create individual feedback Solution {}th
+                            ' try, max number of reviews: {}'.format(
+                            i + 1, self.max_reviews_per_user))
                 self._create_individual_feedback_for_participants()
-                self._match_individual_feedback_to_senders(self.individual_feedback_to_be_received)
-                logger.info('succesfully matched all individual feedback on the {}th try'.format(i+1))
+                self._match_individual_feedback_to_senders(
+                    self.individual_feedback_to_be_received
+                )
+                logger.info('succesfully matched all individual feedback on '
+                            'the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -109,19 +124,23 @@ class RoundManager:
 
     def _create_role_feedback_for_participants(self):
         """
-        This will create Feedback + FeedbackOnRole objects for every participant.
+        This will create Feedback + FeedbackOnRole objects for every
+        participant.
         """
         self.role_feedback = []
         for participant in self.round.participants_receivers.all():
             # TODO: FEED-60: Make sure all roles are different.
             for _ in range(self.round.roles_to_review):
-                feedback = self._create_role_feedback_for_participant(participant)
+                feedback = self._create_role_feedback_for_participant(
+                    participant
+                )
                 if feedback:
                     self.role_feedback.append(feedback)
 
     def _create_role_feedback_for_participant(self, participant):
         """
-        This will create a Feedback + FeedbackOnRole object for the participant.
+        This will create a Feedback + FeedbackOnRole object for the
+        participant.
         Args:
             participant: User object
 
@@ -132,7 +151,8 @@ class RoundManager:
             NoSolutionPossible: If no roles can be found for the user.
         """
         logger.info('Creating role feedback for user: {}'.format(participant))
-        role = participant.role_set.order_by('?').exclude(parent_id=None).exclude(archived=True).first()
+        role = participant.role_set.order_by('?').exclude(parent_id=None)
+        .exclude(archived=True).first()
         if not role:
             raise NoSolutionPossible
 
@@ -171,12 +191,15 @@ class RoundManager:
         """
         This will sort the feedback objects in order of the circle size.
 
-        This makes finding a solution easier, because finding a sender in a small circle is
-        less easy than finding them in big circles, so putting small circles first in the
-        matching should make finding the solution simpler.
+        This makes finding a solution easier, because finding a sender in a
+        small circle is less easy than finding them in big circles, so putting
+        small circles first in the matching should make finding the solution
+        simpler.
         """
         for feedback in self.role_feedback:
-            feedback._circle_size = len(self._get_senders_for_user_in_role(feedback.role.role.parent))
+            feedback._circle_size = len(self._get_senders_for_user_in_role(
+                feedback.role.role.parent)
+            )
         sorted(
             self.role_feedback,
             key=lambda feedback: feedback._circle_size,
@@ -223,9 +246,13 @@ class RoundManager:
             User set
 
         Raises:
-            NoSolutionPossible if there are no other users in the circles of the given User.
+            NoSolutionPossible if there are no other users in the circles of
+            the given User.
         """
-        circles = list(set(user.role_set.all().values_list('parent_id', flat=True)))
+        circles = list(set(user.role_set.all().values_list(
+            'parent_id',
+            flat=True
+        )))
 
         users = set(User.objects.filter(
             role__parent_id__in=circles,
@@ -244,13 +271,16 @@ class RoundManager:
 
     def _match_role_feedback_to_senders(self, feedbacks):
         """
-        Recursive matching function. This will try to find a sender for the feedback objects.
+        Recursive matching function. This will try to find a sender for the
+        feedback objects.
         Args:
             feedbacks: list of Feedback + FeedbackOnRole objects.
 
         Raises:
-            NoSolutionFound if there is no suitable candidate left to match for the current solution.
-            MatchNotFound if the number of solutions tried was bigger than 10.000.
+            NoSolutionFound if there is no suitable candidate left to match for
+            the current solution.
+            MatchNotFound if the number of solutions tried was bigger than
+            10.000.
         """
 
         # Base case, no feedback to give
@@ -259,14 +289,17 @@ class RoundManager:
 
         feedback = feedbacks[0]
 
-        senders = self._get_senders_for_user_in_role(feedback.role.role.parent).copy()
+        senders = self._get_senders_for_user_in_role(feedback.role.role.parent)
+        .copy()
 
         senders.remove(feedback.recipient.id)
 
         users_done = self.users_have_given_feedback_on_role.copy()
         # From the list of users that have given feedback, remove the users
         # that have given the maximum number of reviews.
-        for key, count in dropwhile(lambda user: user[1] >= self.max_reviews_per_user, users_done.most_common()):
+        for key, count in dropwhile(lambda user: user[1] >=
+                                    self.max_reviews_per_user,
+                                    users_done.most_common()):
             del users_done[key]
 
         senders = list(senders.difference(set(users_done)))
@@ -285,7 +318,8 @@ class RoundManager:
                 if self.tries % 10000 == 0:
                     logger.info(
                         '(tries: {}, max depth: {}) counter: {}{}'.format(
-                            self.tries, self.max_depth, self.counter * '#', ' ' * 100
+                            self.tries, self.max_depth, self.counter * '#',
+                            ' ' * 100
                         )
                     )
                 self._match_role_feedback_to_senders(feedbacks[1:])
@@ -310,13 +344,15 @@ class RoundManager:
 
     def _match_individual_feedback_to_senders(self, feedbacks):
         """
-        Recursive matching function. This will try to find a sender for the feedback objects.
+        Recursive matching function. This will try to find a sender for the
+        feedback objects.
         Args:
             feedbacks: list of Feedback + FeedbackOnIndividual objects.
 
         Raises:
-            NoSolutionFound if there is no suitable candidate left to match for the current solution.
-            MatchNotFound if the number of solutions tried was bigger than 10.000.
+            NoSolutionFound if there is no suitable candidate left to match for
+            the current solution. MatchNotFound if the number of solutions
+            tried was bigger than 10.000.
         """
         # Base case, no feedback to give.
         if not feedbacks:
@@ -327,7 +363,9 @@ class RoundManager:
         senders = self._get_senders_for_user(feedback.recipient)
 
         users_done = self.users_have_given_feedback_on_individual.copy()
-        for key, _ in dropwhile(lambda user: user[1] >= self.max_reviews_per_user, users_done.most_common()):
+        for key, _ in dropwhile(lambda user: user[1] >=
+                                self.max_reviews_per_user,
+                                users_done.most_common()):
             users_done.pop(key)
 
         senders = list(senders.difference(set(users_done)))
@@ -346,7 +384,8 @@ class RoundManager:
                 if self.tries % 10000 == 0:
                     logger.info(
                         '(tries: {}, max depth: {}) counter: {}{}'.format(
-                            self.tries, self.max_depth, self.counter * '#', ' ' * 100
+                            self.tries, self.max_depth, self.counter * '#',
+                            ' ' * 100
                         )
                     )
                 self._match_individual_feedback_to_senders(feedbacks[1:])

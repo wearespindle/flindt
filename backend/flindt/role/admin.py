@@ -20,7 +20,10 @@ class IsCircleListFilter(admin.SimpleListFilter):
         human-readable name for the option that will appear
         in the right sidebar.
         """
-        return (('is_circle', _('Is circle')), ('is_not_circle', _('Is not circle')),)
+        return (
+            ('is_circle', _('Is circle')),
+            ('is_not_circle', _('Is not circle')),
+        )
 
     def queryset(self, request, queryset):
         """
