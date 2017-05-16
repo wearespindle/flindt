@@ -129,11 +129,12 @@ class Feedback(FlindtBaseModel):
 
     def __str__(self):
         if self.role:
-            return 'Feedback from {} on role: {} for {}'.format(self.sender, self.role, self.recipient)
+            return 'Feedback from {} on role: {} for {}'.format(self.sender,
+                                                                self.role,
+                                                                self.recipient)
         if self.individual:
-            return 'Feedback from {} on individual: {}'.format(self.sender, self.recipient)
-
-
+            return 'Feedback from {} on individual: {}'.format(self.sender,
+                                                               self.recipient)
 
     # TODO: FEED-71: We should discern between date_created and date_completed.
     # If we make changing the status from incomplete to complete an action, the
@@ -142,41 +143,44 @@ class Feedback(FlindtBaseModel):
 
     def save(self, *args, **kwargs):
         """
-        If the status changes, the date should be updated and a message should be
-        send to the recipient. If feedback is rated, a message should be send to the
-        giver of the feedback.
+        If the status changes, the date should be updated and a message should
+        be send to the recipient. If feedback is rated, a message should be
+        send to the giver of the feedback.
         """
         def send_feedback_received_message():
             pk = str(self.pk)
             message = _(
                 'You just received feedback. Read and rate it! {}'.
-                format(settings.FRONTEND_HOSTNAME+'/received-feedback/'+pk)
+                format(settings.FRONTEND_HOSTNAME + '/received-feedback/' + pk)
             )
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
 
         def send_rating_received_message():
-            message = _('{} {} just rated the feedback that you gave.'.format(self.recipient.first_name,
-                                                                              self.recipient.last_name))
+            message = _('{} {} just rated the feedback that you gave.'.format(
+                self.recipient.first_name, self.recipient.last_name))
             messenger = Messenger(user=self.sender)
             messenger.send_message(message)
 
         def send_feedback_skipped_message():
             message = _(
                 'Unfortunately {} {} could not say anything about the role: {} and skipped giving feedback.'.
-                format(self.sender.first_name, self.sender.last_name, self.role.role)
+                format(self.sender.first_name, self.sender.last_name,
+                       self.role.role)
             )
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
 
         # Check if the status has changed and is complete.
-        if self.__original_status != self.status and self.status == self.COMPLETE:
+        if self.__original_status != self.status
+        and self.status == self.COMPLETE:
             # Update the date.
             self.date = timezone.now()
             # Send a message to the recipient.
             send_feedback_received_message()
 
-        if self.__original_status != self.status and self.status == self.SKIPPED:
+        if self.__original_status != self.status
+        and self.status == self.SKIPPED:
             self.date = timezone.now()
 
             send_feedback_skipped_message()
@@ -189,9 +193,9 @@ class Feedback(FlindtBaseModel):
 
     def __init__(self, *args, **kwargs):
         """
-        When the status changes between 'incomplete' to 'complete', `date` should
-        be updated. To check this, we save the value of `status` when the
-        object is initialized.
+        When the status changes between 'incomplete' to 'complete', `date`
+        should be updated. To check this, we save the value of `status` when
+        the object is initialized.
         """
         super(Feedback, self).__init__(*args, **kwargs)
         self.__original_status = self.status

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import (Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark)
+from .models import (Feedback, FeedbackOnIndividual, FeedbackOnRole, Question,
+                     Rating, Remark)
 
 
 class QuestionAdmin(admin.ModelAdmin):

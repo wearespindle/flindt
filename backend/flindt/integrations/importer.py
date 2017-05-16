@@ -41,7 +41,7 @@ class GlassFrogImporter(object):
             {"people": [{"email": "joris.engbers@wearespindle.com",
                 "external_id": None,
                 "id": 17466,
-                "links": {"circles": [9550, 7210, 3943, 15171, 5338, 14335, 8650]},
+                "links": {"circles": [9550, 7210, 3943, 15171, 5338, 14335]},
                 "name": "Joris Engbers"},
                 ...
                 ...
@@ -69,7 +69,8 @@ class GlassFrogImporter(object):
                 'glassfrog_id': user.get('id'),
             }
 
-            flindt_user, created = User.objects.update_or_create(email=user.get('email'), defaults=kwargs)
+            flindt_user, created = User.objects.update_or_create(
+                email=user.get('email'), defaults=kwargs)
             if self.organization:
                 self.organization.users.add(flindt_user)
 

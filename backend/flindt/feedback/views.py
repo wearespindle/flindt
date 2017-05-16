@@ -2,7 +2,8 @@ from django.db.models import Q
 from rest_framework import viewsets
 
 from .models import Rating, Remark, Question, Feedback
-from .serializers import RatingSerializer, RemarkSerializer, QuestionSerializer, FeedbackSerializer
+from .serializers import (RatingSerializer, RemarkSerializer,
+                          QuestionSerializer, FeedbackSerializer)
 
 
 class RatingViewSet(viewsets.ModelViewSet):
@@ -31,5 +32,6 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         """
         Set the queryset here so it filters on user.
         """
-        return super(FeedbackViewSet, self).get_queryset().filter(Q(sender=self.request.user) |
-                                                                  Q(recipient=self.request.user))
+        return super(FeedbackViewSet, self).get_queryset().filter(
+            Q(sender=self.request.user) |
+            Q(recipient=self.request.user))
