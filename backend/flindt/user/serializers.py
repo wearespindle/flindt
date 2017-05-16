@@ -5,7 +5,7 @@ from flindt.happiness.serializers import HappinessSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    happiness_set = HappinessSerializer(many=True)
+    # happiness_set = HappinessSerializer(many=True)
 
     class Meta:
         model = User

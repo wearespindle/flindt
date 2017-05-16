@@ -1,5 +1,6 @@
 import {
     FETCH_HAPPINESS,
+    POST_HAPPINESS,
 } from '../actions/happiness';
 
 const INITIAL_STATE = {
@@ -13,6 +14,9 @@ export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
     case FETCH_HAPPINESS:
         return { ...state, happiness: action.payload.data };
+
+    case POST_HAPPINESS:
+        return { ...state, happiness: state.happiness.concat(action.payload.data) };
 
     default:
         return state;
