@@ -85,3 +85,25 @@ At this point selecting the options "Give feedback" and "Received feedback" are 
 
 Continue with the setup following the documentation:
 ``backend/docs/sphinx/source/starting/starting.rst``
+
+Contributing
+============
+
+See the  _CONTRIBUTING.md: CONTRIBUTING.md  file on how to contribute to this project.
+
+Contributors
+============
+
+See the _CONTRIBUTORS.md: CONTRIBUTORS.md file for a list of contributors to the project.
+
+Get in touch with a developer
+=============================
+
+If you want to report an issue see the _CONTRIBUTING.md: CONTRIBUTING.md file for more info.
+
+We will be happy to answer your other questions at {opensource@wearespindle.com}.
+
+License
+=======
+
+Flindt is made available under the aGPL license. See the [LICENSE file](LICENSE) for more info.
