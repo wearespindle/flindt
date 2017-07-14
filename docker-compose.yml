@@ -1,11 +1,5 @@
 version: '2.0'
 
-volumes: {}
-
-networks:
-  internal: {}
-  # external: {}  # Reserved for load balancer / proxy.
-
 services:
   db:
     image: mariadb:latest
@@ -14,8 +8,6 @@ services:
       - MYSQL_ROOT_PASSWORD=flindt
       - MYSQL_USER=flindt
       - MYSQL_PASSWORD=flindt
-    networks:
-      internal:
 
   backend:
     build: backend
@@ -27,15 +19,12 @@ services:
       # ext:int port.
       - "8005:8000"
     depends_on:
-      # Define all containers for easy running of development setup.
       - db
     environment:
       # Use the root user to enable creation of a test database.
       - ALLOWED_HOSTS=localhost,0.0.0.0
       - DATABASE_URL=mysql://root:flindt@db/flindt
       - DEBUG=1
-    networks:
-      internal:
 
   frontend:
     build: frontend
@@ -45,5 +34,3 @@ services:
     ports:
       # ext:int port.
       - "8080:8080"
-    networks:
-      internal:
