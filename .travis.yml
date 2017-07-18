@@ -1,0 +1,36 @@
+sudo: required
+
+services:
+  - docker
+
+branches:
+  # Only build on these branches.
+  only:
+    - develop
+    - /^feature/
+    - /^hotfix/
+
+env:
+  global:
+    - TZ=Europe/Amsterdam
+    - GITHUB_REPO="wearespindle/flindt"
+    - DOCKER_COMPOSE_VERSION=1.14.0
+
+language: python
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  # Echo some variables for debug purposes.
+  - echo "Current datetime is $(date +'%Y%m%d%H%M')"
+
+script:
+  # Always build new images for docker.
+  - docker-compose -f docker-compose.yml build
+
+notifications:
+  email: false

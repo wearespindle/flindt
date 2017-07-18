@@ -1,13 +1,41 @@
+.. image:: https://travis-ci.org/wearespindle/flindt.svg?branch=develop
+    :target: https://travis-ci.org/wearespindle/flindt
+
 =======
  Flindt
 =======
+
+`Flindt <http://www.flindt.io>`_: a feedback tool for Holacracy companies.
+
 *Sparks conversations since 2016*
+
+Status
+======
+
+Active / maintained.
+
+At the moment this project a MVP (*Minimum Viable Product*) and is currently Docker-based only.
+
+However, the frontend can be run outside of Docker. You'll need to have Gulp, NPM and Node.JS installed.
+
+Usage
+=====
+
+Check out the `Sphinx docs <http://flindt.readthedocs.org/en/latest/>`_ for detailed information
+
+Requirements
+============
+
+* You have git installed.
+* You have `Docker <https://www.docker.com/>`_ and `docker-compose <https://docs.docker.com/compose/>`_ installed.
+* To be able to give and receive feedback you need an active account at `GlassFrog <https://glassfrog.com/>`_.
+* For OAuth2 authentication, a Google Developer-account is preferred.
+* For notifications an account at `Slack <https://slack.com/>`_.
 
 Development
 ===========
 
-This is a quickstart for a local development setup.
-For in-depth documentation, see the Sphinx-docs at ``backend/docs/sphinx/source/intro/install.rst``.
+A quickstart for a local development.
 
 Local setup
 ^^^^^^^^^^^
@@ -27,7 +55,7 @@ Docker related
 
 ``docker-compose build``
 
--  Start the containers, running in the background:
+-  Start the 3 containers in the background:
 
 ``docker-compose up -d``
 
@@ -83,5 +111,4 @@ You should be able to login to the frontend using the superuser's email-address 
 
 At this point selecting the options "Give feedback" and "Received feedback" are waiting indefinitely. This is because there aren't any feedback objects for a user as of yet.
 
-Continue with the setup following the documentation:
-``backend/docs/sphinx/source/starting/starting.rst``
+Continue with the documentation at `Starting to work <http://flindt.readthedocs.io/en/latest/starting/starting.html>`_.
