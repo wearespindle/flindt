@@ -2,8 +2,7 @@ import logging
 import smtplib
 
 from django.core.mail import send_mail
-
-from slacker import Slacker
+from slacker import Error, Slacker
 
 logger = logging.getLogger(__name__)
 
@@ -41,9 +40,10 @@ class EmailProvider(Provider):
                 [self.user.email],
                 fail_silently=False,
             )
-            logger.info('Email with message: {} send to {}.'.format(message, self.user.email))
-        except smtplib.SMTPServerDisconnected:
-            logger.exception('Sending email with message {} to {} failed.'.format(message, self.user.email))
+            logger.info('Email send to {}.'.format(self.user.email))
+        except smtplib.SMTPServerDisconnected as e:
+            from flindt.round.manager import IntegrationError
+            raise IntegrationError('Email error "%s" for user "%s"' % (e, self.user))
 
 
 class SlackProvider(Provider):
@@ -58,7 +58,12 @@ class SlackProvider(Provider):
         self.slacker = Slacker(self.user.organization_set.first().slack_bot_api_key)
 
     def send_message(self, message):
-        self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@flindt')
+        try:
+            self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@flindt')
+            logger.info('Slack send to {}.'.format(self.user.slack_user_name))
+        except Error as e:
+            from flindt.round.manager import IntegrationError
+            raise IntegrationError('Slack error "%s" for user "%s"' % (e, self.user))
 
 
 class Messenger(object):

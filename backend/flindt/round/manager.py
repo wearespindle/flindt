@@ -11,6 +11,10 @@ from flindt.user.models import User
 logger = logging.getLogger(__name__)
 
 
+class IntegrationError(Exception):
+    pass
+
+
 class MatchNotFoundError(Exception):
     pass
 
@@ -33,6 +37,7 @@ class RoundManager:
     It will raise NoSolutionFound if no solution could be found in a reasonable amount of tries.
     It will raise NoSolutionPossible if there is no solution possible (eg. when
     a user has no roles within a circle).
+    It will raise IntegrationError when messenging integrations fail.
     """
     # Current depth of solution
     counter = 0
