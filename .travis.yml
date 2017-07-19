@@ -17,6 +17,8 @@ env:
     - DOCKER_COMPOSE_VERSION=1.14.0
 
 language: python
+python:
+  - "3.4"
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
