@@ -1,5 +1,6 @@
+import createHistory from 'history/lib/createHashHistory';
 import React from 'react';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
 // Containers (manage redux state)
@@ -27,12 +28,15 @@ import NotFound from './components/not_found';
 
 // Store
 import configureStore from './store/store';
-
 const store = configureStore();
+
+// History. We use a custom hash history that does not use ugly '_k' params:
+// https://github.com/ReactTraining/react-router/issues/1967
+const appHistory = useRouterHistory(createHistory)({ queryKey: false })
 
 export default (
     <Provider store={store}>
-        <Router history={browserHistory}>
+        <Router history={appHistory}>
             <Route path="login" component={Login} />
             <Route component={AuthContainer}>
                 <Route path="/" component={App}>

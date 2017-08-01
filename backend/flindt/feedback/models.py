@@ -147,10 +147,9 @@ class Feedback(FlindtBaseModel):
         giver of the feedback.
         """
         def send_feedback_received_message():
-            pk = str(self.pk)
             message = _(
-                'You just received feedback. Read and rate it! {}'.
-                format(settings.FRONTEND_HOSTNAME+'/received-feedback/'+pk)
+                'You just received feedback. Read and rate it! https://{}/#/received-feedback/{}'.
+                format(settings.FRONTEND_HOSTNAME, self.pk)
             )
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
