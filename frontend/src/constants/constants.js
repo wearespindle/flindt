@@ -1,11 +1,10 @@
 const LOCALHOST = 'http://localhost:8005';
-const PRODUCTION = 'https://api.flindt.wearespindle.com';
 let apiUrl;
 
 if (location && location.hostname === 'localhost') {
     apiUrl = LOCALHOST;
 } else {
-    apiUrl = PRODUCTION;
+    apiUrl = 'https://api.' + location.hostname;
 }
 
 export const API_URL = apiUrl;

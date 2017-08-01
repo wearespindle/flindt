@@ -1,6 +1,7 @@
 import logging
 import smtplib
 
+from django.conf import settings
 from django.core.mail import send_mail
 from slacker import Error, Slacker
 
@@ -36,7 +37,7 @@ class EmailProvider(Provider):
             send_mail(
                 'New message from Flindt',
                 message,
-                'no-reply@wearespindle.com',
+                settings.DEFAULT_FROM_EMAIL,
                 [self.user.email],
                 fail_silently=False,
             )

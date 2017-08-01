@@ -138,8 +138,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'Info <no-reply@wearespindle.com>'
-SERVER_EMAIL = 'Alerts <no-reply@wearespindle.com>'
+DEFAULT_FROM_EMAIL = 'no-reply@wearespindle.com'
 
 ADMINS = (
     ('Admin', 'admin@wearespindle.com'),
