@@ -34,8 +34,7 @@ class AuthContainer extends Component {
                 } else {
                     this.props.userLoginFailure('Can\'t reach Google API.');
                 }
-
-                browserHistory.push('/login');
+                window.location.hash = "/login";
             } else {
                 this.props.userLoginSuccess(data);
                 this.setState({loading: false});
@@ -74,7 +73,7 @@ class AuthContainer extends Component {
                 if (auth2.isSignedIn.get()) {
                     this.onSuccess(auth2.currentUser.get());
                 } else {
-                    browserHistory.push('/login');
+                    window.location.hash = "/login";
                 }
             });
         });

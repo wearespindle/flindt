@@ -21,7 +21,7 @@ class App extends Component {
         event.preventDefault();
         const gapi = window.gapi;
         gapi.auth2.getAuthInstance().signOut().then(() => {
-            browserHistory.push('/login');
+            window.location.hash = "/login";
         });
     }
 
