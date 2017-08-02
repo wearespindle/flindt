@@ -20,7 +20,7 @@ class Login extends Component {
 
     onSuccess(googleUser) {
         this.setState({loading: true});
-        window.location.hash = "/"
+        window.location.hash = '/'
     }
 
     initLogin() {

@@ -21,7 +21,7 @@ class App extends Component {
         event.preventDefault();
         const gapi = window.gapi;
         gapi.auth2.getAuthInstance().signOut().then(() => {
-            window.location.hash = "/login";
+            window.location.hash = '/login';
         });
     }
 
@@ -46,7 +46,7 @@ class App extends Component {
                             Received feedback <i className="fa fa-thumbs-up" /></Link>
                         </li>
                         <li className="logout--link">
-                            <a href="/logout" tabIndex="-1" onClick={this.handleLoggedOutUser}>
+                            <a href="/#/logout" tabIndex="-1" onClick={this.handleLoggedOutUser}>
                                 Logout <i className="fa fa-sign-out" />
                             </a>
                         </li>
