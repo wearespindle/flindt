@@ -5,6 +5,7 @@ Welcome to Flindt's documentation!
    :maxdepth: 2
 
    intro/install
+   intro/Flindt-Dockerless
    data/data
    starting/starting
 
