@@ -34,13 +34,14 @@ class EmailProvider(Provider):
 
     def send_message(self, message):
         try:
-            send_mail(
-                'New message from Flindt',
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [self.user.email],
-                fail_silently=False,
-            )
+            if not settings.SILENT_RUN:
+                send_mail(
+                    'New message from Flindt',
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [self.user.email],
+                    fail_silently=False,
+                )
             logger.info('Email send to {}.'.format(self.user.email))
         except smtplib.SMTPServerDisconnected as e:
             from flindt.round.manager import IntegrationError
@@ -60,7 +61,8 @@ class SlackProvider(Provider):
 
     def send_message(self, message):
         try:
-            self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@flindt')
+            if not settings.SILENT_RUN:
+                self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@flindt')
             logger.info('Slack send to {}.'.format(self.user.slack_user_name))
         except Error as e:
             from flindt.round.manager import IntegrationError

@@ -278,3 +278,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 # ALLOWED_HOSTS = ['localhost']
 
 FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'flindt.wearespindle.com')
+
+# Do not send actual messsenges, but still create all objects. Useful for
+# debugging purposes.
+SILENT_RUN = False
