@@ -45,5 +45,5 @@ yarn.lock
 
 .env
 
-/backend/feedbag/static
-/backend/feedbag/settings/local.py
+/backend/flindt/static
+/backend/flindt/settings/local.py
