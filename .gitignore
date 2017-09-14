@@ -47,3 +47,4 @@ yarn.lock
 
 /backend/flindt/static
 /backend/flindt/settings/local.py
+/backend/logs/

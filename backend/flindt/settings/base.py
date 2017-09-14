@@ -171,6 +171,14 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'default',
         },
+        'flindtfile': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 100,
+            'filename': 'logs/flindt.log',
+            'formatter': 'default',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -191,8 +199,8 @@ LOGGING = {
             'propagate': True,
         },
         '': {
-            'handlers': ['console', ],
-            'level': 'INFO',
+            'handlers': ['console', 'flindtfile'],
+            'level': 'DEBUG',
         }
     }
 }
