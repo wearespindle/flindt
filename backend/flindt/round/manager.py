@@ -39,33 +39,30 @@ class RoundManager:
     a user has no roles within a circle).
     It will raise IntegrationError when messenging integrations fail.
     """
-    # Current depth of solution
-    counter = 0
-    # Total number of solutions tried
-    tries = 0
-    # Max solution depth achieved
-    max_depth = 0
-    # The Round object that needs
-    round = None
-    # All role feedback objects created
-    role_feedback = []
-    # All individual feedback created
-    individual_feedback_to_be_received = []
-    # The users giving feedback
-    users_giving_feedback = None
-    # Counter that keeps track how often a user has given feedback on roles
-    users_have_given_feedback_on_role = Counter()
-    # Counter that keeps track how often a user has given feedback on individuals
-    users_have_given_feedback_on_individual = Counter()
-    # caching of users in particular circle
-    users_in_circle = {}
-    # Keeps track on what the maximum number of feedback a user is allowed to give.
-    # Will increase if no solution can be found.
-    max_reviews_per_user = 0
-
-    def __init__(self, round):
-        self.round = round
-        self.users_giving_feedback = set(self.round.participants_senders.all().values_list('id', flat=True))
+    def __init__(self, _round):
+        # Current depth of solution.
+        self.counter = 0
+        # Total number of solutions tried.
+        self.tries = 0
+        # Max solution depth achieved.
+        self.max_depth = 0
+        # The Round object.
+        self.round = _round
+        # All role feedback objects created.
+        self.role_feedback = []
+        # All individual feedback created.
+        self.individual_feedback_to_be_received = []
+        # The users giving feedback.
+        self.users_giving_feedback = set(_round.participants_senders.all().values_list('id', flat=True))
+        # Counter that keeps track how often a user has given feedback on roles.
+        self.users_have_given_feedback_on_role = Counter()
+        # Counter that keeps track how often a user has given feedback on individuals.
+        self.users_have_given_feedback_on_individual = Counter()
+        # Caching of users in particular circle.
+        self.users_in_circle = {}
+        # Keeps track on what the maximum number of feedback a user is allowed to give.
+        # Will increase if no solution can be found.
+        self.max_reviews_per_user = 0
 
     def start_round(self):
         """
