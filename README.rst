@@ -18,6 +18,17 @@ At the moment this project a MVP (*Minimum Viable Product*) and is currently Doc
 
 However, the frontend can be run outside of Docker. You'll need to have Gulp, NPM and Node.JS installed.
 
+Contributing
+============
+
+See the [CONTRIBUTING.md](CONTRIBUTING.md) file on how to contribute to this project.
+
+Contributors
+============
+
+See the [CONTRIBUTORS.md](CONTRIBUTORS.md) file for a list of contributors to the project.
+
+
 Usage
 =====
 

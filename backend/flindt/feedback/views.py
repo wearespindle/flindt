@@ -1,8 +1,8 @@
 from django.db.models import Q
 from rest_framework import viewsets
 
-from .models import Rating, Remark, Question, Feedback
-from .serializers import RatingSerializer, RemarkSerializer, QuestionSerializer, FeedbackSerializer
+from .models import Feedback, Question, Rating, Remark
+from .serializers import FeedbackSerializer, QuestionSerializer, RatingSerializer, RemarkSerializer
 
 
 class RatingViewSet(viewsets.ModelViewSet):
@@ -19,6 +19,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows questions to be viewed or added.
     """
+
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 

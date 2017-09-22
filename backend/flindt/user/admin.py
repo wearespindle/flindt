@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.models import Group
 
 from .models import User
 
@@ -69,10 +68,9 @@ class UserAdmin(BaseUserAdmin):
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = ((None, {
-                'classes': ('wide',),
-                'fields': ('email',  'password1', 'password2')
-                }
-        ),
+        'classes': ('wide',),
+        'fields': ('email', 'password1', 'password2')
+    }),
     )
     search_fields = ('email',)
     ordering = ('email',)
@@ -82,7 +80,6 @@ class UserAdmin(BaseUserAdmin):
         """
         Override saving User model in Django Admin to use password encryption.
         """
-
         if change:
             # Updating existing user.
             orig_obj = User.objects.get(pk=obj.pk)

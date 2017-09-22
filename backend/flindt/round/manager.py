@@ -1,6 +1,6 @@
-import logging
 from collections import Counter
 from itertools import dropwhile
+import logging
 from random import shuffle
 
 from django.utils import timezone
@@ -29,7 +29,7 @@ class NoSolutionPossible(Exception):
 
 class RoundManager:
     """
-    Manager that make starting a round possible.
+    Manager that makes starting a round possible.
 
     When initializing the class, a Round object is needed.
     When you want to create a round, use `start_round`. This will try to
@@ -79,11 +79,13 @@ class RoundManager:
             # After every 3th try to fix the round, we increment the maximum number of reviews that needs to be given.
             self.max_reviews_per_user = self.round.roles_to_review + i // 3
             try:
-                logger.info('Trying to create role feedback {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
+                logger.info('Trying to create role feedback {}th try, max number of reviews: {}'.format(
+                    i + 1, self.max_reviews_per_user)
+                )
                 self._create_role_feedback_for_participants()
                 self._sort_feedback_on_circle_size()
                 self._match_role_feedback_to_senders(self.role_feedback)
-                logger.info('succesfully matched all role feedback on the {}th try'.format(i+1))
+                logger.info('succesfully matched all role feedback on the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -95,10 +97,12 @@ class RoundManager:
         for i in range(10000):
             self.max_reviews_per_user = self.round.individuals_to_review + i // 3
             try:
-                logger.info('Trying to create individual feedback Solution {}th try, max number of reviews: {}'.format(i+1, self.max_reviews_per_user))
+                logger.info('Trying to create individual feedback Solution {}th try, max number of reviews: {}'.format(
+                    i + 1, self.max_reviews_per_user)
+                )
                 self._create_individual_feedback_for_participants()
                 self._match_individual_feedback_to_senders(self.individual_feedback_to_be_received)
-                logger.info('succesfully matched all individual feedback on the {}th try'.format(i+1))
+                logger.info('succesfully matched all individual feedback on the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -254,7 +258,6 @@ class RoundManager:
             NoSolutionFound if there is no suitable candidate left to match for the current solution.
             MatchNotFound if the number of solutions tried was bigger than 10.000.
         """
-
         # Base case, no feedback to give
         if not feedbacks:
             return

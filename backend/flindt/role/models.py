@@ -10,9 +10,11 @@ logger = logging.getLogger(__name__)
 
 class Role(FlindtBaseModel):
     """
-    The Role model is used to store information about roles. It is primarily
-    designed to capture informtion about roles in the holacratic sense of the
-    world, but can also be used to reflect a more traditional organisation.
+    The Role model is used to store information about roles.
+
+    It is primarily designed to capture information about roles
+    in the holacratic sense of the word, but can also be used to
+    reflect a more traditional organisation.
     """
     name = models.TextField()
     purpose = models.TextField(blank=True, default='')
@@ -44,7 +46,6 @@ class Role(FlindtBaseModel):
     def descendants(self):
         """
         Return all descendants of `self` in a list.
-
 
         TODO: FEED-50: descendants should be a method on a manager returning a
         queryset.

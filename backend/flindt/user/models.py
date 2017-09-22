@@ -1,7 +1,7 @@
 # To understand the customized Django User model, see:
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.db import models
 from django.utils.translation import ugettext as _
 
 from flindt.base.models import FlindtBaseModel
@@ -60,28 +60,34 @@ class User(PermissionsMixin, AbstractBaseUser):
     objects = UserManager()
 
     def get_full_name(self):
-        return "%s" % self.first_name
+        return self.first_name
 
     def get_short_name(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return '{} {}'.format(self.first_name, self.last_name)
 
     def __str__(self):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
+        """
+        Does the user have a specific permission?
+        """
         # TODO: FEED-27: Implement the correct permission system.
         # Simplest possible answer for now: Yes, always
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
+        """
+        Does the user have permissions to view the app `app_label`?
+        """
         # Simplest possible answer: Yes, always
         return True
 
     @property
     def is_staff(self):
-        "Is the user a member of staff?"
+        """
+        Is the user a member of staff?
+        """
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
@@ -94,7 +100,6 @@ class ExtraUserInfo(FlindtBaseModel):
 
     Example:
         This can be used to link a DISC profile to a user like so:
-
         >>> category = ExtraUserInfoCategory.objects.create(name='DISC profile')
         >>> extrauserinfo = ExtraUserInfo.object.create(category=category,link='http://example.com/keycardforjohndoe')
         >>> User.objects.create(extra_info=[extrauserinfo], first_name='John', last_name='Doe')

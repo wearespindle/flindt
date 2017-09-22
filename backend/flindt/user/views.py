@@ -6,9 +6,8 @@ from rest_framework.response import Response
 from flindt.feedback.models import Feedback
 from flindt.feedback.serializers import FeedbackSerializer
 
-from .models import User, ExtraUserInfo, ExtraUserInfoCategory
-from .serializers import (UserSerializer, ExtraUserInfoSerializer,
-                          ExtraUserInfoCategorySerializer)
+from .models import ExtraUserInfo, ExtraUserInfoCategory, User
+from .serializers import ExtraUserInfoCategorySerializer, ExtraUserInfoSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
