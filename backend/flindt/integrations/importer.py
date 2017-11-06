@@ -156,21 +156,23 @@ class GlassFrogImporter(object):
             accountabilities=self._get_circle_accountabilities_by_id(circle_id),
             domains=self._get_circle_domains_by_id(circle_id),
         )
-        role_fullfiller = User.objects.get(
-            glassfrog_id=self._get_circle_leadlink(circle_id).get('links').get('people')[0]
-        )
-        role.users.add(role_fullfiller)
-        role.save()
-        if parent_role:
-            logger.info("Circle {} imported as role. PK: {}. Parent: {}, parent pk {}".format(
-                role, role.pk, parent_role, parent_role.pk))
+        people = self._get_circle_leadlink(circle_id).get('links').get('people')
+        if people:
+            role_fullfiller = User.objects.get(glassfrog_id=people[0])
+            role.users.add(role_fullfiller)
+            role.save()
+            if parent_role:
+                logger.info("Circle {} imported as role. PK: {}. Parent: {}, parent pk {}".format(
+                    role, role.pk, parent_role, parent_role.pk))
 
-        self.import_run.roles.add(role)
-        if self.organization:
-            self.organization.roles.add(role)
+            self.import_run.roles.add(role)
+            if self.organization:
+                self.organization.roles.add(role)
 
-        for role_id in circle_dict.get('links').get('roles'):
-            self.import_role(role_id, parent_role=role)
+            for role_id in circle_dict.get('links').get('roles'):
+                self.import_role(role_id, parent_role=role)
+        else:
+            logger.info('Skipping empty circle with id: {} and parent: {}'.format(circle_id, parent_role))
 
     def import_role(self, role_id, parent_role):
         """
