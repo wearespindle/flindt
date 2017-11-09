@@ -11,7 +11,7 @@ Rounds
 The following steps explain how to start a round
 
 * Go to http://localhost:8005/admin/round/round/add/ and log in with your superuser
-* Chose the amount of people that have to give and receive feedback (called senders and receivers)
+* Choose the amount of people that have to give and receive feedback (called senders and receivers)
 * Set the start and end date (people can't give or edit feedback after a round ends)
 * Set a description for the specific round
 * Select how many roles you want people to give feedback on
