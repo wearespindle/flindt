@@ -25,6 +25,10 @@ class Provider(object):
 
 
 class EmailProvider(Provider):
+    """
+    Provider for sending email messages.
+    """
+
     def __init__(self, *args, **kwargs):
         """
         Args:
@@ -45,10 +49,13 @@ class EmailProvider(Provider):
             logger.info('Email send to {}.'.format(self.user.email))
         except smtplib.SMTPServerDisconnected as e:
             from flindt.round.manager import IntegrationError
-            raise IntegrationError('Email error "%s" for user "%s"' % (e, self.user))
-
+            raise IntegrationError('Email error "{}" for user "{}"'.format(e, self.user))
 
 class SlackProvider(Provider):
+    """
+    Provider for sending slack messages.
+    """
+
     def __init__(self, *args, **kwargs):
         """
         Args:
@@ -66,7 +73,7 @@ class SlackProvider(Provider):
             logger.info('Slack send to {}.'.format(self.user.slack_user_name))
         except Error as e:
             from flindt.round.manager import IntegrationError
-            raise IntegrationError('Slack error "%s" for user "%s"' % (e, self.user))
+            raise IntegrationError('Slack error "{}" for user "{}"'.format(e, self.user))
 
 
 class Messenger(object):

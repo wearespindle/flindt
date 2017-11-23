@@ -14,11 +14,12 @@ class IsCircleListFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         """
-        Returns a list of tuples. The first element in each
-        tuple is the coded value for the option that will
-        appear in the URL query. The second element is the
-        human-readable name for the option that will appear
-        in the right sidebar.
+        Returns a list of tuples.
+
+        The first element in each tuple is the coded value
+        for the option that will appear in the URL query.
+        The second element is the human-readable name for the
+        option that will appear in the right sidebar.
         """
         return (('is_circle', _('Is circle')), ('is_not_circle', _('Is not circle')),)
 
@@ -44,6 +45,6 @@ class RoleAdmin(admin.ModelAdmin):
     def archive_role(self, request, queryset):
         for role in queryset:
             role.archive()
-        self.message_user(request, "Roles were successfully archived.")
+        self.message_user(request, 'Roles were successfully archived.')
 
     archive_role.short_description = 'Archive selected roles'

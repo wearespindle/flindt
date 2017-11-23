@@ -13,5 +13,5 @@ class Command(BaseCommand):
         round = Round.objects.first()
         manager = RoundManager(round)
         manager.start_round()
-        print('')
-        print('success, tries: {}'.format(manager.tries))
+        self.stdout.write('')
+        self.stdout.write('Success, tries: {}'.format(manager.tries))

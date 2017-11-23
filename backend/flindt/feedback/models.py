@@ -13,10 +13,14 @@ from flindt.user.models import User
 
 class Rating(FlindtBaseModel):
     """
-    A Rating is used to to add a ‘feeling’ to a Remark. Like Sad, happy, could
-    be better or "I have no idea what to say about this". It can be accompanied
-    by an image, which is normally a emoji to confer the feeling.
+    A Rating is used to to add a ‘feeling’ to a Remark.
+
+    Like sad, happy, could be better or
+    "I have no idea what to say about this".
+    It can be accompanied by an image, which is normally a emoji
+    to confer the feeling.
     """
+
     name = models.CharField(max_length=255,)
     image = models.ImageField(
         _('image'),
@@ -35,6 +39,7 @@ class Remark(FlindtBaseModel):
 
     A Feedback can link to a rating to confer an emotion.
     """
+
     rating = models.ForeignKey(
         Rating,
         related_name='rating',
@@ -48,9 +53,9 @@ class Remark(FlindtBaseModel):
 
 class Question(FlindtBaseModel):
     """
-    Model for the questions people can answer as an addition to the general
-    feedback given.
+    Model for the questions people can answer as an addition to the general feedback given.
     """
+
     name = models.CharField(
         _('name'),
         max_length=255,
@@ -62,6 +67,10 @@ class Question(FlindtBaseModel):
 
 
 class FeedbackOnIndividual(FlindtBaseModel):
+    """
+    Model for the feedback on individuals.
+    """
+
     question = models.ForeignKey(
         Question,
         related_name='question',
@@ -76,6 +85,7 @@ class FeedbackOnRole(FlindtBaseModel):
     """
     Model for the feedback on roles.
     """
+
     role = models.ForeignKey(Role, blank=True, null=True)
     remarks = models.ManyToManyField(
         Remark,
@@ -90,6 +100,7 @@ class Feedback(FlindtBaseModel):
     """
     Base feedback model which contains fields used for both feedback models.
     """
+
     INCOMPLETE, COMPLETE, SKIPPED = range(3)
 
     STATUS_CHOICES = ((INCOMPLETE, _('Incomplete')),
@@ -132,8 +143,6 @@ class Feedback(FlindtBaseModel):
             return 'Feedback from {} on role: {} for {}'.format(self.sender, self.role, self.recipient)
         if self.individual:
             return 'Feedback from {} on individual: {}'.format(self.sender, self.recipient)
-
-
 
     # TODO: FEED-71: We should discern between date_created and date_completed.
     # If we make changing the status from incomplete to complete an action, the

@@ -3,10 +3,10 @@ from datetime import datetime, timedelta, timezone
 from rest_framework import serializers
 
 from flindt.role.serializers import RoleSerializer
-from flindt.user.serializers import UserSerializer
 from flindt.round.serializers import RoundSerializer
+from flindt.user.serializers import UserSerializer
 
-from .models import Rating, Remark, Question, Feedback, FeedbackOnIndividual, FeedbackOnRole
+from .models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ('id', 'name', 'image', 'description', 'rating_id', )
+        fields = ('id', 'name', 'image', 'description', 'rating_id',)
 
 
 class RemarkSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class RemarkSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('id', 'name', 'content')
+        fields = ('id', 'name', 'content',)
 
 
 class FeedbackOnIndividualSerializer(serializers.ModelSerializer):
@@ -38,7 +38,7 @@ class FeedbackOnIndividualSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FeedbackOnIndividual
-        fields = ('id', 'question', 'answer')
+        fields = ('id', 'question', 'answer',)
 
 
 class FeedbackOnRoleSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class FeedbackOnRoleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FeedbackOnRole
-        fields = ('id', 'role', 'remarks')
+        fields = ('id', 'role', 'remarks',)
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
@@ -94,7 +94,6 @@ class FeedbackSerializer(serializers.ModelSerializer):
         return instance
 
     def validate(self, attrs):
-
         # If a user skips a feedback object, don't validate fields.
         if attrs.get('status') == 2:
             return super(FeedbackSerializer, self).validate(attrs)

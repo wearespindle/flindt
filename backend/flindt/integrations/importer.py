@@ -19,6 +19,7 @@ class GlassFrogImporter(object):
     To import all roles, user `import_circles` with the circle_id, for the
     anchor_circle.
     """
+
     API_BASE_URL = 'https://glassfrog.holacracy.org/api/v3/'
 
     def __init__(self, api_key, organization=None):
@@ -33,8 +34,10 @@ class GlassFrogImporter(object):
 
     def import_users(self):
         """
-        Create a user for every user found in GlassFrog. If a user with the
-        same information is already in the DB, don't create it again.
+        Create a user for every user found in GlassFrog.
+
+        If a user with the same information is already in the DB,
+        don't create it again.
 
         Example JSON Response:
 

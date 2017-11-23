@@ -7,10 +7,11 @@ from ...importer import GlassFrogImporter
 
 class Command(BaseCommand):
     """
-    import can currently be used to import users and roles from GlassFrog.
+    Import can currently be used to import users and roles from GlassFrog.
 
     To import roles, a circle id should always be provided.
     """
+
     help = 'Import users and roles from GlassFrog.'
 
     def add_arguments(self, parser):

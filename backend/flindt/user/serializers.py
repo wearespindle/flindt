@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, ExtraUserInfo, ExtraUserInfoCategory
+from .models import ExtraUserInfo, ExtraUserInfoCategory, User
 
 
 class UserSerializer(serializers.ModelSerializer):
