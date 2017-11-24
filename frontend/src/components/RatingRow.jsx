@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 
 const RatingRows = ({remarks}) =>
     <div>
@@ -30,7 +31,7 @@ const RatingRows = ({remarks}) =>
 
 
 RatingRows.propTypes = {
-    remarks: React.PropTypes.array,
+    remarks: propTypes.array,
 };
 
 export default RatingRows;

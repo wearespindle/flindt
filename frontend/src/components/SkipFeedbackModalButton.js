@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { showSkipFeedbackModal } from '../actions/modal';
@@ -11,7 +12,7 @@ const SkipFeedbackModalButton = (props) => (
 
 
 SkipFeedbackModalButton.propTypes = {
-    showSkipFeedbackModal: React.PropTypes.func,
+    showSkipFeedbackModal: propTypes.func,
 };
 
 export default connect(null, {showSkipFeedbackModal})(SkipFeedbackModalButton);

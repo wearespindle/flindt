@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { showRoleModal } from '../actions/modal';
@@ -11,10 +12,10 @@ const ModalButton = (props) => (
 );
 
 ModalButton.propTypes = {
-    accessToken: React.PropTypes.string,
-    role: React.PropTypes.number,
-    showRoleModal: React.PropTypes.func,
-    children: React.PropTypes.string,
+    accessToken: propTypes.string,
+    role: propTypes.number,
+    showRoleModal: propTypes.func,
+    children: propTypes.string,
 };
 
 export default connect(null, {showRoleModal})(ModalButton);

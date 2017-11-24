@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
@@ -158,10 +159,10 @@ const mapStateToProps = (state) => ({
 });
 
 GiveFeedbackListArchive.propTypes = {
-    feedback: React.PropTypes.array,
-    fetchFeedbackAsSender: React.PropTypes.func,
-    user: React.PropTypes.object,
-    loading: React.PropTypes.bool,
+    feedback: propTypes.array,
+    fetchFeedbackAsSender: propTypes.func,
+    user: propTypes.object,
+    loading: propTypes.bool,
 };
 
 export default connect(mapStateToProps, {fetchFeedbackAsSender})(GiveFeedbackListArchive);

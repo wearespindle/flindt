@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { Link } from 'react-router';
 import Time from 'react-time';
 
@@ -84,12 +85,12 @@ const FeedbackRow = (props) => {
 
 
 FeedbackRow.propTypes = {
-    feedbackType: React.PropTypes.string,
-    recipient: React.PropTypes.object,
-    role: React.PropTypes.object,
-    details: React.PropTypes.object,
-    completed: React.PropTypes.bool,
-    skipped: React.PropTypes.bool,
+    feedbackType: propTypes.string,
+    recipient: propTypes.object,
+    role: propTypes.object,
+    details: propTypes.object,
+    completed: propTypes.bool,
+    skipped: propTypes.bool,
 };
 
 

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import { reduxForm, Field, SubmissionError, getFormValues } from 'redux-form';
 import { Link } from 'react-router';
@@ -20,8 +21,8 @@ const renderField = ({ input, meta: { touched, error } }) => (
 );
 
 renderField.propTypes = {
-    input: React.PropTypes.object,
-    meta: React.PropTypes.object,
+    input: propTypes.object,
+    meta: propTypes.object,
 };
 
 
@@ -190,18 +191,18 @@ const mapStateToProps = (state) => ({
 });
 
 GivePersonalFeedbackClass.propTypes = {
-    cleanFeedback: React.PropTypes.func,
-    dispatch: React.PropTypes.func,
-    editFeedback: React.PropTypes.func,
-    feedback: React.PropTypes.object,
-    fetchFeedback: React.PropTypes.func,
-    handleSubmit: React.PropTypes.func,
-    params: React.PropTypes.object,
-    user: React.PropTypes.object,
+    cleanFeedback: propTypes.func,
+    dispatch: propTypes.func,
+    editFeedback: propTypes.func,
+    feedback: propTypes.object,
+    fetchFeedback: propTypes.func,
+    handleSubmit: propTypes.func,
+    params: propTypes.object,
+    user: propTypes.object,
 };
 
 GivePersonalFeedbackClass.contextTypes = {
-    router: React.PropTypes.object,
+    router: propTypes.object,
 };
 
 // Connect reduxForm to our class.

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -95,16 +96,16 @@ function mapDispatchToProps(dispatch) {
 
 
 SkipFeedbackModal.contextTypes = {
-    router: React.PropTypes.object,
+    router: propTypes.object,
 };
 
 SkipFeedbackModal.propTypes = {
-    hideModal: React.PropTypes.func,
-    isOpen: React.PropTypes.bool,
-    editFeedback: React.PropTypes.func,
-    dispatch: React.PropTypes.func,
-    user: React.PropTypes.object,
-    params: React.PropTypes.object,
+    hideModal: propTypes.func,
+    isOpen: propTypes.bool,
+    editFeedback: propTypes.func,
+    dispatch: propTypes.func,
+    user: propTypes.object,
+    params: propTypes.object,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkipFeedbackModal);

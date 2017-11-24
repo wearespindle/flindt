@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import Time from 'react-time';
 import { reduxForm, Field, SubmissionError, getFormValues } from 'redux-form';
@@ -22,8 +23,8 @@ const renderTextArea = ({ input, meta: { touched, error } }) => (
 );
 
 renderTextArea.propTypes = {
-    input: React.PropTypes.object,
-    meta: React.PropTypes.object,
+    input: propTypes.object,
+    meta: propTypes.object,
 };
 
 
@@ -252,18 +253,18 @@ const mapStateToProps = (state) => ({
 });
 
 GiveRoleFeedbackClass.propTypes = {
-    cleanFeedback: React.PropTypes.func,
-    editFeedback: React.PropTypes.func,
-    dispatch: React.PropTypes.func,
-    feedback: React.PropTypes.object,
-    fetchFeedback: React.PropTypes.func,
-    handleSubmit: React.PropTypes.func,
-    params: React.PropTypes.object,
-    user: React.PropTypes.object,
+    cleanFeedback: propTypes.func,
+    editFeedback: propTypes.func,
+    dispatch: propTypes.func,
+    feedback: propTypes.object,
+    fetchFeedback: propTypes.func,
+    handleSubmit: propTypes.func,
+    params: propTypes.object,
+    user: propTypes.object,
 };
 
 GiveRoleFeedbackClass.contextTypes = {
-    router: React.PropTypes.object,
+    router: propTypes.object,
 };
 
 // Connect reduxForm to our class.

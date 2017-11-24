@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, IndexLink, browserHistory } from 'react-router';
 import Notifications from 'react-notification-system-redux';
@@ -64,9 +65,9 @@ class App extends Component {
 }
 
 App.propTypes = {
-    children: React.PropTypes.object,
-    modal: React.PropTypes.object,
-    notifications: React.PropTypes.array,
+    children: propTypes.object,
+    modal: propTypes.object,
+    notifications: propTypes.array,
 };
 
 const mapStateToProps = (state) => ({

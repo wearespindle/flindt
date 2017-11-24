@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { hideModal } from '../actions/modal';
@@ -73,9 +74,9 @@ class RoleModal extends Component {
 }
 
 RoleModal.propTypes = {
-    hideModal: React.PropTypes.func,
-    details: React.PropTypes.object,
-    isOpen: React.PropTypes.bool,
+    hideModal: propTypes.func,
+    details: propTypes.object,
+    isOpen: propTypes.bool,
 };
 
 export default connect(null, {hideModal})(RoleModal);

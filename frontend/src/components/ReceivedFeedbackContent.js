@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import propTypes from 'prop-types';
 import Time from 'react-time';
 import RoleModalButton from '../components/role_modal_button';
 import RatingRows from '../components/rating_row';
@@ -96,11 +97,11 @@ const ReceivedFeedbackContent = (props) => {
 
 
 ReceivedFeedbackContent.propTypes = {
-    feedback: React.PropTypes.object,
-    person: React.PropTypes.object,
-    question: React.PropTypes.object,
-    receiver: React.PropTypes.object,
-    user: React.PropTypes.object,
+    feedback: propTypes.object,
+    person: propTypes.object,
+    question: propTypes.object,
+    receiver: propTypes.object,
+    user: propTypes.object,
 };
 
 export default ReceivedFeedbackContent;

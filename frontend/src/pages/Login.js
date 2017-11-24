@@ -1,42 +1,35 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import loadScript from '../utils/loadScript';
+import { client_id } from '../../config/google.json';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onSuccess = this.onSuccess.bind(this);
-  }
-
   componentWillMount() {
-    // $.getScript('https://apis.google.com/js/api:client.js', this.initLogin.bind(this));
+    loadScript('https://apis.google.com/js/api:client.js')
+      .then(this.initLogin)
+      .catch(this.initLogin);
+
     this.setState({ loading: false });
   }
 
-  onSuccess(googleUser) {
+  onSuccess = googleUser => {
     this.setState({ loading: true });
     window.location.hash = '/';
-  }
+  };
 
-  initLogin() {
-    var googleClientId = '197265624471-f8cb8sdb8dr1uevsscev16191ksr3ln6.apps.googleusercontent.com';
-    var gapi = window.gapi;
+  initLogin = () => {
+    const { gapi } = window;
 
     gapi.load('auth2', () => {
-      let auth2;
-
-      auth2 = gapi.auth2.init({
-        client_id: googleClientId,
-        scope: 'email'
-      });
-
-      auth2.then(() => {
-        auth2.attachClickHandler('google-plus-signin-button', {}, this.onSuccess);
-      });
+      gapi.auth2
+        .init({ client_id, scope: 'email' })
+        .then(() => {
+          auth2.attachClickHandler('google-plus-signin-button', {}, this.onSuccess);
+        })
+        .catch(console.error);
     });
-  }
+  };
 
   render() {
     if (this.state.loading) {
@@ -49,15 +42,15 @@ class Login extends Component {
       );
     }
 
+    const { error } = this.props.user;
+
     return (
       <div className="l-container">
         <div className="login--wrapper">
           <img className="login--logo" src="/dist/images/logo.svg" alt="Flindt" />
           <p>Use the button below to sign in with your Google account.</p>
 
-          {this.props.user.error && (
-            <div className="label--alert">The following error returned: {this.props.user.error} 😪</div>
-          )}
+          {error && <div className="label--alert">The following error returned: {error} 😪</div>}
 
           <hr />
 
