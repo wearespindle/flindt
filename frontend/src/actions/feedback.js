@@ -19,62 +19,71 @@ export const CLEAN_FEEDBACK = 'CLEAN_FEEDBACK';
 // Test URL to get data as a json to show in our view.
 const ROOT_URL = `${API_URL}/api/v1`;
 
-export function fetchFeedbackAsSender(accessToken, limit = 9999, offset = 0, order = '-date') {
-    const request = axios({
-        method: 'GET',
-        url: `${ROOT_URL}/users/feedback-as-sender/?limit=${limit}&offset=${offset}&ordering=${order}`,
-        headers: {Authorization: `Bearer ${accessToken}`},
-    });
+export function fetchFeedbackAsSender(
+  accessToken,
+  limit = 9999,
+  offset = 0,
+  order = '-date'
+) {
+  const request = axios({
+    method: 'GET',
+    url: `${ROOT_URL}/users/feedback-as-sender/?limit=${limit}&offset=${offset}&ordering=${order}`,
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
 
-    return {
-        type: FETCH_FEEDBACK_AS_SENDER,
-        payload: request,
-    };
+  return {
+    type: FETCH_FEEDBACK_AS_SENDER,
+    payload: request
+  };
 }
 
-export function fetchFeedbackAsReceiver(accessToken, limit = 9999, offset = 0, order = '-date') {
-    const request = axios({
-        method: 'GET',
-        url: `${ROOT_URL}/users/feedback-as-receiver/?limit=${limit}&offset=${offset}&ordering=${order}`,
-        headers: {Authorization: `Bearer ${accessToken}`},
-    });
+export function fetchFeedbackAsReceiver(
+  accessToken,
+  limit = 9999,
+  offset = 0,
+  order = '-date'
+) {
+  const request = axios({
+    method: 'GET',
+    url: `${ROOT_URL}/users/feedback-as-receiver/?limit=${limit}&offset=${offset}&ordering=${order}`,
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
 
-    return {
-        type: FETCH_FEEDBACK_AS_RECEIVER,
-        payload: request,
-    };
+  return {
+    type: FETCH_FEEDBACK_AS_RECEIVER,
+    payload: request
+  };
 }
 
 export function editFeedback(props, accessToken) {
-    const request = axios({
-        method: 'PATCH',
-        data: props,
-        url: `${ROOT_URL}/feedbacks/${props.id}/`,
-        headers: {Authorization: `Bearer ${accessToken}`},
-    });
+  const request = axios({
+    method: 'PATCH',
+    data: props,
+    url: `${ROOT_URL}/feedbacks/${props.id}/`,
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
 
-    return {
-        type: EDIT_FEEDBACK,
-        payload: request,
-    };
+  return {
+    type: EDIT_FEEDBACK,
+    payload: request
+  };
 }
 
 export function fetchFeedback(accessToken, id) {
-    const requestFeedback = axios({
-        method: 'GET',
-        url: `${ROOT_URL}/feedbacks/${id}/`,
-        headers: {Authorization: `Bearer ${accessToken}`},
-    });
+  const requestFeedback = axios({
+    method: 'GET',
+    url: `${ROOT_URL}/feedbacks/${id}/`,
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
 
-    return {
-        type: FETCH_FEEDBACK,
-        payload: requestFeedback,
-    };
+  return {
+    type: FETCH_FEEDBACK,
+    payload: requestFeedback
+  };
 }
 
-
 export function cleanFeedback() {
-    return {
-        type: CLEAN_FEEDBACK,
-    };
+  return {
+    type: CLEAN_FEEDBACK
+  };
 }
