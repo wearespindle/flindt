@@ -43,19 +43,22 @@ class Round(FlindtBaseModel):
 
     def message_for_open(self):
         """
-        TODO: FEED-20: Call this method when a new round is started.
+        This message is send when a new round has been started.
         """
         message = _(
             'Hey, a new feedback round started. Start helping colleagues by giving them some feedback at {}.'.
             format(settings.FRONTEND_HOSTNAME)
         )
         for user in self.participants_senders.all():
+            # Here there needs to be some check whether the participant is actually matched in the round (FEED-141)
+            # if user(sender) has user(recipient):
+                # messenger.send_message(message)
             messenger = Messenger(user=user)
             messenger.send_message(message)
 
     def message_for_close(self):
         """
-        TODO: FEED-20: Call this method when a round is closed.
+        This message is send when a round has been closed.
         """
         message = _(
             'The feedback round is over. Check (and rate) your feedback at {}'.
