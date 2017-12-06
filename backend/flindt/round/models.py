@@ -50,9 +50,6 @@ class Round(FlindtBaseModel):
             format(settings.FRONTEND_HOSTNAME)
         )
         for user in self.participants_senders.all():
-            # Here there needs to be some check whether the participant is actually matched in the round (FEED-141)
-            # if user(sender) has user(recipient):
-                # messenger.send_message(message)
             messenger = Messenger(user=user)
             messenger.send_message(message)
 
