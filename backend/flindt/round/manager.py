@@ -262,10 +262,16 @@ class RoundManager:
         if not feedbacks:
             return
 
+        # Get first object from the list.
         feedback = feedbacks[0]
 
-        senders = self._get_senders_for_user_in_role(feedback.role.role.parent).copy()
+        # Get the circle from the role.
+        circle = feedback.role.role.parent
 
+        # Get the users that are in the circle of the recipient of the feedback.
+        senders = self._get_senders_for_user_in_role(circle).copy()
+
+        # Remove recipient from the senders. So you won't feedback yourself.
         senders.remove(feedback.recipient.id)
 
         users_done = self.users_have_given_feedback_on_role.copy()
@@ -274,6 +280,7 @@ class RoundManager:
         for key, count in dropwhile(lambda user: user[1] >= self.max_reviews_per_user, users_done.most_common()):
             del users_done[key]
 
+        # Remove the users that have given feedback on the role from the senders list.
         senders = list(senders.difference(set(users_done)))
         shuffle(senders)
 
@@ -293,6 +300,8 @@ class RoundManager:
                             self.tries, self.max_depth, self.counter * '#', ' ' * 100
                         )
                     )
+                # Use the feedbacks objects from 1 and higher to prevent using the same object
+                # over and over again.
                 self._match_role_feedback_to_senders(feedbacks[1:])
             except MatchNotFoundError:
                 self.counter -= 1
@@ -327,14 +336,18 @@ class RoundManager:
         if not feedbacks:
             return
 
+        # Get first object from the list.
         feedback = feedbacks[0]
 
         senders = self._get_senders_for_user(feedback.recipient)
 
         users_done = self.users_have_given_feedback_on_individual.copy()
+        # From the list of users that have given feedback, remove the users
+        # that have given the maximum number of reviews.
         for key, _ in dropwhile(lambda user: user[1] >= self.max_reviews_per_user, users_done.most_common()):
             users_done.pop(key)
 
+        # Remove the users that are matched already from the senders list.
         senders = list(senders.difference(set(users_done)))
         shuffle(senders)
 
@@ -354,6 +367,8 @@ class RoundManager:
                             self.tries, self.max_depth, self.counter * '#', ' ' * 100
                         )
                     )
+                # Use the feedbacks objects from 1 and higher to prevent using the same object
+                # over and over again.
                 self._match_individual_feedback_to_senders(feedbacks[1:])
             except MatchNotFoundError:
                 self.counter -= 1

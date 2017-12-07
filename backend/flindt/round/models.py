@@ -43,19 +43,29 @@ class Round(FlindtBaseModel):
 
     def message_for_open(self):
         """
-        This message is send when a new round has been started.
+        Send a message that a new round has started.
+
+        The message will only be send to participants of the round that
+        actually have to give feedback.
+        Participants of the round that only receive feedback, will not
+        receive a message that the round has started.
         """
+        # Prevent circular import.
+        from flindt.feedback.models import Feedback
+
         message = _(
             'Hey, a new feedback round started. Start helping colleagues by giving them some feedback at {}.'.
             format(settings.FRONTEND_HOSTNAME)
         )
-        for user in self.participants_senders.all():
-            messenger = Messenger(user=user)
+
+        sending_user_pks = Feedback.objects.filter(round=self.pk).values_list('sender__pk', flat=True).distinct()
+        for sender in sending_user_pks:
+            messenger = Messenger(user=sender)
             messenger.send_message(message)
 
     def message_for_close(self):
         """
-        This message is send when a round has been closed.
+        Send a message to all feedback recipients that the round has closed.
         """
         message = _(
             'The feedback round is over. Check (and rate) your feedback at {}'.
