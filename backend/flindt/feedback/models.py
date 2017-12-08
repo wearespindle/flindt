@@ -181,17 +181,22 @@ class Feedback(FlindtBaseModel):
         if self.__original_status != self.status and self.status == self.COMPLETE:
             # Update the date.
             self.date = timezone.now()
-            # Send a message to the recipient.
-            send_feedback_received_message()
+            # Do not send a message if DEBUG = True
+            if not settings.DEBUG:
+                # Send a message to the recipient.
+                send_feedback_received_message()
 
         if self.__original_status != self.status and self.status == self.SKIPPED:
             self.date = timezone.now()
+            # Do not send a message if DEBUG = True
+            if not settings.DEBUG:
+                send_feedback_skipped_message()
 
-            send_feedback_skipped_message()
-
-        # Check if the feedback has been rated.
-        if self.how_recognizable and self.how_valuable and self.actionable:
-            send_rating_received_message()
+        # Do not send a message if DEBUG = True
+        if not settings.DEBUG:
+            # Check if the feedback has been rated.
+            if self.how_recognizable and self.how_valuable and self.actionable:
+                send_rating_received_message()
 
         super(Feedback, self).save()
 

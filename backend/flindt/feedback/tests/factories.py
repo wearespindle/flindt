@@ -1,9 +1,12 @@
 import datetime
 import factory
+import pytz
+
+from django.utils import timezone
 
 from factory.declarations import LazyAttribute, SubFactory
 from factory.django import DjangoModelFactory
-from factory.fuzzy import FuzzyInteger, FuzzyChoice, FuzzyNaiveDateTime
+from factory.fuzzy import FuzzyInteger, FuzzyChoice, FuzzyDateTime
 from faker import Factory
 
 from flindt.feedback.models import Feedback, FeedbackOnIndividual, FeedbackOnRole, Question, Rating, Remark
@@ -11,8 +14,8 @@ from flindt.role.tests.factories import RoleFactory
 from flindt.user.models import User
 
 faker = Factory.create('nl_NL')
-past_date = datetime.datetime.today() - datetime.timedelta(days=10)
-future_date = datetime.datetime.today() + datetime.timedelta(days=10)
+past_date = timezone.now() - datetime.timedelta(days=10)
+future_date = timezone.now() + datetime.timedelta(days=10)
 
 
 class QuestionFactory(DjangoModelFactory):
@@ -56,7 +59,7 @@ class FeedbackOnRoleFactory(DjangoModelFactory):
 
 
 class FeedbackFactory(DjangoModelFactory):
-    date = FuzzyNaiveDateTime(past_date, future_date)
+    date = FuzzyDateTime(past_date, future_date)
     recipient = factory.Iterator(User.objects.all())
     sender = factory.Iterator(User.objects.all())
     status = FuzzyChoice(dict(Feedback.STATUS_CHOICES).keys())

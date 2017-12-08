@@ -51,6 +51,7 @@ class EmailProvider(Provider):
             from flindt.round.manager import IntegrationError
             raise IntegrationError('Email error "{}" for user "{}"'.format(e, self.user))
 
+
 class SlackProvider(Provider):
     """
     Provider for sending slack messages.
