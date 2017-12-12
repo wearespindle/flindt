@@ -164,8 +164,33 @@ class Feedback(FlindtBaseModel):
             messenger.send_message(message)
 
         def send_rating_received_message():
-            message = _('{} {} just rated the feedback that you gave.'.format(self.recipient.first_name,
-                                                                              self.recipient.last_name))
+            """
+            When the feedback that a user (sender) has given is rated by
+            the recipient, a message is sent with the content of the rating
+            and a link to Flindt.
+            """
+            def type_of_feedback():
+                # Determines whether the rated feedback is on a role or individual.
+                if self.role:
+                    return 'role'
+                if self.individual:
+                    return 'personal'
+
+            message = _('{first_name} {last_name} just rated the feedback that you gave.'
+                        'This is how recognizable {first_name} found your feedback: {how_recognizable}'
+                        'This is how valuable {first_name} found your feedback: {how_valuable}'
+                        'This is what {first_name} had to say about your feedback: {actionable_content}.'
+                        'Read the rating here: https://{url}/give-feedback/{type}/{pk}'.format(
+                                                                        first_name=self.recipient.first_name,
+                                                                        last_name=self.recipient.last_name,
+                                                                        how_recognizable=self.how_recognizable,
+                                                                        how_valuable=self.how_valuable,
+                                                                        actionable_content=self.actionable_content,
+                                                                        url=settings.FRONTEND_HOSTNAME,
+                                                                        type=type_of_feedback(),
+                                                                        pk=self.pk,
+                                                                        ))
+
             messenger = Messenger(user=self.sender)
             messenger.send_message(message)
 

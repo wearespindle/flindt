@@ -5,7 +5,7 @@ from .factories import FeedbackFactory
 
 class FeedbackTestCase(TestCase):
     """
-    Used to confirm the correct behaviour of Role methods.
+    Used to confirm the correct behaviour of Feedback methods.
     """
 
     def setUp(self):
