@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import Time from 'react-time';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import Header from '../components/header';
 import RatingRows from '../components/RatingRow';
 import RoleModalButton from '../components/RoleModalButton';
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';

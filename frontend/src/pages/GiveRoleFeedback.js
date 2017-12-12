@@ -11,7 +11,7 @@ import history from '../utils/history';
 
 import RoleModalButton from '../components/RoleModalButton';
 import SkipFeedbackModalButton from '../components/SkipFeedbackModalButton';
-import Header from '../components/Header';
+import Header from '../components/header';
 
 import {
   cleanFeedback,

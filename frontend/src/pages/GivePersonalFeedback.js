@@ -8,7 +8,7 @@ import history from '../utils/history';
 
 import Notifications from 'react-notification-system-redux';
 
-import Header from '../components/Header';
+import Header from '../components/header';
 
 import {
   cleanFeedback,

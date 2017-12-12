@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 
 import { fetchFeedbackAsSender } from '../actions/feedback';
 import FeedbackRow from '../components/FeedbackRow';
-import Header from '../components/Header';
+import Header from '../components/header';
 
 class GiveFeedbackListArchive extends Component {
   constructor(props) {
