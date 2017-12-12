@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { fetchFeedbackAsSender } from '../actions/feedback';
 import FeedbackRow from '../components/FeedbackRow';
-import Header from '../components/Header';
+import Header from '../components/header';
 import history from '../utils/history';
 
 class GiveFeedbackList extends Component {

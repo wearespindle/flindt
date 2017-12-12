@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchFeedbackAsReceiver } from '../actions/feedback';
 import FeedbackRow from '../components/FeedbackRow';
-import Header from '../components/Header';
+import Header from '../components/header';
 
 class ReceivedFeedbackList extends Component {
   componentWillMount() {

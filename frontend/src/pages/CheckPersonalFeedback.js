@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import Header from '../components/header';
 import { cleanFeedback, fetchFeedback } from '../actions/feedback';
 
 const moment = require('moment');

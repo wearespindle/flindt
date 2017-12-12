@@ -8,7 +8,7 @@ import Notifications from 'react-notification-system-redux';
 
 import history from '../utils/history';
 import RoleModalButton from '../components/RoleModalButton';
-import Header from '../components/Header';
+import Header from '../components/header';
 import {
   cleanFeedback,
   editFeedback,
