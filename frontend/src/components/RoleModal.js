@@ -5,6 +5,20 @@ import { connect } from 'react-redux';
 import { hideModal } from '../actions/modal';
 
 class RoleModal extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.escFunction, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.escFunction, false);
+  }
+
+  // Close the modal when pressing escape.
+  escFunction = e => {
+    if (e.keyCode === 27) {
+      this.props.hideModal();
+    }
+  };
+
   render() {
     if (!this.props.isOpen) {
       return null;
