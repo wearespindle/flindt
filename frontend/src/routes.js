@@ -1,6 +1,11 @@
-import createHistory from 'history/lib/createHashHistory';
+// import createHistory from 'history/lib/createHashHistory';
 import React from 'react';
-import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
+import {
+  BrowserRouter,
+  Route,
+  IndexRoute,
+  useRouterHistory
+} from 'react-router';
 import { Provider } from 'react-redux';
 
 // Containers (manage redux state)
@@ -28,45 +33,52 @@ import NotFound from './components/not_found';
 
 // Store
 import configureStore from './store/store';
+
 const store = configureStore();
 
 // History. We use a custom hash history that does not use ugly '_k' params:
 // https://github.com/ReactTraining/react-router/issues/1967
-const appHistory = useRouterHistory(createHistory)({ queryKey: false })
+// const appHistory = useRouterHistory(createHistory)({ queryKey: false });
 
 export default (
-    <Provider store={store}>
-        <Router history={appHistory}>
-            <Route path="login" component={Login} />
-            <Route component={AuthContainer}>
-                <Route path="/" component={App}>
-                    <IndexRoute component={Home} />
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route path="login" component={Login} />
+      <Route component={AuthContainer}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Home} />
 
-                    <Route path="give-feedback">
-                        <IndexRoute component={GiveFeedbackList} />
-                        <Route path="personal/:feedbackId/new" component={GivePersonalFeedback} />
-                        <Route path="role/:feedbackId/new" component={GiveRoleFeedback} />
+          <Route path="give-feedback">
+            <IndexRoute component={GiveFeedbackList} />
+            <Route
+              path="personal/:feedbackId/new"
+              component={GivePersonalFeedback}
+            />
+            <Route path="role/:feedbackId/new" component={GiveRoleFeedback} />
 
-                        <Route path="personal/:feedbackId" component={CheckPersonalFeedback} />
-                        <Route path="personal/:feedbackId/edit" component={EditPersonalFeedback} />
+            <Route
+              path="personal/:feedbackId"
+              component={CheckPersonalFeedback}
+            />
+            <Route
+              path="personal/:feedbackId/edit"
+              component={EditPersonalFeedback}
+            />
 
-                        <Route path="role/:feedbackId" component={CheckRoleFeedback} />
-                        <Route path="role/:feedbackId/edit" component={EditRoleFeedback} />
+            <Route path="role/:feedbackId" component={CheckRoleFeedback} />
+            <Route path="role/:feedbackId/edit" component={EditRoleFeedback} />
 
-                        <Route path="archive" component={GiveFeedbackListArchive} />
-                    </Route>
+            <Route path="archive" component={GiveFeedbackListArchive} />
+          </Route>
 
-                    <Route path="received-feedback">
-                        <IndexRoute component={ReceivedFeedbackList} />
-                        <Route path=":feedbackId" component={ReceivedFeedback} />
-                    </Route>
+          <Route path="received-feedback">
+            <IndexRoute component={ReceivedFeedbackList} />
+            <Route path=":feedbackId" component={ReceivedFeedback} />
+          </Route>
 
-                    <Route path="*" component={NotFound} />
-
-                </Route>
-
-            </Route>
-
-        </Router>
-    </Provider>
+          <Route path="*" component={NotFound} />
+        </Route>
+      </Route>
+    </BrowserRouter>
+  </Provider>
 );
