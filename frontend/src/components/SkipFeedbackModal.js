@@ -13,12 +13,24 @@ import { hideModal } from '../actions/modal';
 import { editFeedback } from '../actions/feedback';
 
 class SkipFeedbackModal extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.escFunction, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.escFunction, false);
+  }
+
+  // Close the modal when pressing escape.
+  escFunction = e => {
+    if (e.keyCode === 27) {
+      this.props.hideModal();
+    }
+  };
+
   constructor(props) {
     super(props);
 
     this.skipFeedback = this.skipFeedback.bind(this);
-
-    console.log(props);
   }
 
   getFeedbackId() {
