@@ -144,7 +144,7 @@ class RoundManager:
 
         feedback_on_role = FeedbackOnRole(role=role)
         feedback = Feedback(
-            actionable=False,
+            actionable=True,
             round=self.round,
             recipient=participant,
             date=timezone.now(),
@@ -165,7 +165,7 @@ class RoundManager:
                 question = self.round.question_for_individual_feedback
                 individual = FeedbackOnIndividual(question=question)
                 feedback = Feedback(
-                    actionable=False,
+                    actionable=True,
                     round=self.round,
                     recipient=participant,
                     date=timezone.now(),
