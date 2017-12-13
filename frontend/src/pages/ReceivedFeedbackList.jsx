@@ -10,8 +10,8 @@ class ReceivedFeedbackList extends Component {
     this.get(this.props);
   }
 
-  componentWillReceiveProps(nextProps, oldProps) {
-    this.get(nextProps, oldProps);
+  componentWillReceiveProps(nextProps) {
+    this.get(nextProps, this.props);
   }
 
   get = (nextProps = {}, oldProps = {}) => {
@@ -120,6 +120,4 @@ ReceivedFeedbackList.propTypes = {
   loading: propTypes.bool
 };
 
-export default connect(mapStateToProps, { fetchFeedbackAsReceiver })(
-  ReceivedFeedbackList
-);
+export default connect(mapStateToProps, { fetchFeedbackAsReceiver })(ReceivedFeedbackList);
