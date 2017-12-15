@@ -5,7 +5,6 @@ from flindt.feedback import views as feedback_views
 from flindt.role import views as role_views
 from flindt.user import views as user_views
 
-
 router = routers.DefaultRouter()
 router.register(r'users', user_views.UserViewSet)
 router.register(r'extrauserinfos', user_views.ExtraUserInfoViewSet)
