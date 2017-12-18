@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -11,6 +12,19 @@ import history from '../utils/history';
 
 import { hideModal } from '../actions/modal';
 import { editFeedback } from '../actions/feedback';
+
+// renderField component for reduxForms.
+const renderField = ({ input, meta: { touched, error } }) => (
+  <div>
+    <textarea {...input} />
+    {touched && error && <span className="label--alert">{error}</span>}
+  </div>
+);
+
+renderField.propTypes = {
+  input: propTypes.object,
+  meta: propTypes.object
+};
 
 class SkipFeedbackModal extends Component {
   componentDidMount() {
@@ -27,12 +41,6 @@ class SkipFeedbackModal extends Component {
     }
   };
 
-  constructor(props) {
-    super(props);
-
-    this.skipFeedback = this.skipFeedback.bind(this);
-  }
-
   getFeedbackId() {
     const match = matchPath(history.location.pathname, {
       path: '/give-feedback/role/:feedbackId/new'
@@ -41,15 +49,17 @@ class SkipFeedbackModal extends Component {
     return match.params.feedbackId;
   }
 
-  skipFeedback() {
+  _handleSubmit = values => {
     const feedbackId = this.getFeedbackId();
     const accessToken = this.props.user.user.access_token;
+    const skippedFeedbackReason = values.skippedFeedbackReason;
 
     this.props
       .editFeedback(
         {
           id: feedbackId,
-          status: 2
+          status: 2,
+          skipped_feedback_reason: skippedFeedbackReason
         },
         accessToken
       )
@@ -79,16 +89,18 @@ class SkipFeedbackModal extends Component {
           history.push('/give-feedback');
         }
       });
-  }
+  };
 
   render() {
     if (!this.props.isOpen) {
       return null;
     }
 
+    const { handleSubmit } = this.props;
+
     return (
       <div>
-        <div className="modal--wrapper show">
+        <div className="modal--wrapper show skip--feedback">
           <a onClick={() => this.props.hideModal()} className="modal--close">
             <i className="fa fa-close" />
           </a>
@@ -114,18 +126,45 @@ class SkipFeedbackModal extends Component {
             >
               Give feedback
             </a>
-            <a
-              className="action--button has-padding-right-10 is-right"
-              onClick={this.skipFeedback}
-            >
-              Skip feedback
-            </a>
+
+            <h2 className="no-padding-left">Skip</h2>
+
+            <p>
+              If it is really impossible to give feedback, please tell why you
+              can't give feedback.
+            </p>
+
+            <form onSubmit={handleSubmit(this._handleSubmit)}>
+              <label htmlFor="skippedFeedbackReason">
+                <strong>Reason</strong>
+                <span className="is-required">*</span>
+              </label>
+              <Field name="skippedFeedbackReason" component={renderField} />
+
+              <button
+                className="action--button has-padding-right-10"
+                type="submit"
+              >
+                Skip role feedback
+              </button>
+            </form>
           </div>
         </div>
         <div className="overlay show" />
       </div>
     );
   }
+}
+
+// reduxForm validate function.
+function validate(values) {
+  const errors = {};
+
+  if (!values.skippedFeedbackReason) {
+    errors.skippedFeedbackReason = 'Please fill in a reason';
+  }
+
+  return errors;
 }
 
 const mapStateToProps = state => ({
@@ -155,5 +194,11 @@ SkipFeedbackModal.propTypes = {
   user: propTypes.object,
   params: propTypes.object
 };
+
+// Connect reduxForm to our class.
+SkipFeedbackModal = reduxForm({
+  form: 'GivePersonalFeedbackForm',
+  validate
+})(SkipFeedbackModal);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkipFeedbackModal);

@@ -130,6 +130,10 @@
     padding: 1rem;
     border-bottom: 1px solid $color-neutral-30;
     font-weight: bold;
+
+    &.no-padding-left {
+      padding-left: 0;
+    }
   }
 
   h3 {

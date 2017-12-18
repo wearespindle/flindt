@@ -132,6 +132,7 @@ class Feedback(FlindtBaseModel):
             MaxValueValidator(10),
         ]
     )
+    skipped_feedback_reason = models.TextField(blank=True, null=True)
     actionable = models.BooleanField()
     actionable_content = models.TextField(blank=True)
     individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True)
@@ -196,8 +197,9 @@ class Feedback(FlindtBaseModel):
 
         def send_feedback_skipped_message():
             message = _(
-                'Unfortunately {} {} could not say anything about the role: {} and skipped giving feedback.'.
-                format(self.sender.first_name, self.sender.last_name, self.role.role)
+                'Unfortunately {} {} could not say anything about the role: {} and skipped giving feedback'
+                'with the following reason: {}'.
+                format(self.sender.first_name, self.sender.last_name, self.role.role, self.skipped_feedback_reason)
             )
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
