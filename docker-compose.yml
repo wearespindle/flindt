@@ -28,9 +28,9 @@ services:
 
   frontend:
     build: frontend
-    command: gulp
+    command: npm run start
     volumes:
       - ./frontend:/usr/src/frontend
     ports:
       # ext:int port.
-      - "8080:8080"
+      - "3000:3000"
