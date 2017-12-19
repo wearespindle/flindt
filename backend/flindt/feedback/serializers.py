@@ -96,6 +96,11 @@ class FeedbackSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         # If a user skips a feedback object, don't validate fields.
         if attrs.get('status') == 2:
+            skipped_feedback_reason = attrs.get('skipped_feedback_reason')
+
+            if not skipped_feedback_reason:
+                raise serializers.ValidationError('Please provide a reason when skipping feedback.')
+
             return super(FeedbackSerializer, self).validate(attrs)
 
         if self.instance:
@@ -136,6 +141,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'recipient',
             'sender',
             'status',
+            'skipped_feedback_reason',
             'how_recognizable',
             'how_valuable',
             'actionable',

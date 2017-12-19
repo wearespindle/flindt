@@ -1,31 +1,51 @@
 // =========== States
 
-.is-hidden { display: none !important; }
+.is-hidden {
+  display: none !important;
+}
 
-.is-invisible { visibility: hidden !important; }
+.is-invisible {
+  visibility: hidden !important;
+}
 
-.is-text-left { text-align: left; }
+.is-text-left {
+  text-align: left;
+}
 
-.is-text-right { text-align: right; }
+.is-text-right {
+  text-align: right;
+}
 
-.is-text-center { text-align: center; }
+.is-text-center {
+  text-align: center;
+}
 
-.has-nowrap { white-space: nowrap; }
+.has-nowrap {
+  white-space: nowrap;
+}
 
-.is-left { float: left; }
+.is-left {
+  float: left;
+}
 
-.is-right { float: right; }
+.is-right {
+  float: right;
+}
 
-div.padding-bottom-0 { padding-bottom: 0; }
+div.padding-bottom-0 {
+  padding-bottom: 0;
+}
 
-.is-required { color: $color-alert-50; }
+.is-required {
+  color: $color-alert-50;
+}
 
 .has-margin-top-100 {
-    @media (min-width: $breakpoint-30) {
-        margin-top: 100px;
-    }
+  @media (min-width: $breakpoint-30) {
+    margin-top: 100px;
+  }
 }
 
 .has-padding-right-10 {
-    padding: 0.5rem !important;
+  padding: 0.5rem !important;
 }
