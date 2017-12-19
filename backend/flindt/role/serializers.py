@@ -18,7 +18,7 @@ class ParentRoleSerializer(serializers.ModelSerializer):
 
     def get_accountabilities(self, obj):
         """
-        Override the getter for domains to try and convert the domains to a
+        Override the getter for accountabilities to try and convert the domains to a
         correct json format.
         """
 
@@ -67,7 +67,7 @@ class RoleSerializer(serializers.ModelSerializer):
 
     def get_accountabilities(self, obj):
         """
-        Override the getter for domains to try and convert the domains to a
+        Override the getter for accountabilities to try and convert the domains to a
         correct json format.
         """
 

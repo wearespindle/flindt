@@ -46,12 +46,6 @@ class RoleModal extends Component {
     }
 
     let { name, purpose, accountabilities } = this.props.details.data;
-    let accountabilitiesArray;
-
-    if (accountabilities) {
-      accountabilitiesArray = accountabilities.replace(/'/g, '"');
-      accountabilitiesArray = JSON.parse(accountabilitiesArray);
-    }
 
     return (
       <div>
@@ -66,11 +60,11 @@ class RoleModal extends Component {
             <h3>Purpose</h3>
             <p>{purpose}</p>
 
-            {accountabilitiesArray && (
+            {accountabilities && (
               <div>
                 <h3>Accountabilities</h3>
                 <ul>
-                  {accountabilitiesArray.map((accountability, index) => (
+                  {accountabilities.map((accountability, index) => (
                     <li key={index}>{accountability}</li>
                   ))}
                 </ul>
