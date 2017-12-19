@@ -204,8 +204,12 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
 
             <div className="feedback-form--row padding-bottom-0">
               <div className="feedback-form--form">
-                <form onSubmit={handleSubmit(this._handleSubmit)}>
+                <form
+                  className="feedback-rating--form"
+                  onSubmit={handleSubmit(this._handleSubmit)}
+                >
                   <div className="feedback-form--row">
+                    <h2>Share your thoughts about the given feedback.</h2>
                     <div>
                       <strong>
                         How valuable is the feedback you received from{' '}
