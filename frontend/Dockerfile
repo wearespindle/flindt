@@ -11,7 +11,4 @@ WORKDIR /usr/src/
 RUN npm install --quiet
 ENV NODE_PATH /usr/src/node_modules
 
-# gulp-cli needs to be installed globally.
-RUN npm install --quiet -g gulp-cli webpack@1.14.0
-
 WORKDIR /usr/src/frontend

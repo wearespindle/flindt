@@ -58,8 +58,13 @@ class Round(FlindtBaseModel):
             format(settings.FRONTEND_HOSTNAME)
         )
 
+        # List of user pks that are included in a feedback object in the current round.
         sending_user_pks = Feedback.objects.filter(round=self.pk).values_list('sender__pk', flat=True).distinct()
-        for sender in sending_user_pks:
+
+        # Messenger expects a User object so return a list of Users for all selected users in this round.
+        senders = User.objects.filter(id__in=sending_user_pks)
+
+        for sender in senders:
             messenger = Messenger(user=sender)
             messenger.send_message(message)
 
