@@ -16,7 +16,7 @@ Active / maintained.
 
 At the moment this project a MVP (*Minimum Viable Product*) and is currently Docker-based only.
 
-However, the frontend can be run outside of Docker. You'll need to have Gulp, NPM and Node.JS installed.
+However, the frontend can be run outside of Docker. You'll need to have NPM and Node.JS installed.
 
 Contributing
 ============
@@ -98,7 +98,7 @@ The following credentials needs to be set in this .env-file:
     SOCIAL_AUTH_GOOGLE_PLUS_KEY=your_client_id
     SOCIAL_AUTH_GOOGLE_PLUS_SECRET=your_client_secret
     SOCIAL_AUTH_GOOGLE_PLUS_WHITELISTED_DOMAINS=your_whitelisted_domains
-    CORS_ORIGIN_WHITELIST=localhost:8080,localhost:8005,yourdomain.com
+    CORS_ORIGIN_WHITELIST=localhost:3000,localhost:8005,yourdomain.com
 
 The Google Plus secret can be found in the Google Developer dashboard.
 
@@ -118,7 +118,7 @@ Follow these steps:
 6. "Authorization grant type" --> Resource owner password-based
 7. "Name" is OK to remain empty
 
-You should be able to login to the frontend using the superuser's email-address at http://localhost:8080/.
+You should be able to login to the frontend using the superuser's email-address at http://localhost:3000/.
 
 At this point selecting the options "Give feedback" and "Received feedback" are waiting indefinitely. This is because there aren't any feedback objects for a user as of yet.
 

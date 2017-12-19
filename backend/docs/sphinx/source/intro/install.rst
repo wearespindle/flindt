@@ -68,10 +68,10 @@ And for the front end
 
     cd frontend
     npm install
-    gulp
+    npm run start
 
 Visit the backend at http://localhost:8005/admin and login with the superuser you created. The front end is available at
-http://localhost:8080 (both via Docker as well as  locally)
+http://localhost:3000 (both via Docker as well as  locally)
 
 ==================
 Google Login Setup
@@ -86,7 +86,7 @@ The Flindt tool uses Google Login to register and login users from the domain yo
  * Click on the blue *Create Credentials* button and select OAuth Client ID:
    * Application type? *Web application*
  * Give the credentials a name, e.g. *Flindt*
- * In *Authorized JavaScript origins* fill in your development url, e.g. localhost:8080
+ * In *Authorized JavaScript origins* fill in your development url, e.g. localhost:3000
  * Click on the *Save* button
  * The current screen should be the Credentials overview; click on Flindt
 
@@ -103,7 +103,7 @@ Add the following information in your file:
     SOCIAL_AUTH_GOOGLE_PLUS_KEY=your_client_id
     SOCIAL_AUTH_GOOGLE_PLUS_SECRET=your_client_secret
     SOCIAL_AUTH_GOOGLE_PLUS_WHITELISTED_DOMAINS=your_whitelisted_domains
-    CORS_ORIGIN_WHITELIST=localhost:8080,yourdomain.com
+    CORS_ORIGIN_WHITELIST=localhost:3000,yourdomain.com
 
 ==================
 Django Social Auth
@@ -118,4 +118,4 @@ For the backend to work correctly with Google we need to add our 'Application' t
 * In the Authorization grand type select: *Resource owner password-based*
 * Press save
 
-Go to localhost:8080 and click on the Login with Google button, you can now succesfully log in using your Google account.
+Go to localhost:3000 and click on the Login with Google button, you can now succesfully log in using your Google account.

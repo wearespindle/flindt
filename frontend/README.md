@@ -6,12 +6,13 @@ Webpack enabled frontend
 You're able to run the frontend without Docker but remember to still run the backend docker for this to work.
 
 ```
-	> npm install
-	> gulp
+	> cd frontend
+	> npm i
+	> npm run start
 ```
 
 Livereload is currently not supported, but you know what they say:
 
 `Loads of manual refreshing per day, keeps the arthritis away!`
 
-Your frontend can be reached via `localhost:8080`.
+Your frontend can be reached via `localhost:3000`.
