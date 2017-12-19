@@ -132,9 +132,7 @@ class Feedback(FlindtBaseModel):
             MaxValueValidator(10),
         ]
     )
-
     skipped_feedback_reason = models.TextField(blank=True, null=True)
-
     actionable = models.BooleanField()
     actionable_content = models.TextField(blank=True)
     individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True)

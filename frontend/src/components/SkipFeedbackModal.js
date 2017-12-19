@@ -130,7 +130,7 @@ class SkipFeedbackModal extends Component {
             <h2 className="no-padding-left">Skip</h2>
 
             <p>
-              If it really impossible to give feedback, please tell why you
+              If it is really impossible to give feedback, please tell why you
               can't give feedback.
             </p>
 
