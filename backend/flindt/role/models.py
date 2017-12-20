@@ -18,9 +18,7 @@ class Role(FlindtBaseModel):
     """
     name = models.TextField()
     purpose = models.TextField(blank=True, default='')
-    # TODO: FEED-41: Use a JSON field to validate contents.
     accountabilities = models.TextField(blank=True, default='')  # Used to store JSON
-    # TODO: FEED-41: Use a JSON field to validate contents.
     domains = models.TextField(blank=True, default='')  # Used to store JSON
     parent = models.ForeignKey('Role', related_name='children', blank=True, null=True)
     users = models.ManyToManyField(User, blank=True)
