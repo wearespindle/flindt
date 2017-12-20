@@ -170,27 +170,32 @@ class Feedback(FlindtBaseModel):
             the recipient, a message is sent with the content of the rating
             and a link to Flindt.
             """
-            def type_of_feedback():
-                # Determines whether the rated feedback is on a role or individual.
-                if self.role:
-                    return 'role'
-                if self.individual:
-                    return 'personal'
+            def actionable_feedback():
+                actionable_content = ''
+                if self.actionable and self.actionable_content:
+                    actionable_content = (
+                        'This is what {first_name} had to say about your feedback: {actionable_content}.\n'.format(
+                                first_name=self.recipient.first_name,
+                                actionable_content=self.actionable_content,
+                        )
+                    )
+                return actionable_content
 
-            message = _('{first_name} {last_name} just rated the feedback that you gave.'
-                        'This is how recognizable {first_name} found your feedback: {how_recognizable}'
-                        'This is how valuable {first_name} found your feedback: {how_valuable}'
-                        'This is what {first_name} had to say about your feedback: {actionable_content}.'
-                        'Read the rating here: https://{url}/received-feedback/{type}/{pk}'.format(
-                                                                        first_name=self.recipient.first_name,
-                                                                        last_name=self.recipient.last_name,
-                                                                        how_recognizable=self.how_recognizable,
-                                                                        how_valuable=self.how_valuable,
-                                                                        actionable_content=self.actionable_content,
-                                                                        url=settings.FRONTEND_HOSTNAME,
-                                                                        type=type_of_feedback(),
-                                                                        pk=self.pk,
-                                                                        ))
+            message = _(
+                '{first_name} {last_name} just rated the feedback that you gave.\n'
+                'This is how recognizable {first_name} found your feedback: {how_recognizable}\n'
+                'This is how valuable {first_name} found your feedback: {how_valuable}\n'
+                '{feedback}'
+                'Read the rating here: https://{url}/received-feedback/{pk}'.format(
+                    first_name=self.recipient.first_name,
+                    last_name=self.recipient.last_name,
+                    how_recognizable=self.how_recognizable,
+                    how_valuable=self.how_valuable,
+                    feedback=actionable_feedback(),
+                    url=settings.FRONTEND_HOSTNAME,
+                    pk=self.pk,
+                )
+            )
 
             messenger = Messenger(user=self.sender)
             messenger.send_message(message)
