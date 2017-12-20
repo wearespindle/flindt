@@ -92,4 +92,7 @@ class Messenger(object):
             self.provider = EmailProvider(user=self.user)
 
     def send_message(self, message):
+        # When in DEBUG mode also log the message to the console.
+        if settings.DEBUG:
+            logger.info(message)
         self.provider.send_message(message)
