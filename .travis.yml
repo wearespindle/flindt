@@ -6,8 +6,8 @@ services:
 branches:
   # Only build on these branches.
   only:
+    - master
     - develop
-    - /^feature/
     - /^hotfix/
 
 env:
