@@ -278,3 +278,10 @@
   border-top: 20px solid $color-neutral-10;
 }
 
+.feedback-requested {
+  background: $color-primary-70;
+  padding: 2px;
+  border-radius: 3px;
+  font-size: 90%;
+  margin-left: 10px;
+}

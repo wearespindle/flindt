@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -9,6 +11,8 @@ from flindt.integrations.messenger import Messenger
 from flindt.role.models import Role
 from flindt.round.models import Round
 from flindt.user.models import User
+
+logger = logging.getLogger(__name__)
 
 
 class Rating(FlindtBaseModel):
@@ -87,6 +91,7 @@ class FeedbackOnRole(FlindtBaseModel):
     """
 
     role = models.ForeignKey(Role, blank=True, null=True)
+    requested = models.BooleanField(default=False)
     remarks = models.ManyToManyField(
         Remark,
         blank=True,
@@ -156,11 +161,24 @@ class Feedback(FlindtBaseModel):
         send to the recipient. If feedback is rated, a message should be send to the
         giver of the feedback.
         """
+
+        super(Feedback, self).save()
+
         def send_feedback_received_message():
             message = _(
                 'You just received feedback. Read and rate it! https://{}/#/received-feedback/{}'.
                 format(settings.FRONTEND_HOSTNAME, self.pk)
             )
+
+            messenger = Messenger(user=self.recipient)
+            messenger.send_message(message)
+
+        def send_feedback_requested_received_message():
+            message = _(
+                'The feedback you requested is now in Flindt. Read and rate it! https://{}/#/received-feedback/{}'.
+                    format(settings.FRONTEND_HOSTNAME, self.pk)
+            )
+
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
 
@@ -203,18 +221,42 @@ class Feedback(FlindtBaseModel):
         def send_feedback_skipped_message():
             message = _(
                 'Unfortunately {} {} could not say anything about the role: {} and skipped giving feedback'
-                'with the following reason: {}'.
+                ' with the following reason: {}'.
                 format(self.sender.first_name, self.sender.last_name, self.role.role, self.skipped_feedback_reason)
             )
             messenger = Messenger(user=self.recipient)
             messenger.send_message(message)
 
+        def send_ask_feedback_message():
+            url = 'https://{}/give-feedback/role/{}/new'.format(
+                settings.FRONTEND_HOSTNAME,
+                self.pk
+            )
+            message = _(
+                '{} asked for feedback on the role {}. '
+                'Please be so kind and tell how you think the role is energized. {}'.format(
+                    self.recipient.get_short_name(),
+                    self.role.role.name,
+                    url,
+                )
+            )
+
+            messenger = Messenger(user=self.sender)
+            messenger.send_message(message)
+
+        if self.role and self.role.requested and self.status == self.INCOMPLETE:
+            send_ask_feedback_message()
+
         # Check if the status has changed and is complete.
         if self.__original_status != self.status and self.status == self.COMPLETE:
             # Update the date.
             self.date = timezone.now()
+
             # Send a message to the recipient.
-            send_feedback_received_message()
+            if self.role and self.role.requested:
+                send_feedback_requested_received_message()
+            else:
+                send_feedback_received_message()
 
         if self.__original_status != self.status and self.status == self.SKIPPED:
             self.date = timezone.now()
@@ -224,7 +266,7 @@ class Feedback(FlindtBaseModel):
         if self.how_recognizable and self.how_valuable:
             send_rating_received_message()
 
-        super(Feedback, self).save()
+
 
     def __init__(self, *args, **kwargs):
         """

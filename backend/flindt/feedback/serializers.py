@@ -47,7 +47,7 @@ class FeedbackOnRoleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FeedbackOnRole
-        fields = ('id', 'role', 'remarks',)
+        fields = ('id', 'role', 'requested', 'remarks',)
 
 
 class FeedbackSerializer(serializers.ModelSerializer):

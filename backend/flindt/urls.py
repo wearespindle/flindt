@@ -9,6 +9,8 @@ from flindt.api.urls import router
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include(router.urls)),
+    # Generic django urls for the feedback/ask api views.
+    url(r'^api/v1/feedback/', include('flindt.feedback.urls')),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^api-social-auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^api-token-auth/', views.obtain_auth_token),

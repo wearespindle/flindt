@@ -11,8 +11,8 @@ export const FETCH_FEEDBACK_AS_RECEIVER = 'FETCH_FEEDBACK_AS_RECEIVER';
 export const FETCH_FEEDBACK = 'FETCH_FEEDBACK';
 export const EDIT_FEEDBACK = 'EDIT_FEEDBACK';
 
-// Post new feedback
-export const CREATE_FEEDBACK = 'CREATE_FEEDBACK';
+// Post ask feedback request
+export const ASK_FEEDBACK = 'ASK_FEEDBACK';
 
 export const CLEAN_FEEDBACK = 'CLEAN_FEEDBACK';
 
@@ -79,6 +79,20 @@ export function fetchFeedback(accessToken, id) {
   return {
     type: FETCH_FEEDBACK,
     payload: requestFeedback
+  };
+}
+
+export function askFeedback(props, accessToken) {
+  const request = axios({
+    method: 'post',
+    url: `${ROOT_URL}/feedback/ask/`,
+    data: props,
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+
+  return {
+    type: ASK_FEEDBACK,
+    payload: request
   };
 }
 

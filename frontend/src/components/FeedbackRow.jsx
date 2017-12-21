@@ -8,10 +8,11 @@ require('moment/locale/nl');
 const FeedbackRow = props => {
   let role = null;
   let circle = '';
-  let action, url;
+  let action, url, requested;
 
   if (props.details.role) {
     role = props.details.role.role.name;
+    requested = props.details.role.requested;
 
     if (props.details.role.role.parent) {
       circle = props.details.role.role.parent.name;
@@ -51,7 +52,12 @@ const FeedbackRow = props => {
         {person.first_name} {person.last_name}
       </td>
       <td data-label="Role">
-        {role && <span>{role}</span>}
+        {role && (
+          <span>
+            {role}{' '}
+            {requested && <span className="feedback-requested">requested</span>}
+          </span>
+        )}
         {!role && <span className="feedback-type-indicator">Personal</span>}
       </td>
       <td data-label="Circle">{circle || '-'}</td>

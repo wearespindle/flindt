@@ -142,10 +142,12 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
     }
 
     let person = feedback.recipient;
+    const sender = feedback.sender;
     const { handleSubmit } = this.props;
     const ratings = feedback.round.available_ratings;
     const role = feedback.role.role;
     const accessToken = this.props.user.user.access_token;
+    const requested = feedback.role.requested;
 
     return (
       <div className="content--wrapper">
@@ -170,6 +172,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                   <th>Role</th>
                   <th>Circle</th>
                   <th>Requested on</th>
+                  {requested && <th>Requested</th>}
                 </tr>
               </thead>
               <tbody>
@@ -199,6 +202,9 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                       format="D MMMM YYYY"
                     />
                   </td>
+                  {requested && (
+                    <td>Feedback requested by {sender.first_name}</td>
+                  )}
                 </tr>
               </tbody>
             </table>

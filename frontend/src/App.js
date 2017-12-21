@@ -16,6 +16,7 @@ import SkipFeedbackModal from './components/SkipFeedbackModal';
 
 import { logOut } from './authorisation/google';
 
+import AskFeedback from './pages/AskFeedback';
 import CheckPersonalFeedback from './pages/CheckPersonalFeedback';
 import CheckRoleFeedback from './pages/CheckRoleFeedback';
 import EditPersonalFeedback from './pages/EditPersonalFeedback';
@@ -69,6 +70,11 @@ class App extends Component {
                     Received feedback <i className="fa fa-thumbs-up" />
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink activeClassName="is-active" to="/ask-feedback">
+                    Ask Feedback <i className="fa fa-question-circle" />
+                  </NavLink>
+                </li>
                 <li className="logout--link">
                   <a
                     href="/logout"
@@ -119,6 +125,8 @@ class App extends Component {
                   path="/give-feedback/archive"
                   component={GiveFeedbackListArchive}
                 />
+
+                <Route path="/ask-feedback" component={AskFeedback} />
 
                 <Route path="/give-feedback" component={GiveFeedbackList} />
 
