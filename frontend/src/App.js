@@ -56,7 +56,7 @@ class App extends Component {
 
               <ul className="navigation">
                 <li>
-                  <NavLink activeClassName="is-active" to="/">
+                  <NavLink activeClassName="is-active" exact to="/">
                     Home <i className="fa fa-home" />
                   </NavLink>
                 </li>
@@ -76,11 +76,7 @@ class App extends Component {
                   </NavLink>
                 </li>
                 <li className="logout--link">
-                  <a
-                    href="/logout"
-                    tabIndex="-1"
-                    onClick={this.handleLogOutUser}
-                  >
+                  <a href="/logout" tabIndex="-1" onClick={this.handleLogOutUser}>
                     Logout <i className="fa fa-sign-out" />
                   </a>
                 </li>
@@ -88,14 +84,8 @@ class App extends Component {
             </div>
             <div>
               <Switch>
-                <Route
-                  path="/received-feedback/:feedbackId"
-                  component={ReceivedFeedback}
-                />
-                <Route
-                  path="/received-feedback"
-                  component={ReceivedFeedbackList}
-                />
+                <Route path="/received-feedback/:feedbackId" component={ReceivedFeedback} />
+                <Route path="/received-feedback" component={ReceivedFeedbackList} />
 
                 <Route
                   path="/give-feedback/personal/:feedbackId/new"
@@ -109,22 +99,10 @@ class App extends Component {
                   path="/give-feedback/personal/:feedbackId"
                   component={CheckPersonalFeedback}
                 />
-                <Route
-                  path="/give-feedback/role/:feedbackId/edit"
-                  component={EditRoleFeedback}
-                />
-                <Route
-                  path="/give-feedback/role/:feedbackId/new"
-                  component={GiveRoleFeedback}
-                />
-                <Route
-                  path="/give-feedback/role/:feedbackId"
-                  component={CheckRoleFeedback}
-                />
-                <Route
-                  path="/give-feedback/archive"
-                  component={GiveFeedbackListArchive}
-                />
+                <Route path="/give-feedback/role/:feedbackId/edit" component={EditRoleFeedback} />
+                <Route path="/give-feedback/role/:feedbackId/new" component={GiveRoleFeedback} />
+                <Route path="/give-feedback/role/:feedbackId" component={CheckRoleFeedback} />
+                <Route path="/give-feedback/archive" component={GiveFeedbackListArchive} />
 
                 <Route path="/ask-feedback" component={AskFeedback} />
 
@@ -136,10 +114,7 @@ class App extends Component {
             </div>
           </div>
           <RoleModal details={modal} isOpen={modal.isOpen} {...this.props} />
-          <SkipFeedbackModal
-            isOpen={modal.skipFeedbackModalisOpen}
-            {...this.props}
-          />
+          <SkipFeedbackModal isOpen={modal.skipFeedbackModalisOpen} {...this.props} />
           <Notifications notifications={notifications} />
         </Fragment>
       </AuthContainer>
