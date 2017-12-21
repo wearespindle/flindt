@@ -28,7 +28,7 @@ services:
 
   frontend:
     build: frontend
-    command: npm run start
+    command: bash -c "npm install --quiet && npm run start"
     volumes:
       - ./frontend:/usr/src/frontend
     ports:
