@@ -251,6 +251,8 @@ class Feedback(FlindtBaseModel):
         if self.__original_status != self.status and self.status == self.COMPLETE:
             # Update the date.
             self.date = timezone.now()
+            self.__original_status = self.COMPLETE
+            self.save()
 
             # Send a message to the recipient.
             if self.role and self.role.requested:
@@ -260,6 +262,8 @@ class Feedback(FlindtBaseModel):
 
         if self.__original_status != self.status and self.status == self.SKIPPED:
             self.date = timezone.now()
+            self.__original_status = self.SKIPPED
+            self.save()
             send_feedback_skipped_message()
 
         # Check if the feedback has been rated.
