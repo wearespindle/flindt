@@ -87,10 +87,10 @@ class FeedbackAsk(FeedbackAskBase):
         role = Role.objects.get(pk=feedback_on_role_id)
 
         # Get the the Round based on the logged in user.
-        round_object = Round.objects.get(participants_receivers__in=[self.request.user.pk])
-
-        # If there is no active round return a 404.
-        if not round_object:
+        try:
+            round_object = Round.objects.get(participants_receivers__in=[self.request.user.pk])
+        except Round.DoesNotExsist:
+            # When there is nothing found return a 404
             return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
         # First create the FeedbackOnRole object based on the role and set
@@ -134,8 +134,8 @@ class FeedbackAskCircles(FeedbackAskBase):
         # Get all the roles the user is part off.
         roles = Role.objects.filter(users__in=[self.request.user.pk], archived=False)
 
-        # When no roles are found return a 404.
         if not roles:
+            # When there is nothing found return a 404
             return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
         done_circles = []
@@ -145,10 +145,14 @@ class FeedbackAskCircles(FeedbackAskBase):
 
         # Loop over the roles.
         for role in roles:
+            # Check if the parent has a role
+            if not role.parent:
+                continue
 
-            # Check if the role has a parent and check check if that parent actually is a circle.
+            # Check if the role has a parent and check if that parent actually is a circle.
+            # And that the circle is not archived.
             # And also if the circle is not already processed to prevent duplicate entries.
-            if role.parent and role.parent.is_circle and role.parent.id not in done_circles:
+            if role.parent.is_circle and not role.parent.archived and role.parent.id not in done_circles:
                 # Get the circle of the role.
                 circle_parent = role.parent
                 # Get the name of the circle.
@@ -194,10 +198,10 @@ class FeedbackAskRoles(FeedbackAskBase):
                 }
         """
         # Get the circle based on the given circle_id which is not archived.
-        circle = Role.objects.get(id=circle_id, archived=False)
-
-        # If no circle is found return a 404.
-        if not circle:
+        try:
+            circle = Role.objects.get(id=circle_id, archived=False)
+        except Role.DoesNotExsist:
+            # When there is nothing found return a 404
             return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
         # Get all roles (children) from the circle where the user is in.
@@ -248,10 +252,10 @@ class FeedbackAskPerson(FeedbackAskBase):
                 }
         """
         # Get the circle based on the given circle_id which is not archived.
-        circle = Role.objects.get(id=circle_id, archived=False)
-
-        # If no circle is found return a 404.
-        if not circle:
+        try:
+            circle = Role.objects.get(id=circle_id, archived=False)
+        except Role.DoesNotExsist:
+            # When there is nothing found return a 404
             return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
         # Get all roles (children) from the circle.

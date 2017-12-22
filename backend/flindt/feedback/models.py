@@ -204,7 +204,7 @@ class Feedback(FlindtBaseModel):
                 'This is how recognizable {first_name} found your feedback: {how_recognizable}\n'
                 'This is how valuable {first_name} found your feedback: {how_valuable}\n'
                 '{feedback}'
-                'Read the rating here: https://{url}/received-feedback/{pk}'.format(
+                'Read the rating here: https://{url}/give-feedback/role/{pk}'.format(
                     first_name=self.recipient.first_name,
                     last_name=self.recipient.last_name,
                     how_recognizable=self.how_recognizable,
@@ -265,8 +265,6 @@ class Feedback(FlindtBaseModel):
         # Check if the feedback has been rated.
         if self.how_recognizable and self.how_valuable:
             send_rating_received_message()
-
-
 
     def __init__(self, *args, **kwargs):
         """
