@@ -47,6 +47,8 @@ yarn.lock
 
 .env
 
+docker-compose.override.yml
+
 /backend/flindt/static
 /backend/flindt/settings/local.py
 /backend/logs/flindt*
