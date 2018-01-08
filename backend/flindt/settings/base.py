@@ -266,3 +266,7 @@ FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'flindt.wearespindle.com')
 # Do not send actual messages, but still create all objects. Useful for
 # debugging purposes.
 SILENT_RUN = False
+
+# Fix for the 'Starting a new round'. Because we reached the limit of 1000
+# fields in a POST/GET. 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
