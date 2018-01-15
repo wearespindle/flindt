@@ -57,7 +57,7 @@ class CheckRoleFeedback extends React.Component {
     }
 
     let person = feedback.recipient;
-    let role = feedback.role.role;
+    let role = feedback.role && feedback.role.role;
     let isEditable, isRated;
     let closedReason =
       "The round has been closed, this means you can't edit your feedback anymore.";
@@ -93,7 +93,7 @@ class CheckRoleFeedback extends React.Component {
         </div>
 
         <div className="content">
-          <h2>Feedback on the role {feedback.role.role.name}</h2>
+          {role && <h2>Feedback on the role {role.name}</h2>}
 
           {!isEditable && (
             <div className="label--neutral">
@@ -107,8 +107,8 @@ class CheckRoleFeedback extends React.Component {
               <thead>
                 <tr>
                   <th>Person</th>
-                  <th>Role</th>
-                  <th>Circle</th>
+                  {role && <th>Role</th>}
+                  {role && <th>Circle</th>}
                   <th>Given on</th>
                 </tr>
               </thead>
@@ -117,35 +117,30 @@ class CheckRoleFeedback extends React.Component {
                   <td data-label="Person">
                     {person.first_name} {person.last_name}
                   </td>
-                  <td data-label="Role">
-                    <RoleModalButton accessToken={accessToken} role={role.id}>
-                      {role.name}
-                    </RoleModalButton>
-                  </td>
-                  <td data-label="Circle">
-                    {role.parent && (
-                      <RoleModalButton
-                        accessToken={accessToken}
-                        role={role.parent.id}
-                      >
+                  {role && (
+                    <td data-label="Role">
+                      <RoleModalButton accessToken={accessToken} role={role.id}>
+                        {role.name}
+                      </RoleModalButton>
+                    </td>
+                  )}
+                  {role && (
+                    <td data-label="Circle">
+                      role.parent && (
+                      <RoleModalButton accessToken={accessToken} role={role.parent.id}>
                         {role.parent.name}
                       </RoleModalButton>
-                    )}
-                  </td>
+                    </td>
+                  )}
+
                   <td data-label="Received on">
-                    <Time
-                      value={feedback.date}
-                      locale="EN"
-                      format="D MMMM YYYY"
-                    />
+                    <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
                   </td>
                 </tr>
               </tbody>
             </table>
 
-            <div>
-              <RatingRows remarks={feedback.role.remarks} />
-            </div>
+            <div>{role && <RatingRows remarks={feedback.role.remarks} />}</div>
 
             {isRated && (
               <div className="feedback-form--row padding-bottom-0">
@@ -155,8 +150,7 @@ class CheckRoleFeedback extends React.Component {
                     <div className="feedback-content">
                       <h3>Rating</h3>
                       <strong>
-                        This is how recognizable {person.first_name} found your
-                        feedback.
+                        This is how recognizable {person.first_name} found your feedback.
                       </strong>
 
                       <div className="feedback-form--finalgrade">
@@ -173,15 +167,10 @@ class CheckRoleFeedback extends React.Component {
 
                   <div className="feedback-form--row">
                     <div className="feedback-content">
-                      <strong>
-                        This is how valuable {person.first_name} found your
-                        feedback.
-                      </strong>
+                      <strong>This is how valuable {person.first_name} found your feedback.</strong>
 
                       <div className="feedback-form--finalgrade">
-                        <div
-                          style={{ width: `${feedback.how_valuable * 10}%` }}
-                        />
+                        <div style={{ width: `${feedback.how_valuable * 10}%` }} />
                       </div>
 
                       <span>{feedback.how_valuable} / 10</span>
@@ -244,6 +233,4 @@ CheckRoleFeedback.propTypes = {
   params: propTypes.object
 };
 
-export default connect(mapStateToProps, { cleanFeedback, fetchFeedback })(
-  CheckRoleFeedback
-);
+export default connect(mapStateToProps, { cleanFeedback, fetchFeedback })(CheckRoleFeedback);
