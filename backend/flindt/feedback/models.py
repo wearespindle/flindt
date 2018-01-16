@@ -166,7 +166,7 @@ class Feedback(FlindtBaseModel):
 
         def send_feedback_received_message():
             message = _(
-                'You just received feedback. Read and rate it! https://{}/#/received-feedback/{}'.
+                'You just received feedback. Read and rate it! https://{}/received-feedback/{}'.
                 format(settings.FRONTEND_HOSTNAME, self.pk)
             )
 
@@ -175,7 +175,7 @@ class Feedback(FlindtBaseModel):
 
         def send_feedback_requested_received_message():
             message = _(
-                'The feedback you requested is now in Flindt. Read and rate it! https://{}/#/received-feedback/{}'.
+                'The feedback you requested is now in Flindt. Read and rate it! https://{}/received-feedback/{}'.
                     format(settings.FRONTEND_HOSTNAME, self.pk)
             )
 
