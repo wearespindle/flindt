@@ -22,13 +22,12 @@
     "redux-promise": "^0.5.3"
   },
   "scripts": {
-    "start": "npm-run-all -p watch-css start-js",
-    "build": "npm-run-all build-css build-js",
+    "start": "npx npm-run-all -p watch-css start-js",
+    "build": "npx npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "build-css": "node-sass src/ -o src/",
-    "watch-css":
-      "npm run build-css && node-sass src/ -o src/ --watch --recursive",
+    "build-css": "npx node-sass src/ -o src/",
+    "watch-css": "npm run build-css && npx node-sass src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "build-js": "react-scripts build"
   }
