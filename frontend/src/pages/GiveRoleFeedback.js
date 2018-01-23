@@ -203,7 +203,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                     />
                   </td>
                   {requested && (
-                    <td>Feedback requested by {sender.first_name}</td>
+                    <td>Feedback requested by {person.first_name}</td>
                   )}
                 </tr>
               </tbody>
