@@ -56,20 +56,6 @@ Docker environment
 
     docker-compose up
 
-7. If you want to only run the backend via Docker and the frontend locally
-
-.. code:: bash
-
-    docker-compose run --service-ports backend
-
-And for the front end
-
-.. code:: bash
-
-    cd frontend
-    npm install
-    npm run start
-
 Visit the backend at http://localhost:8005/admin and login with the superuser you created. The front end is available at
 http://localhost:3000 (both via Docker as well as  locally)
 

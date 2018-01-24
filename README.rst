@@ -16,7 +16,7 @@ Active / maintained.
 
 At the moment this project a MVP (*Minimum Viable Product*) and is currently Docker-based only.
 
-However, the frontend can be run outside of Docker. You'll need to have NPM and Node.JS installed.
+However, the frontend is meant to be run outside of Docker. You can find the repo for the front end at https://github.com/wearespindle/flindt-front-end
 
 Contributing
 ============

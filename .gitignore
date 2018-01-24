@@ -36,11 +36,6 @@ tags
 backend/docs/sphinx/build/
 backend/docs/sphinx/source/modules/
 
-npm-debug.log
-/frontend/build
-/frontend/dist
-/frontend/node_modules
-
 .bash_history
 .ipython
 yarn.lock
