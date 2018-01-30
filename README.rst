@@ -1,16 +1,15 @@
-.. image:: https://travis-ci.org/wearespindle/flindt.svg?branch=develop
-    :target: https://travis-ci.org/wearespindle/flindt
+.. image:: https://user-images.githubusercontent.com/519955/34173812-07860bf6-e4f7-11e7-8cbb-2a1c19695b7e.png
+     :target: http://www.flindt.io/
 
-=======
- Flindt
-=======
-
-`Flindt <http://www.flindt.io>`_: a feedback tool for Holacracy companies.
+A feedback tool for Holacracy companies.
 
 *Sparks conversations since 2016*
 
 Status
 ======
+
+.. image:: https://travis-ci.org/wearespindle/flindt.svg?branch=develop
+    :target: https://travis-ci.org/wearespindle/flindt
 
 Active / maintained.
 
@@ -21,13 +20,12 @@ However, the frontend is meant to be run outside of Docker. You can find the rep
 Contributing
 ============
 
-See the [CONTRIBUTING.md](CONTRIBUTING.md) file on how to contribute to this project.
+See the `CONTRIBUTING.md <CONTRIBUTING.md>`_ file on how to contribute to this project.
 
 Contributors
 ============
 
-See the [CONTRIBUTORS.md](CONTRIBUTORS.md) file for a list of contributors to the project.
-
+See the `CONTRIBUTORS.md <CONTRIBUTORS.md>`_ file for a list of contributors to the project.
 
 Usage
 =====
