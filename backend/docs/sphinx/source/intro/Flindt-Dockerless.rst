@@ -270,23 +270,6 @@ File ``Vagrantfile``:
 
     end
 
-Frontend
-========
-
-File ``build_frontend.sh``:
-
-.. code:: bash
-
-    #!/bin/bash -e
-
-    rm -rf upload
-
-    docker-compose build frontend
-    docker-compose run --rm frontend gulp build-production
-
-    mkdir upload
-    cp frontend/index.html upload
-    cp -r frontend/dist upload
 
 nginx vhosts
 ============
