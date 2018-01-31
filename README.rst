@@ -60,7 +60,7 @@ Pull the repository from GitHub to your local machine:
 Docker related
 ^^^^^^^^^^^^^^
 
--  Build the containers:
+-  Build the containers (database, backend and front end):
 
 ``docker-compose build``
 

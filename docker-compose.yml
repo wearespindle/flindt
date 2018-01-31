@@ -26,3 +26,8 @@ services:
       - DATABASE_URL=mysql://root:flindt@db/flindt
       - DEBUG=1
 
+  frontend:
+    build: frontend
+    ports:
+      # ext:int port.
+      - "3000:80"
