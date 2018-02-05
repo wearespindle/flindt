@@ -3,6 +3,8 @@ version: '2.0'
 services:
   db:
     image: mariadb:latest
+    volumes:
+      - ./mysql-chars.cnf:/etc/mysql/mariadb.conf.d/mysql-chars.cnf:ro
     environment:
       - MYSQL_DATABASE=flindt
       - MYSQL_ROOT_PASSWORD=flindt
