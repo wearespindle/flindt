@@ -48,7 +48,9 @@ class Round(FlindtBaseModel):
         The message will only be send to participants of the round that
         actually have to give feedback.
         Participants of the round that only receive feedback, will not
-        receive a message that the round has started.
+        receive a message that the round has started. Neither will users
+        that do not belong to an Organization (because the slack integration
+        won't work in that case).
         """
         # Prevent circular import.
         from flindt.feedback.models import Feedback
@@ -64,9 +66,13 @@ class Round(FlindtBaseModel):
         # Messenger expects a User object so return a list of Users for all selected users in this round.
         senders = User.objects.filter(id__in=sending_user_pks)
 
+        users_without_organization = []
         for sender in senders:
+            if not sender.organization_set.first():  # Check if all users (senders) have an organization
+                users_without_organization.append(sender)
             messenger = Messenger(user=sender)
             messenger.send_message(message)
+        return users_without_organization  # A list of users without organization, to be used in an admin message
 
     def message_for_close(self):
         """

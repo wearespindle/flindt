@@ -86,7 +86,10 @@ class Messenger(object):
     def __init__(self, *args, **kwargs):
         self.user = kwargs['user']
 
-        if self.user.slack_user_name and self.user.organization_set.first().slack_bot_api_key:
+        organization = self.user.organization_set.first()
+        if not organization:
+            self.provider = None
+        elif self.user.slack_user_name and organization.slack_bot_api_key:
             self.provider = SlackProvider(user=self.user)
         else:
             self.provider = EmailProvider(user=self.user)
@@ -95,4 +98,5 @@ class Messenger(object):
         # When in DEBUG mode also log the message to the console.
         if settings.DEBUG:
             logger.info(message)
-        self.provider.send_message(message)
+        if self.provider:
+            self.provider.send_message(message)

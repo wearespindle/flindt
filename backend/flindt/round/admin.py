@@ -12,7 +12,7 @@ class RoundAdmin(DjangoObjectActions, admin.ModelAdmin):
         round_manager = RoundManager(obj)
         try:
             round_manager.start_round()
-            obj.message_for_open()
+            users_without_organization = obj.message_for_open()
         except NoSolutionPossible:
             self.message_user(request,
                               'Not possible to start a round when users are included that do not fulfill any role!')
@@ -20,6 +20,9 @@ class RoundAdmin(DjangoObjectActions, admin.ModelAdmin):
             self.message_user(request, 'There was an integration error: {}'.format(e))
         else:
             self.message_user(request, 'Round started!')
+            if users_without_organization:
+                self.message_user(request, 'Some users do not have an organization and did not '
+                                           'receive a message: {}'.format(users_without_organization))
 
     start_round.label = _('Start the round')
     start_round.short_description = 'This will create feedback objects.'
