@@ -204,13 +204,14 @@ class Feedback(FlindtBaseModel):
                 'This is how recognizable {first_name} found your feedback: {how_recognizable}\n'
                 'This is how valuable {first_name} found your feedback: {how_valuable}\n'
                 '{feedback}'
-                'Read the rating here: https://{url}/give-feedback/role/{pk}'.format(
+                'Read the rating here: https://{url}/give-feedback/{type}/{pk}'.format(
                     first_name=self.recipient.first_name,
                     last_name=self.recipient.last_name,
                     how_recognizable=self.how_recognizable,
                     how_valuable=self.how_valuable,
                     feedback=actionable_feedback(),
                     url=settings.FRONTEND_HOSTNAME,
+                    type='personal' if self.individual else 'role',
                     pk=self.pk,
                 )
             )
