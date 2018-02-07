@@ -58,7 +58,7 @@ class UserAdmin(BaseUserAdmin):
     # that reference specific fields on auth.User.
     list_display = ('email', 'get_full_name', 'is_admin', 'slack_user_name',)
     list_editable = ('slack_user_name',)
-    list_filter = ('is_admin',)
+    list_filter = ('is_admin', 'organization')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'prefix', 'last_name',
