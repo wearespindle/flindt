@@ -14,7 +14,6 @@ router.register(r'extrauserinfocategories',
                 user_views.ExtraUserInfoCategoryViewSet)
 
 router.register(r'ratings', feedback_views.RatingViewSet)
-router.register(r'remarks', feedback_views.RemarkViewSet)
 router.register(r'questions', feedback_views.QuestionViewSet)
 router.register(r'feedback/give', feedback_views.FeedbackGiveViewSet)
 router.register(r'feedback/receive', feedback_views.FeedbackReceiveViewSet)

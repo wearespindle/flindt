@@ -19,11 +19,6 @@ class RatingViewSet(viewsets.ModelViewSet):
     serializer_class = RatingSerializer
 
 
-class RemarkViewSet(viewsets.ModelViewSet):
-    queryset = Remark.objects.all()
-    serializer_class = RemarkSerializer
-
-
 class QuestionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows questions to be viewed or added.
