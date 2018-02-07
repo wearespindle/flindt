@@ -184,7 +184,7 @@ class FeedbackAskCircles(FeedbackAskBase):
 
 
 class FeedbackAskRoles(FeedbackAskBase):
-    def get(self, request, circle_id):
+    def get(self, request, circle_id=None):
         """
         Get the circles the user is in.
 
@@ -203,15 +203,18 @@ class FeedbackAskRoles(FeedbackAskBase):
                     ]
                 }
         """
-        # Get the circle based on the given circle_id which is not archived.
-        try:
-            circle = Role.objects.get(id=circle_id, archived=False)
-        except Role.DoesNotExsist:
-            # When there is nothing found return a 404
-            return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
+        if circle_id:
+            # Get the circle based on the given circle_id which is not archived.
+            try:
+                circle = Role.objects.get(id=circle_id, archived=False)
+            except Role.DoesNotExsist:
+                # When there is nothing found return a 404
+                return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
-        # Get all roles (children) from the circle where the user is in.
-        roles = circle.children.filter(users__in=[self.request.user.pk])
+            # Get all roles (children) from the circle where the user is in.
+            roles = circle.children.filter(users__in=[self.request.user.pk])
+        else:
+            roles = Role.objects.filter(archived=False, users__in=[self.request.user.pk])
 
         # When there are no roles found return a 404.
         if not roles:
@@ -222,9 +225,12 @@ class FeedbackAskRoles(FeedbackAskBase):
         }
 
         for role in roles:
+            name = role.name
+            if not circle_id:
+                name = '{} ({})'.format(name, role.parent.name)
             circle_dict = {
                 'id': role.id,
-                'name': role.name
+                'name': name,
             }
             response_dict['roles'].append(circle_dict)
 
@@ -238,7 +244,7 @@ class FeedbackAskPerson(FeedbackAskBase):
     """
     API Endpoint for asking feedback from a person.
     """
-    def get(self, request, circle_id):
+    def get(self, request, circle_id=None):
         """
         Get the persons in a circle with the given circle id.
 
@@ -257,41 +263,64 @@ class FeedbackAskPerson(FeedbackAskBase):
                     ]
                 }
         """
-        # Get the circle based on the given circle_id which is not archived.
-        try:
-            circle = Role.objects.get(id=circle_id, archived=False)
-        except Role.DoesNotExsist:
-            # When there is nothing found return a 404
-            return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
-
-        # Get all roles (children) from the circle.
-        roles = circle.children.all()
-
-        # When there are no roles found return a 404.
-        if not roles:
-            return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
         persons_done = []
         response_dict = {
             'persons': [],
         }
 
-        # Loop over all the roles.
-        for role in roles:
-            # Loop over all the person in the role.
-            for person in role.users.all():
-                # Check if the user is not already in the list to prevent adding
-                # users who have multiple roles in the circle.
-                if person.pk != self.request.user.pk and person.pk not in persons_done:
+        # When the circle_id is not given get all the users in the
+        # organization of the logged in user.
+        if circle_id:
+            # Get the circle based on the given circle_id which is not archived.
+            try:
+                circle = Role.objects.get(id=circle_id, archived=False)
+            except Role.DoesNotExsist:
+                # When there is nothing found return a 404
+                return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
+            # Get all roles (children) from the circle.
+            roles = circle.children.all()
+
+            # When there are no roles found return a 404.
+            if not roles:
+                return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
+
+            # Loop over all the roles.
+            for role in roles:
+                # Loop over all the person in the role.
+                for person in role.users.all():
+                    # Check if the user is not already in the list to prevent adding
+                    # users who have multiple roles in the circle.
+                    if person.pk != self.request.user.pk and person.pk not in persons_done:
+
+                        # Add the person id and first name, last name to the circle_dict.
+                        person_dict = {
+                            'id': person.pk,
+                            'name': person.get_short_name(),
+                        }
+
+                        # Append the circle dict to the response dict.
+                        response_dict['persons'].append(person_dict)
+
+                        # Add the person id to list of persons that has already been checked.
+                        persons_done.append(person.pk)
+        else:
+            # Get the organization this user is in.
+            organization = self.request.user.organization_set.first()
+            # Get all the users in this organization
+            all_persons = organization.users.all()
+
+            for person in all_persons:
+                if person.pk != self.request.user.pk and person.pk not in persons_done:
                     # Add the person id and first name, last name to the circle_dict.
-                    circle_dict = {
+                    person_dict = {
                         'id': person.pk,
                         'name': person.get_short_name(),
                     }
 
                     # Append the circle dict to the response dict.
-                    response_dict['persons'].append(circle_dict)
+                    response_dict['persons'].append(person_dict)
 
                     # Add the person id to list of persons that has already been checked.
                     persons_done.append(person.pk)
