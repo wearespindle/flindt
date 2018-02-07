@@ -20,6 +20,7 @@ class Round(FlindtBaseModel):
         User,
         related_name='+',
     )
+    organization = models.ForeignKey('organization.Organization', blank=True, null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField(help_text='Editing of feedback will be disabled after this date has passed.')
     description = models.CharField(

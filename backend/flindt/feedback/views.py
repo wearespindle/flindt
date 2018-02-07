@@ -6,12 +6,13 @@ from rest_framework import viewsets, status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 
+from flindt.organization.models import Organization
 from flindt.role.models import Role
 from flindt.round.models import Round
 from flindt.user.models import User
 
-from .models import Feedback, FeedbackOnRole, Question, Rating, Remark
-from .serializers import FeedbackSerializer, QuestionSerializer, RatingSerializer, RemarkSerializer
+from .models import Feedback, FeedbackOnRole, Question, Rating
+from .serializers import FeedbackSerializer, QuestionSerializer, RatingSerializer
 
 
 class RatingViewSet(viewsets.ModelViewSet):
@@ -87,9 +88,14 @@ class FeedbackAsk(FeedbackAskBase):
         # Get the role based on the feedback_on_role_id
         role = Role.objects.get(pk=feedback_on_role_id)
 
+        # Get the organization where this role belongs to
+        organization = Organization.objects.filter(roles__in=[role.id])
+
         # Get the the Round based on the logged in user.
         try:
-            round_object = Round.objects.get(participants_receivers__in=[self.request.user.pk])
+            round_object = Round.objects.get(
+                organization=organization, participants_receivers__in=[self.request.user.pk],
+            )
         except Round.DoesNotExsist:
             # When there is nothing found return a 404
             return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
