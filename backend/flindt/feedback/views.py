@@ -32,16 +32,22 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
 
 
-class FeedbackViewSet(viewsets.ModelViewSet):
+class FeedbackReceiveViewSet(viewsets.ModelViewSet):
+    # renderer_classes = (JSONRenderer, )
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
     def get_queryset(self):
-        """
-        Set the queryset here so it filters on user.
-        """
-        return super(FeedbackViewSet, self).get_queryset().filter(Q(sender=self.request.user) |
-                                                                  Q(recipient=self.request.user))
+        return super(FeedbackReceiveViewSet, self).get_queryset().filter(recipient=self.request.user)
+
+
+class FeedbackGiveViewSet(viewsets.ModelViewSet):
+    # renderer_classes = (JSONRenderer,)
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
+
+    def get_queryset(self):
+        return super(FeedbackGiveViewSet, self).get_queryset().filter(sender=self.request.user)
 
 
 class FeedbackAskBase(APIView):
