@@ -51,7 +51,10 @@ class GlassFrogImporter(object):
                 ...
             ]}
         """
-        all_users = self._make_api_request('people').get('people')
+        users_from_circle = 'people'
+        if self.organization and self.organization.glassfrog_anchor_circle_id:
+            users_from_circle = 'people?circle_id={}'.format(self.organization.glassfrog_anchor_circle_id)
+        all_users = self._make_api_request(users_from_circle).get('people')
 
         for user in all_users:
             name_tokens = user.get('name').split(' ')
