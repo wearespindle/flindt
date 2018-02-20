@@ -1,42 +1,42 @@
 sudo: required
-
 services:
   - docker
-
 branches:
-  # Only build on these branches.
   only:
-    - master
-    - develop
-    - /^hotfix/
-
+  - master
+  - develop
+  - "/^hotfix/"
 env:
   global:
     - TZ=Europe/Amsterdam
     - GITHUB_REPO="wearespindle/flindt"
-    - DOCKER_COMPOSE_VERSION=1.14.0
-
+    - DOCKER_COMPOSE_VERSION=1.19.0
+    - secure: "qyl7JNcvjTF92OSoJ2fihhjivrIAv1qh67F8C/m+AvAYzWZBr4pG1+g324Wec0RHQIDeofJDQhn5QmvvkJtJFRrUKiLfF1yOAXYqCfAIBz80xHXRHVLDYmmxkpLxMcSltPltUTU+qVchrZ0+VIFjE5JdsWTtxALlyC3htwSA3fshFMHmG74pEfal8AB2X3I1A+iRFvOYeUvu5dBfqcMfBl3WVd+c7NI9gp6zNGVEBqYoo7jENWO/BVJoPet28AXC6ndxc4R+58/B8ewQ4f+E0DcoJ/Be3LTULUVFv2sNxQqSXzT9vxxsLiBbAeXefC61TgKi6IOzLNf8uRROUjxM8DYVPKFw7HGJKGErVGUdZh1Vdpd+6F96D/SfuzjWAblhLVKfiRLf2BHKMUR6gZhOOZSwMv7xdCiScnBYLtAw3rugnziUdY2pvrKsbpwDaIaOLsZOi3rsvqoAOzIjWtkm6oPsfEgWEYo/JLn1L01Oq7h0e1dQB7h+vNpL8bzYAm35X8zcunDdZV+Oy8aEi2ZpdLH5vVeKxtKvAepy8oq8U6Rt1bW70ASBkV0hRyKVV1DupXUeofrbIT3cNaKQFYnqfCtNdzvd3AIt6C4w8dd7CYC7ZIWjMjbcuekPnZF97EjKAf8z+6Cy7W7FB5xf8KNr2l+fJmhJqV1u4yCh38iX7Mk=" # DOCKER_USER
+    - secure: "UpCEur0O0m5rxqDuSs8zMY5VNAbKztMRuUCH7aqOSuhW5/OwaBmWVKFH+MeR374Hfgu+VjVhwU+x5gROJ6fx34fC6Gc0oNrjEWToKRt2ZdREDfsBiqBJ4/vxiLufMkPQ/2ZAB06NLryFJFapT36FQ/io+u3ZMtqs5mNIwuZt2DazDVvfj0lSw8I4UDinEGLRNMY2tNsEODHh5132hBCE8uO09GdYuOeYejJtfm9A5oF1c9ngW18pzdO3HcQ1vDglI8mBlNOfzTKujGSGDJXxiC+7E9f7uRirSpvik53nvBQELUnOW9XiR6Hx/4VF0U6MXnpMWLkbow5qHoabIWT44Ey1LX3R7tzunfhtxAJ2euF/0+yoi+Alg4n83TZ/k3IdmF8h1IU87E01wV9kNpTVqmZs3Re300ZYAeZOfoxp7E5v17lwq4eWpjYz8+pxY9lCK1iz60hd6KIM4TYkbyc0ipIlsYLsjtJLCOrkPyFKn3jfaSp2+5LDgO3tpi9QnX4BwoG4Xr3f9u9hdR0OVfkPRc3OvMqUiv4S1BYeBDbYIlKj6U6bjujBgtfVhiPEgd48KvV+H7DHrO9pOQZvFtW3azwFvpS7XTU4TLmUcCjyQCyN2r6jfIBKwzd9jntpElIs7P7NKPGCeJ2rtpANuZu1mNTiz3XarfqoijFMsDnGuuQ=" # DOCKER_PASS
+    - COMMIT=${TRAVIS_COMMIT::8}
 language: python
 python:
-  - "3.4"
-
+  - '3.4'
 before_install:
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-
 before_script:
-  # Echo some variables for debug purposes.
   - echo "Current datetime is $(date +'%Y%m%d%H%M')"
-
 script:
-  # Always build new images for docker.
-  - docker-compose -f docker-compose.yml build
-
+  - docker-compose -f docker-compose.prod.yml build
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=wearespindle/flindt_backend
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f backend/Dockerfile -t $REPO:$COMMIT backend
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  #- docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO:$TAG
 notifications:
   email: false
   slack:
-    on_success: always # default: always
-    on_failure: always # default: always
+    on_success: always
+    on_failure: always
     secure: re6jnSR7H2XcGwTbnyykKN6hGkn+JqC3J1oVHXVSG+KFjxA3Tq4vof0CUIgTcLeThXjkQVKWWkEtUPvh7t1duAxyIMFYKs35KeBycpB6D7QiPxPXUmL3Hh+6TTkxWhN5DofN0gaMBG2eIfBAaz9PpK5CQHuOKoXRxN21i9U6ZEN9qohV1oBcCpcsXD6W9amItkRnC7Iric3tFhSe98Y+dM9SfzyVxAHBBddyDkSqawJDKS638Wkb1Oyt0l1E8DyHuktRrElpG9yP8c0greaUc6/+ZcmJc1hJIaZbS1Orvd2EhAX7RXWOTaoAQ1VB/KL3dCQ3S4emYOd71zVjA4EB8agToQSQkuFtjOGSvvnLhf4gc4LUW46kaKa3tJvh8dxrX1cNol4DUJ5wig1ZITJZa+hwClbTE5DgrqQn0kT6fH6uhxGEFUfOsIPA5XkgjLRFy4PUYkXiVXKboBLf6EBLQuWin/MB/421ORELSXQGaNVhBgVbDvqKeyVUNl8QhLg34lpRbvrEn9vS6WaeQFGZnXtRjazDrhJJ4zNrEnlUdZKclcRwybORgl28abbECDLGWgZTdtZw/tWTMjCO+k/pTGZDkXwHjlAkQbTcjNqQn52g2cFVeQqG+3OEAqra2Rp8QhxEmeGgta37fp/p3+/3xE8lq3spXd99YFrhFcx9vjQ=
