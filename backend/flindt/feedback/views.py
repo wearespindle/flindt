@@ -92,11 +92,12 @@ class FeedbackAsk(FeedbackAskBase):
         organization = Organization.objects.filter(roles__in=[role.id])
 
         # Get the the Round based on the logged in user.
-        try:
-            round_object = Round.objects.get(
-                organization=organization, participants_receivers__in=[self.request.user.pk],
-            )
-        except Round.DoesNotExsist:
+        round_object = Round.objects.filter(
+            organization=organization,
+            participants_receivers__in=[self.request.user.pk],
+        ).first()
+
+        if not round_object:
             # When there is nothing found return a 404
             return JsonResponse({}, status=status.HTTP_404_NOT_FOUND)
 
