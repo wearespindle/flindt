@@ -155,8 +155,10 @@ class GlassFrogImporter(object):
         logger.info('Importing circle with id: {} and parent: {}'.format(circle_id, parent_role))
         circle_dict = self._get_circle_by_id(circle_id)
 
+        circle_name = self._remove_non_ascii(circle_dict.get('name'))
+
         role = Role.objects.create(
-            name=circle_dict.get('name'),
+            name=circle_name,
             purpose=self._get_circle_purpose_by_id(circle_id),
             parent=parent_role,
             accountabilities=self._get_circle_accountabilities_by_id(circle_id),
@@ -198,8 +200,11 @@ class GlassFrogImporter(object):
             logger.info('Importing role with id {} as subcircle circle of {}.'.format(role_id, parent_role))
             self.import_circle(role_dict.get('links').get('supporting_circle'), parent_role=parent_role)
         else:
+            # Cleanup the role name
+            role_name = self._remove_non_ascii(role_dict.get('name'))
+
             role = Role.objects.create(
-                name=role_dict.get('name'),
+                name=role_name,
                 purpose=role_dict.get('purpose') or "",
                 parent=parent_role,
                 accountabilities=self._get_role_accountabilities_by_id(role_id),
@@ -417,3 +422,16 @@ class GlassFrogImporter(object):
         match = next((a for a in domains_list if a['id'] == id), None)
 
         return match.get('description')
+
+    @staticmethod
+    def _remove_non_ascii(string):
+        """
+        Brute force method to remove non-ascii characters from a string.
+
+        Args:
+            string (string): The string to clean.
+
+        Returns:
+            str: The cleaned string without non-ascii characters.
+        """
+        return ''.join(i for i in string if ord(i) < 128)
