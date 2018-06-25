@@ -104,17 +104,9 @@ class ExtraUserInfo(FlindtBaseModel):
         >>> extrauserinfo = ExtraUserInfo.object.create(category=category,link='http://example.com/keycardforjohndoe')
         >>> User.objects.create(extra_info=[extrauserinfo], first_name='John', last_name='Doe')
     """
-    category = models.ForeignKey(
-        'ExtraUserInfoCategory',
-    )
-    link = models.URLField(
-        _('link'),
-        blank=True,
-    )
-    description = models.TextField(
-        _('description'),
-        blank=True,
-    )
+    category = models.ForeignKey('ExtraUserInfoCategory', on_delete=models.CASCADE)
+    link = models.URLField(_('link'), blank=True)
+    description = models.TextField(_('description'), blank=True)
 
     def __str__(self):
         ret = '{category}: {info}'
@@ -130,10 +122,7 @@ class ExtraUserInfoCategory(FlindtBaseModel):
     """
     Provide a category for extrauserinfo.
     """
-    name = models.CharField(
-        _('name'),
-        max_length=255,
-    )
+    name = models.CharField(_('name'), max_length=255)
 
     def __str__(self):
         return self.name

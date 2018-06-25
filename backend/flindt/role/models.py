@@ -20,7 +20,7 @@ class Role(FlindtBaseModel):
     purpose = models.TextField(blank=True, default='')
     accountabilities = models.TextField(blank=True, default='')  # Used to store JSON
     domains = models.TextField(blank=True, default='')  # Used to store JSON
-    parent = models.ForeignKey('Role', related_name='children', blank=True, null=True)
+    parent = models.ForeignKey('Role', related_name='children', blank=True, null=True, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, blank=True)
     archived = models.BooleanField(default=False)
 
@@ -77,8 +77,8 @@ class Focus(FlindtBaseModel):
     TODO: FEED-47: Start using/importing focuses. It seems that the GlassFrog
     API, does not currently know about focus.
     """
-    role = models.ForeignKey('Role')
-    user = models.ForeignKey(User)
+    role = models.ForeignKey('Role', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.TextField()
 
     def __str__(self):

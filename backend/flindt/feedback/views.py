@@ -89,12 +89,12 @@ class FeedbackAsk(FeedbackAskBase):
         role = Role.objects.get(pk=feedback_on_role_id)
 
         # Get the organization where this role belongs to
-        organization = Organization.objects.filter(roles__in=[role.id])
+        organization = Organization.objects.filter(roles__id__in=[role.id])
 
         # Get the the Round based on the logged in user.
         round_object = Round.objects.filter(
-            organization=organization,
-            participants_receivers__in=[self.request.user.pk],
+            organization__id__in=organization.all(),
+            participants_receivers__id__in=[self.request.user.pk],
         ).first()
 
         if not round_object:

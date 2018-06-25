@@ -12,28 +12,21 @@ class Round(FlindtBaseModel):
     Contains information about a round.
     A round contains the setting for a round of feedback.
     """
-    participants_senders = models.ManyToManyField(
-        User,
-        related_name='+',
-    )
-    participants_receivers = models.ManyToManyField(
-        User,
-        related_name='+',
-    )
-    organization = models.ForeignKey('organization.Organization', blank=True, null=True)
+    participants_senders = models.ManyToManyField(User, related_name='+')
+    participants_receivers = models.ManyToManyField(User, related_name='+')
+    organization = models.ForeignKey('organization.Organization', blank=True, null=True, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField(help_text='Editing of feedback will be disabled after this date has passed.')
-    description = models.CharField(
-        _('description'),
-        max_length=255,
-    )
+    description = models.CharField(_('description'), max_length=255)
     # determines the amount of roles each user has to review
     roles_to_review = models.PositiveSmallIntegerField()
     # determines the amount of people each user has to review
     individuals_to_review = models.PositiveSmallIntegerField()
     # How many people need to be given feedback before being able to view the “report”.
     min_feedback_sent = models.PositiveIntegerField()
-    question_for_individual_feedback = models.ForeignKey('feedback.Question', blank=True, null=True)
+    question_for_individual_feedback = models.ForeignKey(
+        'feedback.Question', blank=True, null=True, on_delete=models.CASCADE
+    )
     available_ratings = models.ManyToManyField('feedback.Rating')
 
     def __str__(self):

@@ -1,21 +1,21 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import path, re_path
 from rest_framework.authtoken import views
 
 from flindt.api.urls import router
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^api/v1/', include(router.urls)),
-    # Generic django urls for the feedback/ask api views.
-    url(r'^api/v1/feedback/', include('flindt.feedback.urls')),
-    url(r'^api-auth/', include('rest_framework.urls')),
-    url(r'^api-social-auth/', include('rest_framework_social_oauth2.urls')),
-    url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
-    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    re_path('^api/v1/', include(router.urls)),
+    re_path('^api/v1/feedback/', include('flindt.feedback.urls')),
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-social-auth/', include('rest_framework_social_oauth2.urls')),
+    path('api-token-auth/', views.obtain_auth_token),
+    path('auth/', include('rest_framework_social_oauth2.urls')),
+    path('jet/', include('jet.urls', 'jet')),
 ]
 
 if settings.DEBUG and settings.MEDIA_ROOT:

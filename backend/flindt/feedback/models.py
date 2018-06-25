@@ -26,11 +26,7 @@ class Rating(FlindtBaseModel):
     """
 
     name = models.CharField(max_length=255,)
-    image = models.ImageField(
-        _('image'),
-        blank=True,
-        upload_to=b'ratings'
-    )
+    image = models.ImageField(_('image'), blank=True, upload_to=b'ratings')
     description = models.TextField(blank=True,)
 
     def __str__(self):
@@ -44,11 +40,7 @@ class Remark(FlindtBaseModel):
     A Feedback can link to a rating to confer an emotion.
     """
 
-    rating = models.ForeignKey(
-        Rating,
-        related_name='rating',
-        null=True
-    )
+    rating = models.ForeignKey(Rating, related_name='rating', null=True, on_delete=models.CASCADE)
     content = models.TextField(_('content'))
 
     def __str__(self):
@@ -60,11 +52,8 @@ class Question(FlindtBaseModel):
     Model for the questions people can answer as an addition to the general feedback given.
     """
 
-    name = models.CharField(
-        _('name'),
-        max_length=255,
-    )
-    content = models.TextField(blank=True,)
+    name = models.CharField(_('name'), max_length=255)
+    content = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -75,10 +64,7 @@ class FeedbackOnIndividual(FlindtBaseModel):
     Model for the feedback on individuals.
     """
 
-    question = models.ForeignKey(
-        Question,
-        related_name='question',
-    )
+    question = models.ForeignKey(Question, related_name='question', on_delete=models.CASCADE)
     answer = models.TextField(blank=True,)
 
     def __str__(self):
@@ -90,12 +76,9 @@ class FeedbackOnRole(FlindtBaseModel):
     Model for the feedback on roles.
     """
 
-    role = models.ForeignKey(Role, blank=True, null=True)
+    role = models.ForeignKey(Role, blank=True, null=True, on_delete=models.CASCADE)
     requested = models.BooleanField(default=False)
-    remarks = models.ManyToManyField(
-        Remark,
-        blank=True,
-    )
+    remarks = models.ManyToManyField(Remark, blank=True)
 
     def __str__(self):
         return 'Feedback on {}'.format(self.role)
@@ -113,18 +96,9 @@ class Feedback(FlindtBaseModel):
                       (SKIPPED, _('Skipped')),)
 
     date = models.DateTimeField()
-    recipient = models.ForeignKey(
-        User,
-        related_name='%(class)s_received_feedback',
-    )
-    sender = models.ForeignKey(
-        User,
-        related_name='%(class)s_sent_feedback',
-    )
-    status = models.IntegerField(
-        default=INCOMPLETE,
-        choices=STATUS_CHOICES,
-    )
+    recipient = models.ForeignKey(User, related_name='%(class)s_received_feedback', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User,related_name='%(class)s_sent_feedback', on_delete=models.CASCADE)
+    status = models.IntegerField(default=INCOMPLETE, choices=STATUS_CHOICES)
     how_recognizable = models.IntegerField(
         blank=True, null=True, validators=[
             MinValueValidator(0),
@@ -140,9 +114,9 @@ class Feedback(FlindtBaseModel):
     skipped_feedback_reason = models.TextField(blank=True, null=True)
     actionable = models.BooleanField()
     actionable_content = models.TextField(blank=True)
-    individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True)
-    role = models.ForeignKey(FeedbackOnRole, null=True, blank=True)
-    round = models.ForeignKey(Round, null=True, blank=True)
+    individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True, on_delete=models.CASCADE)
+    role = models.ForeignKey(FeedbackOnRole, null=True, blank=True, on_delete=models.CASCADE)
+    round = models.ForeignKey(Round, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         if self.role:
