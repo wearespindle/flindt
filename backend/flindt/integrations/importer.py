@@ -198,22 +198,25 @@ class GlassFrogImporter(object):
             logger.info('Importing role with id {} as subcircle circle of {}.'.format(role_id, parent_role))
             self.import_circle(role_dict.get('links').get('supporting_circle'), parent_role=parent_role)
         else:
-            role = Role.objects.create(
-                name=role_dict.get('name'),
-                purpose=role_dict.get('purpose') or "",
-                parent=parent_role,
-                accountabilities=self._get_role_accountabilities_by_id(role_id),
-                domains=self._get_role_domains_by_id(role_id),
-            )
-            role_fullfillers = User.objects.filter(glassfrog_id__in=role_dict.get('links').get('people'))
-            for user in role_fullfillers:
-                role.users.add(user)
-            role.save()
-            self.import_run.roles.add(role)
-            if self.organization:
-                self.organization.roles.add(role)
+            if 'flindt-exclude' in role_dict.get('tag_names'):
+                logger.info("Role {} excluded with 'flindt-exclude' tag in GlassFrog.".format(role_dict.get('name')))
+            else:
+                role = Role.objects.create(
+                    name=role_dict.get('name'),
+                    purpose=role_dict.get('purpose') or "",
+                    parent=parent_role,
+                    accountabilities=self._get_role_accountabilities_by_id(role_id),
+                    domains=self._get_role_domains_by_id(role_id),
+                )
+                role_fullfillers = User.objects.filter(glassfrog_id__in=role_dict.get('links').get('people'))
+                for user in role_fullfillers:
+                    role.users.add(user)
+                role.save()
+                self.import_run.roles.add(role)
+                if self.organization:
+                    self.organization.roles.add(role)
 
-            logger.info("Role {} imported as role.".format(role))
+                logger.info("Role {} imported as role.".format(role))
 
     def _make_api_request(self, uri):
         """

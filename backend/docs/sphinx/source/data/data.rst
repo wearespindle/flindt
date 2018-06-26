@@ -19,6 +19,7 @@ To be able to give and receive feedback you need to run a GlassFrog import.
 * Press *save*
 * Click on your newly generated Organization
 * First click on the *Import users from this organization* button
-* After the first import is completed, you can use the *Import roles for this organization* button to import all the roles
+* After the first import is completed, you can use the *Import roles for this organization* button to import all the roles, if you want to
+exclude roles from being imported you can use the 'flindt-exclude' tag in GlassFrog. Go to a role in GlassFrog and click on 'add tag', to add 'flindt-exclude'.
 
 You now have all the data necessary for starting a feedback round
