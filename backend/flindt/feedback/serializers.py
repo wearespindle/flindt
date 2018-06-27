@@ -146,6 +146,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'how_valuable',
             'actionable',
             'actionable_content',
+            'actionable_got_reminded',
             'individual',
             'role',
             'round',

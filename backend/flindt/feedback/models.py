@@ -97,7 +97,7 @@ class Feedback(FlindtBaseModel):
 
     date = models.DateTimeField()
     recipient = models.ForeignKey(User, related_name='%(class)s_received_feedback', on_delete=models.CASCADE)
-    sender = models.ForeignKey(User,related_name='%(class)s_sent_feedback', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name='%(class)s_sent_feedback', on_delete=models.CASCADE)
     status = models.IntegerField(default=INCOMPLETE, choices=STATUS_CHOICES)
     how_recognizable = models.IntegerField(
         blank=True, null=True, validators=[
@@ -114,6 +114,7 @@ class Feedback(FlindtBaseModel):
     skipped_feedback_reason = models.TextField(blank=True, null=True)
     actionable = models.BooleanField()
     actionable_content = models.TextField(blank=True)
+    actionable_got_reminded = models.BooleanField(default=False)
     individual = models.ForeignKey(FeedbackOnIndividual, null=True, blank=True, on_delete=models.CASCADE)
     role = models.ForeignKey(FeedbackOnRole, null=True, blank=True, on_delete=models.CASCADE)
     round = models.ForeignKey(Round, null=True, blank=True, on_delete=models.CASCADE)
