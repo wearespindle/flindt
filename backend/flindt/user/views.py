@@ -26,6 +26,19 @@ class UserViewSet(viewsets.ModelViewSet):
         This view returns all the feedback the user has sent.
         """
         sent_feedback = Feedback.objects.filter(sender=self.request.user)
+        # Check if there is a status querystring in the GET parameters.
+        if 'status' in request.GET:
+            status = request.GET.get('status')
+
+            # Validate that the status value is actually valid for filtering
+            try:
+                valid = next(iter(True for s in Feedback.STATUS_CHOICES if int(status) in s), False)
+            except ValueError:
+                valid = False
+
+            if valid:
+                sent_feedback = Feedback.objects.filter(sender=self.request.user, status=status)
+
         page = self.paginate_queryset(self.filter_queryset(sent_feedback))
         if page is not None:
             serializer = FeedbackSerializer(page, many=True)
