@@ -30,6 +30,10 @@ services:
 
   frontend:
     build: frontend
+    # export PORT=3000 # when you want a Dockerized frontend.
+    # export PORT=3001 # when you run the frontend outside of Docker.
+    environment:
+      - PORT=${PORT}
     ports:
       # ext:int port.
-      - "3000:80"
+      - "${PORT}:80"

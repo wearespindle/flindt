@@ -60,6 +60,12 @@ Pull the repository from GitHub to your local machine:
 Docker related
 ^^^^^^^^^^^^^^
 
+In your shell, run one of these commands before starting:
+
+``export PORT=3000`` when you want a **Dockerized frontend**, listening on port 3000.
+
+``export PORT=3001`` or any other port than "3000", for when you run the frontend **outside** of Docker.
+
 -  Build the containers (database, backend and front end):
 
 ``docker-compose build``
