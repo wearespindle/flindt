@@ -156,7 +156,7 @@ class GlassFrogImporter(object):
         circle_dict = self._get_circle_by_id(circle_id)
 
         role = Role.objects.create(
-            name=circle_dict.get('name'),
+            name=circle_dict.get('name').encode('utf-8').decode('ascii', 'ignore'),
             purpose=self._get_circle_purpose_by_id(circle_id),
             parent=parent_role,
             accountabilities=self._get_circle_accountabilities_by_id(circle_id),
@@ -202,7 +202,7 @@ class GlassFrogImporter(object):
                 logger.info("Role {} excluded with 'flindt-exclude' tag in GlassFrog.".format(role_dict.get('name')))
             else:
                 role = Role.objects.create(
-                    name=role_dict.get('name'),
+                    name=role_dict.get('name').encode('utf-8').decode('ascii', 'ignore'),
                     purpose=role_dict.get('purpose') or "",
                     parent=parent_role,
                     accountabilities=self._get_role_accountabilities_by_id(role_id),

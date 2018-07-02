@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from django.conf import settings
@@ -17,7 +18,6 @@ logger = logging.getLogger(__name__)
 class Organization(FlindtBaseModel):
     """
     An organization couples roles and users to a specific organization.
-
     This is useful to archive all roles for an organization.
     An organization can also have API_KEYS for different integrations.
     """

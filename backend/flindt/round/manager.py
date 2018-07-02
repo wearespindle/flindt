@@ -27,6 +27,12 @@ class NoSolutionPossible(Exception):
     pass
 
 
+class UserInformationNotComplete(Exception):
+    def __init__(self, data):
+        super(Exception, self).__init__()
+        self.data = data
+
+
 class RoundManager:
     """
     Manager that makes starting a round possible.
@@ -37,7 +43,7 @@ class RoundManager:
     It will raise NoSolutionFound if no solution could be found in a reasonable amount of tries.
     It will raise NoSolutionPossible if there is no solution possible (eg. when
     a user has no roles within a circle).
-    It will raise IntegrationError when messenging integrations fail.
+    It will raise IntegrationError when messaging integrations fail.
     """
     def __init__(self, _round):
         # Current depth of solution.
@@ -66,14 +72,30 @@ class RoundManager:
 
     def start_round(self):
         """
-        This will try to
-        create feedback objects for every receiver and sender associated with the round.
-        It will raise NoSolutionFound if no solution could be found in a reasonable amount of tries.
-        It will raise NoSolutionPossible if there is no solution possible (eg. when
-        a user has no roles within a circle).
+        This will try to create feedback objects for every receiver and sender
+        associated with the round.
+        It will raise NoSolutionFound if no solution could be found in a
+        reasonable amount of tries.
+        It will raise NoSolutionPossible if there is no solution possible
+        (eg. when a user has no roles within a circle).
         """
         # We do a maximum of tries that is equal to number of users giving feedback.
         logger.info('starting a new round: {}'.format(self.round))
+
+        # Check that users are in a role.
+        users_without_roles = self.do_all_users_have_a_role()
+
+        # Check that users have a correct slack id.
+        users_without_slack_id = self.do_all_users_have_a_slack_id()
+
+        # When there a users without a role or the slack id is not present/correct
+        # raise an exception.
+        if users_without_roles or users_without_slack_id:
+            user_exception_data = {
+                'without_role': users_without_roles,
+                'without_slack_id': users_without_slack_id,
+            }
+            raise UserInformationNotComplete(data=user_exception_data)
 
         for i in range(self.round.min_feedback_sent + 100):
             # After every 3th try to fix the round, we increment the maximum number of reviews that needs to be given.
@@ -85,7 +107,7 @@ class RoundManager:
                 self._create_role_feedback_for_participants()
                 self._sort_feedback_on_circle_size()
                 self._match_role_feedback_to_senders(self.role_feedback)
-                logger.info('succesfully matched all role feedback on the {}th try'.format(i + 1))
+                logger.info('Successfully matched all role feedback on the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -102,7 +124,7 @@ class RoundManager:
                 )
                 self._create_individual_feedback_for_participants()
                 self._match_individual_feedback_to_senders(self.individual_feedback_to_be_received)
-                logger.info('succesfully matched all individual feedback on the {}th try'.format(i + 1))
+                logger.info('Successfully matched all individual feedback on the {}th try'.format(i + 1))
                 break
             except (NoSolutionFound, MatchNotFoundError):
                 # reset the round
@@ -112,6 +134,48 @@ class RoundManager:
                 self.users_have_given_feedback_on_individual = Counter()
 
         logger.info('New round started.')
+
+    def do_all_users_have_a_role(self):
+        receivers = self.round.participants_receivers.all()
+        senders = self.round.participants_senders.all()
+
+        users_without_role = []
+        for receiver in receivers:
+            role = receiver.role_set.exclude(parent_id=None).exclude(archived=True).first()
+            if not role:
+                users_without_role.append(receiver.email)
+
+        for sender in senders:
+            role = sender.role_set.exclude(parent_id=None).exclude(archived=True).first()
+            if not role and not sender.email in users_without_role:
+                users_without_role.append(sender.email)
+
+        return users_without_role
+
+    def do_all_users_have_a_slack_id(self):
+        receivers = self.round.participants_receivers.all()
+        senders = self.round.participants_senders.all()
+
+        users_without_slack_id = []
+
+        for receiver in receivers:
+            slack_user_name = receiver.slack_user_name
+            if not slack_user_name or not slack_user_name.startswith('U'):
+                invalid_user = receiver.email
+                if slack_user_name and not slack_user_name.startswith('U'):
+                    invalid_user = '{} ({})'.format(invalid_user, slack_user_name)
+                users_without_slack_id.append(invalid_user)
+
+        for sender in senders:
+            slack_user_name = sender.slack_user_name
+            if not slack_user_name or not slack_user_name.startswith('U'):
+                invalid_user = sender.email
+                if slack_user_name and not slack_user_name.startswith('U'):
+                    invalid_user = '{} ({})'.format(invalid_user, slack_user_name)
+                if invalid_user not in users_without_slack_id:
+                    users_without_slack_id.append(invalid_user)
+
+        return users_without_slack_id
 
     def _create_role_feedback_for_participants(self):
         """

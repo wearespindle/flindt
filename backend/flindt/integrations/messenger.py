@@ -1,80 +1,11 @@
 import logging
-import smtplib
 
 from django.conf import settings
-from django.core.mail import send_mail
-from slacker import Error, Slacker
+
+from flindt.integrations.providers.email import EmailProvider
+from flindt.integrations.providers.slack import SlackProvider
 
 logger = logging.getLogger(__name__)
-
-
-class Provider(object):
-    """
-    A Provider implements `send_message` which sends a message using a
-    mechanism like email or Slack.
-    """
-
-    def send_message(self, message):
-        """
-        Send `message` to `user` using the users preferred channel.
-
-        Args:
-            message (str): A string containing the message.
-        """
-        raise NotImplementedError
-
-
-class EmailProvider(Provider):
-    """
-    Provider for sending email messages.
-    """
-
-    def __init__(self, *args, **kwargs):
-        """
-        Args:
-            user (User): The user that should receive the message.
-        """
-        self.user = kwargs['user']
-
-    def send_message(self, message):
-        try:
-            if not settings.SILENT_RUN:
-                send_mail(
-                    'New message from Flindt',
-                    message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [self.user.email],
-                    fail_silently=False,
-                )
-            logger.info('Email send to {}.'.format(self.user.email))
-        except smtplib.SMTPServerDisconnected as e:
-            from flindt.round.manager import IntegrationError
-            raise IntegrationError('Email error "{}" for user "{}"'.format(e, self.user))
-
-
-class SlackProvider(Provider):
-    """
-    Provider for sending slack messages.
-    """
-
-    def __init__(self, *args, **kwargs):
-        """
-        Args:
-            user (User): The user that should receive the message.
-
-        TODO: FEED-59: Replace slack integration with app instead of bot.
-        """
-        self.user = kwargs['user']
-        self.slacker = Slacker(self.user.organization_set.first().slack_bot_api_key)
-
-    def send_message(self, message):
-        try:
-            if not settings.SILENT_RUN:
-                self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@flindt')
-            logger.info('Slack send to {}.'.format(self.user.slack_user_name))
-        except Error as e:
-            from flindt.round.manager import IntegrationError
-            raise IntegrationError('Slack error "{}" for user "{}"'.format(e, self.user))
 
 
 class Messenger(object):
