@@ -5,6 +5,7 @@ from random import shuffle
 
 from django.utils import timezone
 
+from flindt import settings
 from flindt.feedback.models import (Feedback, FeedbackOnIndividual, FeedbackOnRole)
 from flindt.user.models import User
 
@@ -25,7 +26,6 @@ class NoSolutionFound(Exception):
 
 class NoSolutionPossible(Exception):
     pass
-
 
 class UserInformationNotComplete(Exception):
     def __init__(self, data):
@@ -69,6 +69,8 @@ class RoundManager:
         # Keeps track on what the maximum number of feedback a user is allowed to give.
         # Will increase if no solution can be found.
         self.max_reviews_per_user = 0
+
+        self.already_received_individual_feedback_by_user = {}
 
     def start_round(self):
         """
@@ -153,6 +155,8 @@ class RoundManager:
         return users_without_role
 
     def do_all_users_have_a_slack_id(self):
+        if settings.SILENT_RUN:
+            return []
         receivers = self.round.participants_receivers.all()
         senders = self.round.participants_senders.all()
 
@@ -226,6 +230,7 @@ class RoundManager:
 
         for i in range(self.round.individuals_to_review):
             for participant in self.round.participants_receivers.all():
+                logger.info('Creating individual feedback for user: {}'.format(participant))
                 question = self.round.question_for_individual_feedback
                 individual = FeedbackOnIndividual(question=question)
                 feedback = Feedback(
@@ -339,6 +344,7 @@ class RoundManager:
         senders.remove(feedback.recipient.id)
 
         users_done = self.users_have_given_feedback_on_role.copy()
+
         # From the list of users that have given feedback, remove the users
         # that have given the maximum number of reviews.
         for key, count in dropwhile(lambda user: user[1] >= self.max_reviews_per_user, users_done.most_common()):
@@ -403,6 +409,9 @@ class RoundManager:
         # Get first object from the list.
         feedback = feedbacks[0]
 
+        if feedback.recipient.id not in self.already_received_individual_feedback_by_user:
+            self.already_received_individual_feedback_by_user[feedback.recipient.id] = []
+
         senders = self._get_senders_for_user(feedback.recipient)
 
         users_done = self.users_have_given_feedback_on_individual.copy()
@@ -419,27 +428,34 @@ class RoundManager:
 
         for sender in senders:
             matched_sender = sender
-            self.users_have_given_feedback_on_individual[sender] += 1
-
-            try:
-                self.tries += 1
-                self.counter += 1
-                self.max_depth = max(self.counter, self.max_depth)
-                if self.tries % 10000 == 0:
-                    logger.info(
-                        '(tries: {}, max depth: {}) counter: {}{}'.format(
-                            self.tries, self.max_depth, self.counter * '#', ' ' * 100
-                        )
-                    )
-                # Use the feedbacks objects from 1 and higher to prevent using the same object
-                # over and over again.
-                self._match_individual_feedback_to_senders(feedbacks[1:])
-            except MatchNotFoundError:
-                self.counter -= 1
-                self.users_have_given_feedback_on_individual[sender] -= 1
-                matched_sender = None
+            # Check if the matched_sender already is giving individual feedback
+            # to the user, to prevent duplicate individual feedback requests.
+            if matched_sender in self.already_received_individual_feedback_by_user[feedback.recipient.id]:
+                logger.info("Sender: {} already giving individual feedback to user. {}".format(matched_sender, feedback.recipient.id))
             else:
-                break
+                logger.info("User {} matched to {} for individual feedback.".format(matched_sender, feedback.recipient.id))
+                self.already_received_individual_feedback_by_user[feedback.recipient.id].append(matched_sender)
+                self.users_have_given_feedback_on_individual[sender] += 1
+
+                try:
+                    self.tries += 1
+                    self.counter += 1
+                    self.max_depth = max(self.counter, self.max_depth)
+                    if self.tries % 10000 == 0:
+                        logger.info(
+                            '(tries: {}, max depth: {}) counter: {}{}'.format(
+                                self.tries, self.max_depth, self.counter * '#', ' ' * 100
+                            )
+                        )
+                    # Use the feedbacks objects from 1 and higher to prevent using the same object
+                    # over and over again.
+                    self._match_individual_feedback_to_senders(feedbacks[1:])
+                except MatchNotFoundError:
+                    self.counter -= 1
+                    self.users_have_given_feedback_on_individual[sender] -= 1
+                    matched_sender = None
+                else:
+                    break
 
         if not matched_sender:
             if self.tries >= 10000:
@@ -452,3 +468,5 @@ class RoundManager:
         feedback.individual = feedback.individual
         feedback.sender_id = matched_sender
         feedback.save()
+
+        logger.info("Matching recipient {} to sender {}".format(feedback.recipient, feedback.sender))

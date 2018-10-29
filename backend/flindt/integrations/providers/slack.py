@@ -27,7 +27,7 @@ class SlackProvider(Provider):
         try:
             if not settings.SILENT_RUN:
                 self.slacker.chat.post_message(self.user.slack_user_name, message, as_user='@flindt')
-            logger.info('Slack send to {}.'.format(self.user.slack_user_name))
+            logger.info('Slack send to {} ({}).'.format(self.user.email, self.user.slack_user_name))
         except Error as e:
             from flindt.round.manager import IntegrationError
             raise IntegrationError('Slack error "{}" for user "{}"'.format(e, self.user))
