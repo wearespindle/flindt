@@ -1,5 +1,5 @@
 # Stage 1 - the build process
-FROM node:8 as build-deps
+FROM node:8.13 as build-deps
 
 LABEL maintainer="info@wearespindle.com"
 

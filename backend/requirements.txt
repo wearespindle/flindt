@@ -7,7 +7,7 @@ djangorestframework==3.8.2
 django-cors-headers==2.2.0
 social-auth-app-django==2.1.0
 python-social-auth==0.3.4
-requests==2.13.0
+requests==2.20.0
 Pillow==4.0.0
 
 
