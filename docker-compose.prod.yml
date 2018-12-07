@@ -12,7 +12,7 @@ services:
       - "127.0.0.1:8005:8000"
 
   proxy:
-    build: proxy
+    build: backend/proxy
     command: --api # the Web UI
     ports:
       - "80:80"
