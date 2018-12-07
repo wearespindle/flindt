@@ -4,7 +4,7 @@ services:
 
   backend:
     build: backend
-    command: uwsgi --ini uwsgi.ini # For production.
+    command: uwsgi --ini uwsgi.ini --static-map /static=/usr/src/flindt/flindt/static # For production.
     volumes:
       - ./backend:/usr/src/flindt
     ports:
