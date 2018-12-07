@@ -9,7 +9,7 @@ services:
       - ./backend:/usr/src/flindt
     ports:
       # ext:int port.
-      - "8005:8000"
+      - "127.0.0.1:8005:8000"
 
   proxy:
     build: proxy
