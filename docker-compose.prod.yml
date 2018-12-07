@@ -1,8 +1,20 @@
-backend:
-  build: backend
-  command: uwsgi --ini uwsgi.ini # For production.
-  volumes:
-    - ./backend:/usr/src/flindt
-  ports:
-    # ext:int port.
-    - "8005:8000"
+version: '2.0'
+
+services:
+
+  backend:
+    build: backend
+    command: uwsgi --ini uwsgi.ini # For production.
+    volumes:
+      - ./backend:/usr/src/flindt
+    ports:
+      # ext:int port.
+      - "8005:8000"
+
+  proxy:
+    build: proxy
+    command: --api # the Web UI
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:8080:8080" # the Web UI

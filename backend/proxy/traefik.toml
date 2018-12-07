@@ -1,0 +1,33 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[file]
+
+[backends]
+  [backends.backend1]
+    [backends.backend1.servers.server1]
+       url = "http://backend:8000"
+
+[frontends]
+  [frontends.frontend1]
+      backend = "backend1"
+      passHostHeader = true
+        [frontends.frontend1.routes.route1]
+        rule = "Host:api-dev.flindt.wearespindle.com"
+
+[acme]
+  email = "admin@wearespindle.com"
+  storage = "acme.json"
+  entryPoint = "https"
+  [acme.httpChallenge]
+    entryPoint = "http"
+  [[acme.domains]]
+    main = "api-dev.flindt.wearespindle.com"
