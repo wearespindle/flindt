@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: podquota
+  namespace: flindt-website
+spec:
+  hard:
+    pods: "4"

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: flindt-fe-service
+  name: flindt-fe-service
+  namespace: flindt-website
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  selector:
+    app: flindt-frontend
+    tier: frontend
+  type: NodePort
+status:
+  loadBalancer: {}

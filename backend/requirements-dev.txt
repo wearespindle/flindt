@@ -1,15 +1,15 @@
 -r requirements.txt
 
-ipython==5.1.0
-django-extensions==2.0.7
+ipython==7.2.0
+django-extensions==2.1.4
 
 #######################################################
 ### Debug                                           ###
 #######################################################
-django-debug-toolbar==1.9.1
+django-debug-toolbar==1.11
 
 django-dbshell-plus==1.0.1
-ipdb==0.10.1
+ipdb==0.11
 
 #######################################################
 ### Testing                                         ###
@@ -19,7 +19,7 @@ factory_boy==2.11.1
 #######################################################
 ### Docs                                            ###
 #######################################################
-sphinx==1.4.8
+##sphinx==1.4.8
 # Allows 'Edit on github' button in Sphinx docs.
-https://github.com/westurner/sphinxcontrib-srclinks/archive/master.zip
-sphinx_rtd_theme==0.1.9
+##https://github.com/westurner/sphinxcontrib-srclinks/archive/master.zip
+##sphinx_rtd_theme==0.1.9

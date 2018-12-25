@@ -5,7 +5,6 @@
 *.*~
 .DS_Store
 .idea/
-newrelic.ini
 *.org
 *.css
 
@@ -35,6 +34,9 @@ tags
 # /docs/sphinx/
 backend/docs/sphinx/build/
 backend/docs/sphinx/source/modules/
+#/backend/flindt/static
+/backend/flindt/settings/local.py
+/backend/logs/flindt*
 
 .bash_history
 .ipython
@@ -44,9 +46,4 @@ yarn.lock
 
 docker-compose.override.yml
 
-/backend/flindt/static
-/backend/flindt/settings/local.py
-/backend/logs/flindt*
-
-frontend/node_modules/
-frontend/dist/
+k8s-config/dev.secret.yaml

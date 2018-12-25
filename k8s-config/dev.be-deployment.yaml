@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flindt-backend
+  namespace: flindt-website
+spec:
+  selector:
+    matchLabels:
+      app: flindt-backend
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flindt-backend
+        tier: backend
+    spec:
+      containers:
+      - name: flindt-backend
+        image: wearespindle/flindt_backend:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "384Mi"
+        env:
+        - name: SOCIAL_AUTH_GOOGLE_PLUS_KEY
+          value: '587834240110-2kju38c786jk0okdqp3v74im71f7lbf1.apps.googleusercontent.com'
+        - name: FRONTEND_HOSTNAME
+          value: 'flindt.internal'
+        - name: DEBUG
+          value: '1'
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: flindt-credentials
+              key: DATABASE_URL
+        - name: DJANGO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: flindt-credentials
+              key: DJANGO_SECRET_KEY
+        - name: SOCIAL_AUTH_GOOGLE_PLUS_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: flindt-credentials
+              key: GOOGLE_PLUS_SECRET
+        lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "python manage.py collectstatic --no-input"]
+            preStop:
+              exec:
+                command: ["/usr/local/bin/uwsgi", "--stop", "/tmp/project-master.pid"]
+        imagePullPolicy: IfNotPresent
+        securityContext:
+           allowPrivilegeEscalation: false

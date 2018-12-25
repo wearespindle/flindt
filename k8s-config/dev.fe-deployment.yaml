@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flindt-frontend
+  namespace: flindt-website
+spec:
+  selector:
+    matchLabels:
+      app: flindt-frontend
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flindt-frontend
+        tier: frontend
+    spec:
+      containers:
+      - name: flindt-frontend
+        image: wearespindle/flindt_frontend:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "16Mi"
+          limits:
+            cpu: "200m"
+            memory: "32Mi"
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false

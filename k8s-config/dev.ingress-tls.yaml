@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: flindt-ingress
+  namespace: flindt-website
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    #nginx.ingress.kubernetes.io/enable-cors: "true"
+    #nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+    #nginx.ingress.kubernetes.io/cors-allow-origin: ""
+spec:
+  tls:
+  - hosts:
+    - api.flindt.internal
+    secretName: be-ingress-tls
+  - hosts:
+    - flindt.internal
+    secretName: fe-ingress-tls
+  rules:
+  - host: flindt.internal
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flindt-fe-service
+          servicePort: 80
+  - host: api.flindt.internal
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flindt-be-service
+          servicePort: 8005

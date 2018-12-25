@@ -1,0 +1,12 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  artifacts:
+    - image: wearespindle/flindt_backend:latest
+      context: backend
+    - image: wearespindle/flindt_frontend
+      context: ../flindt-front-end
+deploy:
+  kubectl:
+    manifests:
+      - k8s-config/dev.*

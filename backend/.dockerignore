@@ -1,0 +1,4 @@
+.git
+.dockerignore
+docs
+*.pyc
