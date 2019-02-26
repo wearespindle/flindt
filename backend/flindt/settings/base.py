@@ -154,29 +154,20 @@ LOGGING = {
             'filename': 'logs/flindt.log',
             'formatter': 'default',
         },
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
-        }
     },
     'loggers': {
-        # Silence SuspiciousOperation.DisallowedHost exception ('Invalid
-        # HTTP_HOST' header messages). Set the handler to 'null' so we don't
-        # get those annoying emails.
-        'django.security.DisallowedHost': {
-            'handlers': ['null'],
-            'propagate': False,
+        'django': {
+            'handlers': ['console', 'flindtfile'],
+            'level': 'DEBUG',
         },
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
+        'flindt': {
+            'handlers': ['console', 'flindtfile'],
+            'level': 'DEBUG',
         },
         '': {
             'handlers': ['console', 'flindtfile'],
             'level': 'DEBUG',
-        }
+        },
     }
 }
 
@@ -267,5 +258,5 @@ FRONTEND_HOSTNAME = os.getenv('FRONTEND_HOSTNAME', 'flindt.wearespindle.com')
 SILENT_RUN = False
 
 # Fix for the 'Starting a new round'. Because we reached the limit of 1000
-# fields in a POST/GET. 
+# fields in a POST/GET.
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
