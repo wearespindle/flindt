@@ -21,7 +21,7 @@ defaultEntryPoints = ["http", "https"]
       backend = "backend1"
       passHostHeader = true
         [frontends.frontend1.routes.route1]
-        rule = "Host:api-dev.flindt.wearespindle.com"
+        rule = "Host:api.flindt.wearespindle.com"
 
 [acme]
   email = "admin@wearespindle.com"
@@ -30,4 +30,4 @@ defaultEntryPoints = ["http", "https"]
   [acme.httpChallenge]
     entryPoint = "http"
   [[acme.domains]]
-    main = "api-dev.flindt.wearespindle.com"
+    main = "api.flindt.wearespindle.com"
