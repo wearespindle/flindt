@@ -1,4 +1,8 @@
+import os
+
+from flindt.settings.base import boolean
 from flindt.settings.base import *  # noqa
+
 
 DEBUG = boolean(os.environ.get('DEBUG', 0))
 TEMPLATE_DEBUG = boolean(os.environ.get('DEBUG', DEBUG))
