@@ -50,3 +50,8 @@ docker-compose.override.yml
 
 frontend/node_modules/
 frontend/dist/
+
+*.direnv.master*
+.venv
+.envrc
+default.nix
