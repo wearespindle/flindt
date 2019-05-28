@@ -1,4 +1,4 @@
-FROM python:3.4-slim-jessie
+FROM python:3.6-slim-stretch
 
 LABEL maintainer="info@wearespindle.com"
 
@@ -8,7 +8,7 @@ RUN apt-get update && \
     gettext \
     mime-support \
     mysql-client \
-    libmysqlclient-dev && \
+    default-libmysqlclient-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY requirements.txt requirements.txt

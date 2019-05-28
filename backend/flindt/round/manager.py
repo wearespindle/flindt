@@ -336,7 +336,7 @@ class RoundManager:
         senders = self._get_senders_for_user_in_role(circle).copy()
 
         # Remove recipient from the senders. So you won't feedback yourself.
-        senders.remove(feedback.recipient.id)
+        senders.discard(feedback.recipient.id)
 
         users_done = self.users_have_given_feedback_on_role.copy()
         # From the list of users that have given feedback, remove the users
