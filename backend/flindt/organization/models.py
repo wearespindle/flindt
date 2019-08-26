@@ -27,7 +27,12 @@ class Organization(FlindtBaseModel):
     slack_bot_api_key = models.CharField(max_length=255, blank=True)
     glassfrog_anchor_circle_id = models.IntegerField(blank=True, null=True)
     users = models.ManyToManyField(User, blank=True)
-    roles = models.ManyToManyField(Role, blank=True)
+    roles = models.ManyToManyField(
+        Role,
+        blank=True,
+        # Don't show archived roles in the admin.
+        limit_choices_to={'archived': False},
+    )
 
     def __str__(self):
         return self.name
